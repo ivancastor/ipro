@@ -207,6 +207,10 @@
               <input type="tel" id="agend-whatsapp" class="agend-input" placeholder="(19) 99999-9999" maxlength="15" oninput="window.agendFormatPhone(this)">
             </div>
           </div>
+          <div id="agend-step3-nb-email" style="display:none">
+            <label style="font-size:11px;font-weight:700;color:#888;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em">E-mail *</label>
+            <input type="email" id="agend-nb-email" class="agend-input" placeholder="seu@email.com">
+          </div>
           <div id="agend-step3-extra-fields">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
               <div>
@@ -626,6 +630,11 @@
                 <label style="font-size:11px;font-weight:700;color:#888;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em">WhatsApp *</label>
                 <input type="tel" id="agend-whatsapp" class="agend-input" placeholder="(19) 99999-9999" maxlength="15" oninput="window.agendFormatPhone(this)">
               </div>
+            </div>
+            <!-- Email for notebook mode -->
+            <div id="agend-step3-nb-email" style="display:none">
+              <label style="font-size:11px;font-weight:700;color:#888;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em">E-mail *</label>
+              <input type="email" id="agend-nb-email" class="agend-input" placeholder="seu@email.com">
             </div>
             <!-- Extra fields (hidden in notebook mode) -->
             <div id="agend-step3-extra-fields">
@@ -1064,7 +1073,10 @@
     const formNome = document.getElementById('agend-nome');
     const formCpf = document.getElementById('agend-cpf');
     if (nomeEl && formNome) nomeEl.value = formNome.value.trim();
-    if (cpfEl && formCpf) cpfEl.value = formCpf.value.trim();
+    if (cpfEl && formCpf) cpfEl.value = isNotebook ? '' : formCpf.value.trim();
+    // Hide CPF field for notebook (no CPF collected)
+    const cpfRow = cpfEl && cpfEl.closest ? cpfEl.closest('div') : null;
+    if (cpfRow) cpfRow.style.display = isNotebook ? 'none' : '';
     const btn = document.getElementById('agend-termos-btn');
     if (btn) { btn.disabled = true; btn.style.opacity = '.4'; btn.style.cursor = 'not-allowed'; }
     const errEl = document.getElementById('agend-termos-error');
@@ -1102,11 +1114,15 @@
     const nome = (document.getElementById('agend-termos-nome')?.value || '').trim();
     const cpf = (document.getElementById('agend-termos-cpf')?.value || '').trim();
     const errEl = document.getElementById('agend-termos-error');
-    if (!nome || !cpf) {
+    if (!nome) {
+      if (errEl) { errEl.textContent = 'Preencha o nome completo.'; errEl.style.display = 'block'; }
+      return;
+    }
+    if (!isNotebook && !cpf) {
       if (errEl) { errEl.textContent = 'Preencha nome completo e CPF.'; errEl.style.display = 'block'; }
       return;
     }
-    if (cpf.replace(/\D/g, '').length < 11) {
+    if (!isNotebook && cpf.replace(/\D/g, '').length < 11) {
       if (errEl) { errEl.textContent = 'CPF inválido.'; errEl.style.display = 'block'; }
       return;
     }
@@ -1184,7 +1200,9 @@
       const extra = document.getElementById('agend-step3-extra-fields');
       const desc = document.getElementById('agend-step3-desc');
       if (extra) extra.style.display = isNotebook ? 'none' : '';
-      if (desc) desc.textContent = isNotebook ? 'Preencha para enviarmos o retorno via WhatsApp' : 'Preencha para confirmarmos seu agendamento via WhatsApp';
+      const nbEmailRow = document.getElementById('agend-step3-nb-email');
+      if (nbEmailRow) nbEmailRow.style.display = isNotebook ? '' : 'none';
+      if (desc) desc.textContent = isNotebook ? 'Preencha para confirmarmos seu agendamento' : 'Preencha para confirmarmos seu agendamento via WhatsApp';
     }
   }
 
@@ -1202,8 +1220,10 @@
       const nome = document.getElementById('agend-nome').value.trim();
       const wpp = document.getElementById('agend-whatsapp').value.trim();
       if (isNotebook) {
-        // Notebook: only name + whatsapp required
+        // Notebook: name, whatsapp and email required
+        const nbEmail = (document.getElementById('agend-nb-email')?.value || '').trim();
         if (!nome || !wpp) { alert('Preencha nome e WhatsApp.'); return; }
+        if (!nbEmail || !nbEmail.includes('@')) { alert('Preencha um e-mail válido.'); return; }
         buildReview();
       } else {
         const cpf = document.getElementById('agend-cpf').value.trim();
@@ -2019,6 +2039,7 @@
         notebookSel.tipoSolicitacao === 'agendamento' ? { l: 'Data', v: dateFormatted } : null,
         notebookSel.tipoSolicitacao === 'agendamento' && sel.horario ? { l: 'Horário', v: sel.horario.slice(0, 5) } : null,
         { l: 'Nome', v: document.getElementById('agend-nome').value.trim() },
+        { l: 'E-mail', v: (document.getElementById('agend-nb-email')?.value || '').trim() },
         { l: 'WhatsApp', v: document.getElementById('agend-whatsapp').value.trim() }
       ].filter(Boolean);
     } else {
@@ -2080,7 +2101,7 @@
           horario: sel.horario || null,
           nome: document.getElementById('agend-nome').value.trim(),
           cpf: '',
-          email: '',
+          email: (document.getElementById('agend-nb-email')?.value || '').trim(),
           whatsapp: document.getElementById('agend-whatsapp').value.trim(),
           cep: '',
           endereco_rua: '', endereco_numero: '', endereco_complemento: '',
