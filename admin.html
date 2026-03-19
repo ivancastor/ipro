@@ -43,6 +43,12 @@
     .svc-new-form input:focus,.svc-new-form select:focus{border-color:#1a6cff}
     .inner-tab-btn{font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;cursor:pointer;transition:all .15s;color:#777;background:transparent;border:none}
     .inner-tab-btn.active{background:#1a6cff;color:#fff}
+    /* Drag-and-drop sortable */
+    .drag-handle{cursor:grab;color:#ccc;padding:3px 5px;border-radius:6px;transition:color .15s,background .15s;line-height:1;font-size:14px}
+    .drag-handle:hover{color:#888;background:#f0f0f0}
+    .drag-handle:active{cursor:grabbing}
+    [data-item-id].drag-over{border-color:#1a6cff!important;box-shadow:0 0 0 2px rgba(26,108,255,.25)!important}
+    [data-item-id].drag-dragging{opacity:0.45}
   </style>
 </head>
 <body class="bg-[#f0eeeb] text-[#1a1a1a] font-sans antialiased min-h-screen">
@@ -767,6 +773,57 @@ async function renderAdminView() {
 }
 
 // ─── Level: Produtos ──────────────────────────────────────
+
+// ─── Drag-and-drop sortable helper ───────────────────────
+function setupSortable(containerId, apiEndpoint) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  let dragSrc = null;
+  container.addEventListener('dragstart', e => {
+    const item = e.target.closest('[data-item-id]');
+    if (!item || item.parentNode !== container) return;
+    dragSrc = item;
+    setTimeout(() => item.classList.add('drag-dragging'), 0);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', item.dataset.itemId);
+  });
+  container.addEventListener('dragend', () => {
+    if (dragSrc) { dragSrc.classList.remove('drag-dragging'); dragSrc = null; }
+    container.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+  });
+  container.addEventListener('dragover', e => {
+    e.preventDefault();
+    if (!dragSrc) return;
+    const target = e.target.closest('[data-item-id]');
+    if (target && target !== dragSrc && target.parentNode === container) {
+      container.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+      target.classList.add('drag-over');
+    }
+  });
+  container.addEventListener('dragleave', e => {
+    const target = e.target.closest('[data-item-id]');
+    if (target) target.classList.remove('drag-over');
+  });
+  container.addEventListener('drop', e => {
+    e.preventDefault();
+    if (!dragSrc) return;
+    const target = e.target.closest('[data-item-id]');
+    if (!target || target === dragSrc || target.parentNode !== container) return;
+    const items = Array.from(container.querySelectorAll('[data-item-id]'));
+    const srcIdx = items.indexOf(dragSrc), dstIdx = items.indexOf(target);
+    if (srcIdx < dstIdx) container.insertBefore(dragSrc, target.nextSibling);
+    else container.insertBefore(dragSrc, target);
+    target.classList.remove('drag-over');
+    const newIds = Array.from(container.querySelectorAll('[data-item-id]')).map(el => el.dataset.itemId);
+    saveSortOrder(apiEndpoint, newIds);
+  });
+}
+async function saveSortOrder(endpoint, ids) {
+  for (let i = 0; i < ids.length; i++) {
+    API(endpoint + '/' + ids[i], { method: 'PUT', body: { ordem: i + 1 } }).catch(() => {});
+  }
+}
+// ─────────────────────────────────────────────────────────
 function renderProdutosView(container) {
   if (!produtos.length) {
     container.innerHTML = '<div class="bg-white rounded-2xl p-12 text-center border border-[#e0ddd9]"><p class="text-[#999]">Nenhum produto cadastrado.</p></div>';
@@ -774,11 +831,12 @@ function renderProdutosView(container) {
     return;
   }
   let html = '<div class="flex items-center justify-between mb-5"><h2 class="text-xl font-bold tracking-tight">Dispositivos</h2><button onclick="openModal(\'produto\')" class="bg-[#1a6cff] hover:bg-[#0057e6] text-white font-semibold px-4 py-2 rounded-xl text-sm flex items-center gap-2"><i class="fa-solid fa-plus text-xs"></i> Novo Produto</button></div>';
-  html += '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">';
+  html += '<div id="produtos-sort" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">';
   produtos.forEach(p => {
-    html += `<div class="bg-white rounded-2xl border border-[#e0ddd9] hover:shadow-lg transition-all group">
+    html += `<div draggable="true" data-item-id="${p.id}" class="bg-white rounded-2xl border border-[#e0ddd9] hover:shadow-lg transition-all group">
       <div class="p-5 cursor-pointer" onclick="navigateAdmin('modelos',${JSON.stringify(p).replace(/"/g,'&quot;')})">
         <div class="flex items-center gap-4 mb-3">
+          <span class="drag-handle select-none shrink-0" onclick="event.stopPropagation()" title="Arrastar para reordenar">⠿</span>
           ${p.imagem ? `<img loading="lazy" src="${p.imagem}" class="w-16 h-16 rounded-xl object-cover shrink-0">` : `<div class="w-16 h-16 rounded-xl bg-[#f5f5f7] flex items-center justify-center shrink-0"><i class="fa-solid fa-mobile-screen-button text-2xl text-[#ccc]"></i></div>`}
           <div class="min-w-0">
             <h4 class="font-bold text-base group-hover:text-[#1a6cff] transition-colors">${p.nome}</h4>
@@ -858,6 +916,7 @@ function renderProdutosView(container) {
   </div>`;
   html += '</div>';
   container.innerHTML = html;
+  setupSortable('produtos-sort', '/api/produtos');
 }
 
 // ─── Level: Notebook Serviços ─────────────────────────────
@@ -869,11 +928,11 @@ async function renderNotebookServicosView(container) {
   if (!nbServicos.length) {
     html += '<div class="bg-white rounded-2xl p-8 text-center border border-[#e0ddd9]"><p class="text-[#999] text-sm">Nenhum tipo de serviço cadastrado.</p></div>';
   } else {
-    html += '<div class="space-y-3">';
+    html += '<div id="nb-servicos-sort" class="space-y-3">';
     nbServicos.forEach((s, idx) => {
-      html += `<div class="bg-white rounded-xl border border-[#e0ddd9] overflow-hidden">
+      html += `<div draggable="true" data-item-id="${s.id}" class="bg-white rounded-xl border border-[#e0ddd9] overflow-hidden">
         <div class="flex items-center gap-3 px-4 py-3">
-          <span class="text-xs font-bold text-[#aaa] w-6 text-center">${idx + 1}</span>
+          <span class="drag-handle select-none shrink-0" title="Arrastar para reordenar">⠿</span>
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2 flex-wrap">
               <span class="text-sm font-semibold">${s.nome}</span>
@@ -910,6 +969,7 @@ async function renderNotebookServicosView(container) {
     html += '</div>';
   }
   container.innerHTML = html;
+  setupSortable('nb-servicos-sort', '/api/notebook-servicos');
 }
 
 // ─── Level: Modelos ───────────────────────────────────────
@@ -927,10 +987,11 @@ async function renderModelosView(container) {
   if (!list.length) {
     html += '<div class="bg-white rounded-2xl p-8 text-center border border-[#e0ddd9] mb-5"><p class="text-[#999] text-sm">Nenhum modelo cadastrado para este produto.</p></div>';
   } else {
-    html += '<div class="space-y-3 mb-6">';
+    html += '<div id="modelos-sort" class="space-y-3 mb-6">';
     list.forEach(m => {
-      html += `<div class="bg-white rounded-xl border border-[#e0ddd9] overflow-hidden">
+      html += `<div class="bg-white rounded-xl border border-[#e0ddd9] overflow-hidden" draggable="true" data-item-id="${m.id}">
         <div class="flex items-center gap-3 px-4 py-3 hover:bg-[#f8fbff] cursor-pointer group" onclick="navigateAdmin('servicos',${JSON.stringify(m).replace(/"/g,'&quot;')})">
+          <span class="drag-handle select-none shrink-0" onclick="event.stopPropagation()" title="Arrastar para reordenar">⠿</span>
           <div class="w-10 h-10 rounded-lg bg-[#e8eeff] flex items-center justify-center shrink-0"><i class="fa-solid fa-mobile-screen text-[#1a6cff] text-sm"></i></div>
           <div class="flex-1 min-w-0">
             <span class="text-sm font-semibold group-hover:text-[#1a6cff] transition-colors">${m.nome}</span>
@@ -966,6 +1027,7 @@ async function renderModelosView(container) {
   }
 
   container.innerHTML = html;
+  setupSortable('modelos-sort', '/api/modelos');
 }
 
 // ─── Level: Serviços ──────────────────────────────────────
@@ -998,10 +1060,11 @@ async function renderServicosView(container) {
   if (!list.length) {
     html += '<div class="bg-white rounded-2xl p-8 text-center border border-[#e0ddd9] mb-5"><p class="text-[#999] text-sm">Nenhum serviço cadastrado para este modelo.</p></div>';
   } else {
-    html += '<div class="space-y-3 mb-6">';
+    html += '<div id="servicos-sort" class="space-y-3 mb-6">';
     list.forEach(s => {
-      html += `<div class="bg-white rounded-xl border border-[#e0ddd9] overflow-hidden">
+      html += `<div class="bg-white rounded-xl border border-[#e0ddd9] overflow-hidden" draggable="true" data-item-id="${s.id}">
         <div class="flex items-center gap-3 px-4 py-3 hover:bg-[#f8fbff] cursor-pointer group" onclick="navigateAdmin('opcoes',${JSON.stringify(s).replace(/"/g,'&quot;')})">
+          <span class="drag-handle select-none shrink-0" onclick="event.stopPropagation()" title="Arrastar para reordenar">⠿</span>
           <div class="w-10 h-10 rounded-lg bg-[#e8f5e9] flex items-center justify-center shrink-0"><i class="fa-solid fa-wrench text-[#2e7d32] text-sm"></i></div>
           <div class="flex-1 min-w-0">
             <span class="text-sm font-semibold group-hover:text-[#1a6cff] transition-colors">${s.nome}</span>
@@ -1037,6 +1100,7 @@ async function renderServicosView(container) {
   }
 
   container.innerHTML = html;
+  setupSortable('servicos-sort', '/api/servicos');
 }
 
 // ─── Level: Opções ────────────────────────────────────────
