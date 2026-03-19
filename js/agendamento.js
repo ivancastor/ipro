@@ -1074,9 +1074,9 @@
     const formCpf = document.getElementById('agend-cpf');
     if (nomeEl && formNome) nomeEl.value = formNome.value.trim();
     if (cpfEl && formCpf) cpfEl.value = isNotebook ? '' : formCpf.value.trim();
-    // Hide CPF field for notebook (no CPF collected)
+    // Always show CPF field (required for all booking types)
     const cpfRow = cpfEl && cpfEl.closest ? cpfEl.closest('div') : null;
-    if (cpfRow) cpfRow.style.display = isNotebook ? 'none' : '';
+    if (cpfRow) cpfRow.style.display = '';
     const btn = document.getElementById('agend-termos-btn');
     if (btn) { btn.disabled = true; btn.style.opacity = '.4'; btn.style.cursor = 'not-allowed'; }
     const errEl = document.getElementById('agend-termos-error');
@@ -1114,15 +1114,11 @@
     const nome = (document.getElementById('agend-termos-nome')?.value || '').trim();
     const cpf = (document.getElementById('agend-termos-cpf')?.value || '').trim();
     const errEl = document.getElementById('agend-termos-error');
-    if (!nome) {
-      if (errEl) { errEl.textContent = 'Preencha o nome completo.'; errEl.style.display = 'block'; }
-      return;
-    }
-    if (!isNotebook && !cpf) {
+    if (!nome || !cpf) {
       if (errEl) { errEl.textContent = 'Preencha nome completo e CPF.'; errEl.style.display = 'block'; }
       return;
     }
-    if (!isNotebook && cpf.replace(/\D/g, '').length < 11) {
+    if (cpf.replace(/\D/g, '').length < 11) {
       if (errEl) { errEl.textContent = 'CPF inválido.'; errEl.style.display = 'block'; }
       return;
     }
