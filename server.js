@@ -124,24 +124,12 @@ function buildTermosEmailHtml(info) {
         <div style="display:flex;align-items:center;gap:8px;padding:10px 0"><span style="color:#4caf50;font-weight:700">✓</span><span style="font-size:13px;color:#1a1a1a">Termos de agendamento e pagamento</span></div>
       </div>
 
-      <div style="background:#f5f5f7;border-radius:14px;padding:20px;margin-bottom:24px">
-        <h2 style="font-size:14px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin:0 0 12px">Resumo dos Termos e Condições</h2>
-        <div style="font-size:12px;color:#555;line-height:1.8">
-          <p style="margin:0 0 8px"><strong style="color:#1a1a1a">Agendamento:</strong> Exclusivamente com agendamento prévio. Tolerância de 15 minutos.</p>
-          <p style="margin:0 0 8px"><strong style="color:#1a1a1a">Orçamento:</strong> Valores são estimativas. O orçamento final pode variar após diagnóstico presencial.</p>
-          <p style="margin:0 0 8px"><strong style="color:#1a1a1a">Peças:</strong> Podem ser originais Apple, originais removidas ou compatíveis de alta qualidade.</p>
-          <p style="margin:0 0 8px"><strong style="color:#1a1a1a">Garantia:</strong> Mínimo de 90 dias conforme CDC. Cobre o mesmo defeito no mesmo componente.</p>
-          <p style="margin:0 0 8px"><strong style="color:#1a1a1a">Pagamento:</strong> Na retirada do equipamento. Pix, dinheiro, débito ou crédito.</p>
-          <p style="margin:0 0 8px"><strong style="color:#1a1a1a">Dados:</strong> Responsabilidade exclusiva do cliente realizar backup antes do reparo.</p>
-          <p style="margin:0"><strong style="color:#1a1a1a">LGPD:</strong> Dados utilizados exclusivamente para prestação do serviço.</p>
-        </div>
+      <div style="background:#f5f5f7;border-radius:14px;padding:20px;margin-bottom:24px;text-align:center">
+        <p style="font-size:13px;color:#555;margin:0 0 12px">Para consultar os Termos e Condições completos, acesse:</p>
+        <a href="https://ipro.vercel.app/termos.html" style="display:inline-block;background:#1a6cff;color:#fff;font-size:13px;font-weight:700;text-decoration:none;padding:12px 24px;border-radius:10px">📄 Ver Termos e Condições</a>
       </div>
 
-      <div style="background:#fffbeb;border:1.5px solid #fde68a;border-radius:14px;padding:16px;margin-bottom:16px">
-        <p style="font-size:12px;color:#92400e;margin:0;line-height:1.7"><strong>Validade jurídica:</strong> Este aceite eletrônico possui validade jurídica nos termos da MP nº 2.200-2/2001. São registrados para fins de comprovação: nome completo, CPF, data/hora do aceite, IP do dispositivo e os termos específicos aceitos.</p>
-      </div>
-
-      <p style="font-size:11px;color:#aaa;text-align:center;margin:0">Para consultar os termos completos, acesse nosso site ou entre em contato via WhatsApp (19) 99406-3782.</p>
+      <p style="font-size:11px;color:#aaa;text-align:center;margin:0">Dúvidas? Entre em contato via WhatsApp (19) 99406-3782.</p>
     </div>
     <div style="background:#f5f5f7;padding:20px 32px;text-align:center;border-top:1px solid #eee">
       <p style="font-size:12px;color:#888;margin:0"><strong style="color:#555">iPro Assistência Técnica Apple</strong></p>

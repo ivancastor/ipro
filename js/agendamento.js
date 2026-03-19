@@ -876,81 +876,112 @@
         <div class="termos-body" style="font-family:Inter,sans-serif">
           <h2>1. Identificação da Empresa</h2>
           <p>A <strong>iPro Assistência Técnica Apple</strong> é uma empresa especializada em manutenção e reparo de dispositivos Apple, inscrita no CNPJ sob o nº <strong>32.819.954/0001-17</strong>, com sede na Rua Jorge Krug, 69 – Vila Itapura, Campinas/SP – CEP 13023-210.</p>
-          <p>A iPro é uma assistência técnica independente e <strong>não possui vínculo, parceria ou autorização oficial da Apple Inc.</strong></p>
+          <p>A iPro é uma assistência técnica independente e <strong>não possui vínculo, parceria ou autorização oficial da Apple Inc.</strong> Os serviços prestados são de natureza técnica independente, realizados por profissionais qualificados.</p>
 
           <h2>2. Objeto dos Serviços</h2>
-          <p>Os serviços prestados pela iPro incluem: diagnóstico, manutenção preventiva e corretiva, reparo de hardware e software, troca de componentes, limpeza técnica, backup e migração de dados, atualização de sistemas operacionais e instalação de acessórios em dispositivos Apple.</p>
+          <p>Os serviços prestados pela iPro incluem, mas não se limitam a: diagnóstico, manutenção preventiva e corretiva, reparo de hardware e software, troca de componentes, limpeza técnica, backup e migração de dados, atualização de sistemas operacionais e instalação de acessórios em dispositivos da marca Apple (iPhone, iPad, MacBook, iMac, Mac Mini, Apple Watch e similares).</p>
+          <p>Os serviços disponíveis e seus respectivos valores são apresentados no site e no sistema de agendamento online, podendo ser atualizados a qualquer momento sem aviso prévio.</p>
 
           <h2>3. Agendamento e Atendimento</h2>
-          <p><strong>3.1.</strong> O atendimento é realizado <strong>exclusivamente mediante agendamento prévio</strong>.</p>
-          <p><strong>3.2.</strong> O cliente deve comparecer com tolerância máxima de <strong>15 minutos</strong>.</p>
-          <p><strong>3.3.</strong> Cancelamentos devem ser solicitados com antecedência mínima de <strong>2 horas</strong>.</p>
+          <p><strong>3.1.</strong> O atendimento na iPro é realizado <strong>exclusivamente mediante agendamento prévio</strong>, que pode ser feito pelo site ou via WhatsApp.</p>
+          <p><strong>3.2.</strong> O agendamento confirma a reserva de um horário específico. O cliente deve comparecer no horário agendado com tolerância máxima de <strong>15 minutos</strong>. Atrasos superiores poderão resultar no cancelamento automático do agendamento.</p>
+          <p><strong>3.3.</strong> Cancelamentos ou remarcações devem ser solicitados com antecedência mínima de <strong>2 horas</strong> do horário agendado, via WhatsApp.</p>
+          <p><strong>3.4.</strong> O horário de funcionamento é de segunda a sexta-feira, das 10h às 12h e das 13h30 às 16h30, exceto feriados.</p>
 
           <h2>4. Diagnóstico e Orçamento</h2>
-          <p><strong>4.1.</strong> Todo serviço é precedido de diagnóstico técnico.</p>
-          <p><strong>4.2.</strong> Os valores apresentados no site são <strong>estimativas</strong>. O orçamento final pode variar após o diagnóstico presencial.</p>
+          <p><strong>4.1.</strong> Todo serviço é precedido de um diagnóstico técnico para identificação precisa do problema. O diagnóstico pode ser realizado presencialmente ou de forma remota (para questões de software).</p>
+          <p><strong>4.2.</strong> Os valores apresentados no site são <strong>estimativas</strong> baseadas nos serviços padrão. O orçamento final pode variar após o diagnóstico técnico presencial, caso sejam identificados problemas adicionais ou necessidade de peças específicas.</p>
+          <p><strong>4.3.</strong> Diagnósticos que necessitem de desmontagem ou análise aprofundada poderão ter custo, informado previamente ao cliente.</p>
 
           <h2>5. Aprovação do Serviço</h2>
-          <p><strong>5.1.</strong> Nenhum serviço será executado sem a <strong>aprovação expressa do cliente</strong>.</p>
-          <p><strong>5.2.</strong> A aprovação pelo sistema online constitui <strong>aceite digital válido</strong> e vinculante.</p>
+          <p><strong>5.1.</strong> Nenhum serviço será executado sem a <strong>aprovação expressa do cliente</strong>, seja presencial, via WhatsApp ou pelo sistema de agendamento online.</p>
+          <p><strong>5.2.</strong> A aprovação do orçamento pelo sistema de agendamento online, incluindo a aceitação dos termos mediante fornecimento de nome completo e CPF, constitui <strong>aceite digital válido e vinculante</strong>, nos termos da legislação brasileira.</p>
+          <p><strong>5.3.</strong> Após aprovação, o cliente autoriza a iPro a realizar o serviço descrito no orçamento.</p>
 
           <h2>6. Peças e Componentes</h2>
-          <p><strong>6.1.</strong> A iPro utiliza peças de alta qualidade: <strong>originais Apple, originais removidas ou compatíveis de alta qualidade</strong>.</p>
-          <p><strong>6.2.</strong> O tipo de peça será informado ao cliente <strong>antes da execução do serviço</strong>.</p>
+          <p><strong>6.1.</strong> A iPro utiliza peças de alta qualidade para todos os reparos. Dependendo da disponibilidade e do tipo de serviço, as peças podem ser <strong>originais Apple, originais removidas (seminovas em perfeito estado) ou compatíveis de alta qualidade</strong>.</p>
+          <p><strong>6.2.</strong> O tipo de peça utilizada será informado ao cliente <strong>antes da execução do serviço</strong>. O cliente tem o direito de recusar o serviço caso não concorde com o tipo de peça oferecida.</p>
+          <p><strong>6.3.</strong> Peças substituídas que forem removidas do dispositivo não serão devolvidas ao cliente, salvo solicitação expressa no momento da aprovação do serviço.</p>
 
           <h2>7. Peças Originais e Compatíveis</h2>
-          <p><strong>7.1.</strong> <strong>Peças originais Apple:</strong> fabricadas pela Apple com máxima compatibilidade.</p>
-          <p><strong>7.2.</strong> <strong>Peças compatíveis:</strong> produzidas por terceiros. <strong>Alguns recursos exclusivos da Apple podem não funcionar.</strong></p>
-          <p><strong>7.3.</strong> O dispositivo poderá exibir avisos de "peça desconhecida" nas configurações.</p>
+          <p><strong>7.1.</strong> <strong>Peças originais Apple:</strong> são componentes fabricados pela Apple ou por seus fornecedores autorizados. Oferecem máxima compatibilidade e funcionalidade com o ecossistema Apple, incluindo recursos como True Tone, Face ID e calibração de bateria.</p>
+          <p><strong>7.2.</strong> <strong>Peças compatíveis de alta qualidade:</strong> são componentes produzidos por fabricantes terceiros, com especificações técnicas equivalentes ou próximas às originais. <strong>Alguns recursos exclusivos da Apple podem não funcionar</strong> com peças compatíveis (exemplo: True Tone, notificações de peça desconhecida, calibração automática de bateria).</p>
+          <p><strong>7.3.</strong> Ao optar por peças compatíveis, o cliente declara estar ciente de que: (a) o dispositivo poderá exibir avisos de "peça desconhecida" ou "não genuína" nas configurações do sistema; (b) determinadas funcionalidades software-dependentes podem ser limitadas; (c) a iPro não se responsabiliza por limitações impostas por atualizações futuras do sistema operacional da Apple.</p>
+          <p><strong>7.4.</strong> A escolha entre peça original e compatível, quando disponível, será sempre do cliente, mediante orientação técnica da iPro.</p>
 
           <h2>8. Garantia dos Serviços</h2>
-          <p><strong>8.1.</strong> Garantia mínima de <strong>90 dias</strong>, conforme o Código de Defesa do Consumidor.</p>
-          <p><strong>8.2.</strong> A garantia cobre exclusivamente o <strong>mesmo defeito no mesmo componente</strong>.</p>
+          <p><strong>8.1.</strong> Todos os serviços realizados pela iPro possuem garantia mínima de <strong>90 (noventa) dias</strong>, contados a partir da data de entrega do equipamento ao cliente, conforme o Código de Defesa do Consumidor (Lei nº 8.078/1990).</p>
+          <p><strong>8.2.</strong> A garantia cobre exclusivamente o serviço realizado e a peça substituída, ou seja, o <strong>mesmo defeito no mesmo componente</strong>. Defeitos em outros componentes ou decorrentes de causas diversas não são cobertos.</p>
+          <p><strong>8.3.</strong> Para acionar a garantia, o cliente deve entrar em contato via WhatsApp e agendar um retorno para avaliação técnica.</p>
 
           <h2>9. Exclusões de Garantia</h2>
+          <p>A garantia não se aplica nos seguintes casos:</p>
           <ul>
-            <li>Danos por mau uso, quedas, impacto ou contato com líquidos após o reparo</li>
-            <li>Tentativa de reparo por terceiros após o serviço</li>
-            <li>Violação de lacres ou adulteração do equipamento</li>
-            <li>Danos por variações de energia elétrica</li>
-            <li>Defeitos por atualização de software realizada pelo cliente</li>
-            <li>Desgaste natural de componentes</li>
+            <li>Danos causados por mau uso, quedas, impacto, pressão excessiva ou contato com líquidos após o reparo</li>
+            <li>Tentativa de reparo por terceiros ou pelo próprio cliente após o serviço</li>
+            <li>Violação dos lacres ou sinais de adulteração do equipamento</li>
+            <li>Danos causados por variações de energia elétrica, curto-circuito ou descarga atmosférica</li>
+            <li>Defeitos decorrentes de atualização de software ou sistema operacional realizada pelo cliente após o serviço</li>
+            <li>Oxidação, corrosão ou danos por contato com líquidos (se o serviço original não foi tratamento de oxidação)</li>
+            <li>Desgaste natural de componentes (bateria, borrachas, adesivos, etc.)</li>
+            <li>Equipamentos com sinais de manipulação indevida, componentes não originais instalados por terceiros ou histórico de reparos anteriores não informados</li>
           </ul>
 
           <h2>10. Prazo de Execução</h2>
-          <p>Muitos serviços são realizados no mesmo dia. Serviços complexos podem ter prazo adicional.</p>
+          <p><strong>10.1.</strong> O prazo estimado para cada serviço é informado no momento do agendamento e pode variar conforme a complexidade do reparo e a disponibilidade de peças.</p>
+          <p><strong>10.2.</strong> Muitos serviços são realizados no <strong>mesmo dia</strong> (reparos rápidos como troca de tela, bateria, etc.). Serviços mais complexos podem demandar prazo adicional, que será comunicado ao cliente.</p>
+          <p><strong>10.3.</strong> A iPro não se responsabiliza por atrasos decorrentes de falta de peças no mercado, greves de transportadoras ou outros eventos de força maior.</p>
 
           <h2>11. Formas de Pagamento</h2>
-          <p>Pagamento na retirada: Pix, dinheiro, cartão de débito e crédito.</p>
+          <p><strong>11.1.</strong> O pagamento é realizado <strong>na retirada do equipamento</strong>, após a conclusão do serviço. Não é cobrado valor antecipado, salvo em casos específicos que necessitem encomenda de peças especiais (informado previamente).</p>
+          <p><strong>11.2.</strong> São aceitas as seguintes formas de pagamento: <strong>Pix, dinheiro, cartão de débito e cartão de crédito</strong> (à vista ou parcelado, conforme disponibilidade).</p>
+          <p><strong>11.3.</strong> Os valores dos serviços incluem mão de obra e peças, salvo indicação em contrário no orçamento.</p>
 
           <h2>12. Política de Cancelamento</h2>
-          <p>Cancelamento gratuito antes do início do serviço. Após início, custos de diagnóstico e mão de obra podem ser cobrados.</p>
+          <p><strong>12.1.</strong> O cliente pode cancelar o agendamento a qualquer momento antes do início do serviço, <strong>sem custo</strong>.</p>
+          <p><strong>12.2.</strong> Caso o serviço já tenha sido iniciado e o cliente deseje cancelar, poderão ser cobrados os custos de diagnóstico e mão de obra já empregada.</p>
+          <p><strong>12.3.</strong> Se o cliente reprovar o orçamento após o diagnóstico, o equipamento será remontado e devolvido. Poderá haver cobrança de taxa de diagnóstico, se aplicável e previamente informada.</p>
 
           <h2>13. Responsabilidade sobre o Dispositivo</h2>
-          <p>A iPro <strong>não se responsabiliza por dados, arquivos, fotos ou senhas</strong> armazenados no dispositivo.</p>
+          <p><strong>13.1.</strong> A iPro se responsabiliza pelo dispositivo do cliente enquanto este estiver em sua posse, comprometendo-se a tratá-lo com o máximo cuidado técnico.</p>
+          <p><strong>13.2.</strong> A iPro <strong>não se responsabiliza por dados, arquivos, fotos, vídeos, senhas ou qualquer conteúdo armazenado no dispositivo</strong>. É de responsabilidade exclusiva do cliente realizar backup antes de entregar o equipamento.</p>
+          <p><strong>13.3.</strong> Casos, capinhas, películas, carregadores e acessórios não fazem parte do serviço e devem ser retirados pelo cliente antes da entrega do dispositivo.</p>
 
           <h2>14. Retirada do Equipamento</h2>
-          <p>Retirada em até <strong>30 dias</strong> após notificação de conclusão.</p>
+          <p><strong>14.1.</strong> O cliente será notificado via WhatsApp quando o serviço for concluído. A retirada deve ser feita no prazo máximo de <strong>30 (trinta) dias</strong> após a notificação de conclusão.</p>
+          <p><strong>14.2.</strong> O equipamento só será entregue ao titular do agendamento ou a pessoa autorizada mediante apresentação de documento de identificação.</p>
 
           <h2>15. Abandono de Equipamento</h2>
-          <p>Equipamento não retirado em <strong>90 dias</strong> será considerado abandonado.</p>
+          <p><strong>15.1.</strong> O equipamento não retirado no prazo de <strong>90 (noventa) dias</strong> após a notificação de conclusão do serviço será considerado abandonado, nos termos do art. 1.263 do Código Civil Brasileiro.</p>
+          <p><strong>15.2.</strong> A iPro enviará ao menos 2 (duas) notificações via WhatsApp antes de considerar o equipamento abandonado. Após o prazo, a iPro poderá dar a destinação que julgar adequada ao equipamento, sem direito a indenização por parte do cliente.</p>
 
           <h2>16. Backup e Dados Pessoais</h2>
-          <p>É <strong>responsabilidade exclusiva do cliente</strong> realizar backup antes de entregar o dispositivo.</p>
+          <p><strong>16.1.</strong> É <strong>responsabilidade exclusiva do cliente</strong> realizar o backup de todos os dados, fotos, vídeos, contatos, mensagens e demais conteúdos armazenados no dispositivo antes de entregá-lo para reparo.</p>
+          <p><strong>16.2.</strong> Alguns serviços podem resultar na formatação total do dispositivo (reinstalação de sistema, troca de placa lógica, etc.). Nesses casos, o cliente será informado previamente.</p>
+          <p><strong>16.3.</strong> A iPro oferece serviço de backup e migração de dados como serviço avulso, mediante agendamento e pagamento específico.</p>
 
           <h2>17. Privacidade e LGPD</h2>
-          <p>Dados coletados são utilizados exclusivamente para a prestação do serviço, em conformidade com a <strong>LGPD</strong>.</p>
+          <p><strong>17.1.</strong> Os dados pessoais coletados durante o agendamento (nome, CPF, e-mail, WhatsApp, endereço e IP) são utilizados exclusivamente para a prestação do serviço contratado, comunicação com o cliente e cumprimento de obrigações legais.</p>
+          <p><strong>17.2.</strong> A iPro compromete-se a tratar os dados em conformidade com a <strong>Lei Geral de Proteção de Dados (Lei nº 13.709/2018 — LGPD)</strong>, adotando medidas técnicas e organizacionais adequadas para proteger os dados contra acesso não autorizado, destruição, perda ou alteração.</p>
+          <p><strong>17.3.</strong> Os dados pessoais não serão compartilhados com terceiros, exceto quando necessário para o cumprimento de obrigações legais ou por determinação judicial.</p>
+          <p><strong>17.4.</strong> O cliente pode solicitar a exclusão de seus dados pessoais a qualquer momento, entrando em contato via WhatsApp ou e-mail, respeitados os prazos legais de guarda obrigatória.</p>
 
-          <h2>18. Assinatura Digital</h2>
-          <p><strong>18.1.</strong> O cliente fornece nome completo e CPF como <strong>assinatura digital</strong>.</p>
-          <p><strong>18.2.</strong> Este aceite possui <strong>validade jurídica</strong> nos termos da MP nº 2.200-2/2001.</p>
-          <p><strong>18.3.</strong> São registrados: nome, CPF, data/hora do aceite, IP e termos aceitos.</p>
+          <h2>18. Assinatura Digital e Aceite Eletrônico</h2>
+          <p><strong>18.1.</strong> Ao confirmar o agendamento pelo sistema online, o cliente fornece seu nome completo e CPF como forma de <strong>assinatura digital</strong>, declarando ter lido, compreendido e aceito integralmente os presentes Termos e Condições.</p>
+          <p><strong>18.2.</strong> Este aceite eletrônico possui <strong>validade jurídica</strong> nos termos da Medida Provisória nº 2.200-2/2001, que institui a Infraestrutura de Chaves Públicas Brasileira (ICP-Brasil) e reconhece a validade de documentos eletrônicos.</p>
+          <p><strong>18.3.</strong> São registrados para fins de comprovação: nome completo, CPF, data e hora do aceite, endereço IP do dispositivo utilizado e os termos específicos aceitos pelo cliente.</p>
+          <p><strong>18.4.</strong> O cliente declara que as informações fornecidas são verdadeiras e de sua responsabilidade, respondendo civil e criminalmente por eventuais falsidades.</p>
 
           <h2>19. Limitação de Responsabilidade</h2>
-          <p>A responsabilidade da iPro está limitada ao valor do serviço contratado.</p>
+          <p><strong>19.1.</strong> A responsabilidade da iPro está limitada ao valor do serviço contratado. Em nenhuma hipótese a iPro será responsável por lucros cessantes, danos indiretos, perda de negócios ou quaisquer danos consequenciais.</p>
+          <p><strong>19.2.</strong> A iPro não se responsabiliza por defeitos pré-existentes não identificáveis sem desmontagem completa, defeitos ocultos de fabricação ou problemas decorrentes do desgaste natural do equipamento.</p>
+          <p><strong>19.3.</strong> Em caso de dano acidental durante o reparo causado pela iPro, a empresa se compromete a reparar o dano ou, quando não for possível, oferecer solução equivalente ao cliente.</p>
 
           <h2>20. Disposições Gerais</h2>
-          <p>Foro da Comarca de Campinas/SP.</p>
+          <p><strong>20.1.</strong> Estes Termos e Condições podem ser atualizados a qualquer momento. A versão vigente será sempre a publicada no site da iPro. É responsabilidade do cliente consultar esta página periodicamente.</p>
+          <p><strong>20.2.</strong> A eventual nulidade ou inaplicabilidade de qualquer cláusula destes Termos não afetará a validade das demais disposições.</p>
+          <p><strong>20.3.</strong> Estes Termos são regidos pelas leis da República Federativa do Brasil.</p>
+          <p><strong>20.4.</strong> Fica eleito o foro da <strong>Comarca de Campinas/SP</strong> para dirimir quaisquer questões oriundas destes Termos, com renúncia expressa a qualquer outro, por mais privilegiado que seja.</p>
 
           <div style="margin-top:20px;padding-top:16px;border-top:1px solid #e5e5e5;text-align:center">
             <p style="font-size:12px;color:#888;margin:0"><strong style="color:#555">iPro Assistência Técnica Apple</strong></p>
