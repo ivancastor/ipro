@@ -39,15 +39,21 @@ const ASAAS_BASE         = ASAAS_ENV === "production"
 
 async function asaasRequest(method, endpoint, body) {
   const url = `${ASAAS_BASE}${endpoint}`;
+  if (!ASAAS_API_KEY) throw new Error("ASAAS_API_KEY não configurada no servidor");
   const opts = {
     method,
-    headers: { "Content-Type": "application/json", "access_token": ASAAS_API_KEY }
+    headers: { "Content-Type": "application/json", "access_token": ASAAS_API_KEY.replace(/^"|"$/g, "") }
   };
   if (body) opts.body = JSON.stringify(body);
   const res = await fetch(url, opts);
-  const json = await res.json().catch(() => ({}));
+  const rawText = await res.text();
+  let json = {};
+  try { json = JSON.parse(rawText); } catch { json = {}; }
   if (!res.ok) {
-    const msg = (json.errors && json.errors[0]?.description) || JSON.stringify(json);
+    const msg = (json.errors && json.errors[0]?.description)
+      || json.error || json.message
+      || `Asaas HTTP ${res.status}: ${rawText.slice(0, 200)}`;
+    console.error(`[Asaas] ${method} ${url} → ${res.status}:`, rawText.slice(0, 500));
     throw new Error(msg);
   }
   return json;

@@ -1789,7 +1789,7 @@
     const active = servicosData.filter(s => s.ativo !== false);
     if (!active.length) { list.innerHTML = '<p style="font-size:13px;color:#999">Nenhum serviço disponível.</p>'; return; }
 
-    const LIMIT = 9;
+    const LIMIT = 6;
     const principais = active.slice(0, LIMIT);
     const extras = active.slice(LIMIT);
 
@@ -1797,6 +1797,7 @@
       const card = document.createElement('div');
       card.className = 'agend-card';
       card.style.flexDirection = 'column';
+      card.style.alignItems = 'stretch';
       card.style.gap = '0';
       card.style.padding = '0';
       card.innerHTML = `
@@ -2200,8 +2201,8 @@
           body: JSON.stringify({ booking_data: body, preco_total: precoNum })
         });
         if (!asaasRes.ok) {
-          const d = await asaasRes.json();
-          throw new Error(d.error || 'Erro ao gerar pagamento PIX');
+          const d = await asaasRes.json().catch(() => ({}));
+          throw new Error(d.error || d.message || 'Erro ao gerar pagamento PIX. Verifique se a chave Asaas está configurada.');
         }
         const pixData = await asaasRes.json();
         window.closeAgendamento();
