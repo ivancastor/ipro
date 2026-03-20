@@ -1223,6 +1223,7 @@ async function renderOpcoesView(container) {
             <span class="ml-2 text-xs px-2 py-0.5 rounded-full ${o.ativo !== false ? 'bg-green-100 text-green-700' : 'bg-[#f0f0f0] text-[#aaa]'}">${o.ativo !== false ? 'Ativo' : 'Inativo'}</span>
           </div>
           <div class="flex gap-1.5 shrink-0">
+            <button onclick="togglePagamentoParcial('${o.id}', ${!o.pagamento_parcial})" title="${o.pagamento_parcial ? 'Desabilitar entrada 20%' : 'Habilitar entrada 20%'}" class="h-7 px-2 rounded-lg flex items-center gap-1 text-xs font-semibold transition-colors ${o.pagamento_parcial ? 'bg-amber-100 text-amber-700 hover:bg-amber-200' : 'bg-[#f0f0f2] text-[#aaa] hover:bg-amber-50 hover:text-amber-600'}"><i class="fa-solid fa-pix" style="font-size:10px"></i>${o.pagamento_parcial ? ' 20%' : ''}</button>
             <button onclick="editOpcao('${o.id}')" class="w-7 h-7 bg-[#f0f4ff] hover:bg-[#1a6cff] hover:text-white rounded-lg flex items-center justify-center text-[#1a6cff] transition-colors" title="Editar"><i class="fa-solid fa-pen" style="font-size:10px"></i></button>
             <button onclick="deleteOpcaoInline('${o.id}','${s.id}')" class="w-7 h-7 bg-red-50 hover:bg-red-500 hover:text-white rounded-lg flex items-center justify-center text-red-400 transition-colors" title="Excluir"><i class="fa-solid fa-trash" style="font-size:10px"></i></button>
           </div>
@@ -1451,6 +1452,22 @@ async function deleteOpcaoInline(id, svcId) {
   _opcoesCache[svcId] = (_opcoesCache[svcId] || []).filter(o => o.id !== id);
   renderAdminView();
 }
+
+async function togglePagamentoParcial(id, novoValor) {
+  const allOpcoes = Object.values(_opcoesCache).flat();
+  const o = allOpcoes.find(x => x.id === id);
+  if (!o) return;
+  try {
+    const updated = await API('/api/opcoes/' + id, { method: 'PUT', body: { pagamento_parcial: novoValor } });
+    // Update cache
+    for (const svcId of Object.keys(_opcoesCache)) {
+      const idx = _opcoesCache[svcId].findIndex(x => x.id === id);
+      if (idx !== -1) { _opcoesCache[svcId][idx] = { ..._opcoesCache[svcId][idx], pagamento_parcial: updated.pagamento_parcial }; break; }
+    }
+    renderAdminView();
+  } catch (e) { alert('Erro ao atualizar: ' + e.message); }
+}
+
 
 async function loadServicoFaq(svcId) {
   const list = await API('/api/faq?servico_id=' + svcId);
@@ -1784,6 +1801,16 @@ function openModal(type, editData) {
           <option value="false" ${editData && !editData.ativo ? 'selected' : ''}>Inativo</option>
         </select></div>
       </div>
+      <div class="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
+        <div>
+          <p class="text-xs font-semibold text-amber-800">Exigir entrada de 20% via PIX</p>
+          <p class="text-xs text-amber-600 mt-0.5">Cliente paga 20% antes do agendamento ser confirmado</p>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer ml-3">
+          <input type="checkbox" id="m-pagamento-parcial" class="sr-only peer" ${editData && editData.pagamento_parcial ? 'checked' : ''}>
+          <div class="w-10 h-6 bg-gray-200 peer-checked:bg-amber-500 rounded-full peer peer-focus:ring-2 peer-focus:ring-amber-300 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
+        </label>
+      </div>
       <button type="submit" class="w-full bg-[#1a6cff] hover:bg-[#0057e6] text-white font-semibold py-3.5 rounded-xl text-sm">Salvar</button>`;
   } else if (type === 'faq') {
     // Detect context (produto, modelo, servico, opcao)
@@ -1951,10 +1978,11 @@ document.getElementById('modal-form').addEventListener('submit', async e => {
     const preco = parseFloat(document.getElementById('m-preco').value) || 0;
     const tempo_estimado = document.getElementById('m-tempo').value.trim();
     const descricao = document.getElementById('m-descricao').value.trim();
+    const pagamento_parcial = document.getElementById('m-pagamento-parcial')?.checked || false;
     if (modalEditId) {
-      await API('/api/opcoes/' + modalEditId, { method: 'PUT', body: { nome, preco, descricao, tempo_estimado, ordem, ativo } });
+      await API('/api/opcoes/' + modalEditId, { method: 'PUT', body: { nome, preco, descricao, tempo_estimado, ordem, ativo, pagamento_parcial } });
     } else {
-      await API('/api/opcoes', { method: 'POST', body: { servico_id: selectedServicoId, nome, preco, descricao, tempo_estimado, ordem, ativo } });
+      await API('/api/opcoes', { method: 'POST', body: { servico_id: selectedServicoId, nome, preco, descricao, tempo_estimado, ordem, ativo, pagamento_parcial } });
     }
     await loadServicoOpcoes(selectedServicoId);
   } else if (modalType === 'nb-servico') {

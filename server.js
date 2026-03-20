@@ -405,9 +405,11 @@ app.post("/api/opcoes", authAdmin, async (req, res) => {
 });
 
 app.put("/api/opcoes/:id", authAdmin, async (req, res) => {
-  const { nome, preco, descricao, tempo_estimado, ordem, ativo } = req.body;
+  const { nome, preco, descricao, tempo_estimado, ordem, ativo, pagamento_parcial } = req.body;
+  const updateObj = { nome, preco, descricao, tempo_estimado, ordem, ativo };
+  if (pagamento_parcial !== undefined) updateObj.pagamento_parcial = pagamento_parcial;
   const { data, error } = await supabase
-    .from("opcoes").update({ nome, preco, descricao, tempo_estimado, ordem, ativo }).eq("id", req.params.id).select().single();
+    .from("opcoes").update(updateObj).eq("id", req.params.id).select().single();
   if (error) return res.status(500).json({ error: error.message });
   res.json(data);
 });

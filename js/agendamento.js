@@ -2160,10 +2160,10 @@
         window._termosAceiteData = null;
       }
 
-      // ── Asaas PIX payment — intercept when price is known ──
+      // ── Asaas PIX payment — intercept only when pagamento_parcial is enabled ──
       const precoNum   = parseFloat(body.opcao_preco) || 0;
       const isOrcamento = body.tipo_solicitacao === 'orcamento';
-      if (precoNum > 0 && !isOrcamento) {
+      if (sel.opcao?.pagamento_parcial === true && precoNum > 0 && !isOrcamento) {
         btn.textContent = 'Gerando PIX...';
         const asaasRes = await fetch('/api/asaas/criar-cobranca', {
           method: 'POST',

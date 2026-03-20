@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS opcoes (
   tempo_estimado TEXT DEFAULT '',
   ordem INT DEFAULT 0,
   ativo BOOLEAN DEFAULT true,
+  pagamento_parcial BOOLEAN DEFAULT false,
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
