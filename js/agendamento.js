@@ -86,17 +86,7 @@
           <h3 id="agend-modelo-title">Qual o modelo?</h3>
         </div>
         <p style="font-size:12px;color:#aaa;margin-bottom:14px">Selecione o modelo do seu dispositivo</p>
-        <div id="agend-modelos-cards" style="display:flex;flex-direction:column;gap:7px;margin-bottom:10px"></div>
-        <div id="agend-modelos-paginacao" style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px"></div>
-        <div id="agend-modelo-faq-link" style="display:none;margin-bottom:10px">
-          <button onclick="window.agendShowFaqModelo()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#1a6cff;font-family:Inter,sans-serif;font-weight:600;text-align:left;padding:0;display:inline-flex;align-items:center;gap:4px">
-            <i class="fa-solid fa-circle-question" style="font-size:11px"></i> Saiba mais sobre este modelo
-          </button>
-        </div>
-        <button id="agend-modelo-btn" onclick="window.agendConfirmarModelo()" disabled
-          style="width:100%;padding:13px;border-radius:14px;background:#1a6cff;color:#fff;font-size:14px;font-weight:700;border:none;cursor:not-allowed;font-family:Inter,sans-serif;opacity:.4;transition:all .2s">
-          Continuar →
-        </button>
+        <div id="agend-modelos-cards" style="display:flex;flex-direction:column;gap:8px"></div>
       `;
     }
     // Step 1: Serviço
@@ -534,17 +524,7 @@
               <h3 id="agend-modelo-title">Qual o modelo?</h3>
             </div>
             <p style="font-size:12px;color:#bbb;margin:4px 0 16px">Selecione o modelo do seu dispositivo</p>
-            <div id="agend-modelos-cards" style="display:flex;flex-direction:column;gap:7px;margin-bottom:10px"></div>
-            <div id="agend-modelos-paginacao" style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px"></div>
-            <div id="agend-modelo-faq-link" style="display:none;margin-bottom:14px">
-              <button onclick="window.agendShowFaqModelo()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#1a6cff;font-family:Inter,sans-serif;font-weight:600;text-align:left;padding:0;display:inline-flex;align-items:center;gap:4px">
-                <i class="fa-solid fa-circle-question" style="font-size:11px"></i> Saiba mais sobre este modelo
-              </button>
-            </div>
-            <button id="agend-modelo-btn" onclick="window.agendConfirmarModelo()" disabled
-              style="width:100%;padding:14px;border-radius:14px;background:#1a6cff;color:#fff;font-size:14px;font-weight:700;border:none;cursor:not-allowed;font-family:Inter,sans-serif;opacity:.4;transition:all .2s">
-              Continuar →
-            </button>
+            <div id="agend-modelos-cards" style="display:flex;flex-direction:column;gap:8px"></div>
           </div>
           <div id="agend-sub1-servico" style="display:none;padding-top:20px">
             <button class="agend-back-btn" onclick="window.agendBack('modelo')">← Voltar</button>
@@ -1761,79 +1741,42 @@
       hideAllSub1();
       document.getElementById('agend-sub1-modelo').style.display = '';
       document.getElementById('agend-modelo-title').textContent = 'Qual o modelo do ' + p.nome + '?';
-      _modeloPageData = activeModels;
-      _modeloCurrentPage = 1;
-      renderModeloPage(1);
-      const btn = document.getElementById('agend-modelo-btn');
-      btn.disabled = true; btn.style.opacity = '0.4'; btn.style.cursor = 'not-allowed';
+      renderModeloCards(activeModels);
     } else {
       sel.modelo = null;
       await loadServicos(p.id);
     }
   }
 
-  const MODELOS_PER_PAGE = 5;
-  let _modeloPageData = [];
-  let _modeloCurrentPage = 1;
-
-  function renderModeloPage(page) {
-    _modeloCurrentPage = page;
-    const total = _modeloPageData.length;
-    const totalPages = Math.ceil(total / MODELOS_PER_PAGE);
-    const start = (page - 1) * MODELOS_PER_PAGE;
-    const items = _modeloPageData.slice(start, start + MODELOS_PER_PAGE);
+  function renderModeloCards(modelos) {
     const cardsEl = document.getElementById('agend-modelos-cards');
-    const pagEl = document.getElementById('agend-modelos-paginacao');
     if (!cardsEl) return;
-    cardsEl.innerHTML = items.map(m => `
-      <div class="agend-modelo-card" onclick="window.agendSelectModeloCard('${m.id}',${JSON.stringify(m.nome)})" id="agend-mc-${m.id}">
-        <div class="agend-card-icon" style="font-size:14px"><i class="fa-solid fa-mobile-screen"></i></div>
-        <span style="flex:1;font-size:14px;font-weight:600;color:#1a1a1a">${m.nome}</span>
-        <i class="fa-solid fa-chevron-right" style="font-size:10px;color:#ccc"></i>
-      </div>`).join('');
-    if (pagEl) {
-      if (totalPages <= 1) {
-        pagEl.innerHTML = '';
-      } else {
-        let h = '';
-        if (page > 1) h += `<button class="agend-modelos-pag-btn" onclick="window.renderModeloPage(${page - 1})">← ${page - 1}</button>`;
-        h += `<span class="agend-modelos-pag-num">${page}</span>`;
-        if (page < totalPages) h += `<button class="agend-modelos-pag-btn" onclick="window.renderModeloPage(${page + 1})">${page + 1} →</button>`;
-        pagEl.innerHTML = h;
-      }
-    }
-    if (sel.modelo) {
-      const c = document.getElementById('agend-mc-' + sel.modelo.id);
-      if (c) c.classList.add('selected');
-    }
+    const cards = modelos.map(m => {
+      const div = document.createElement('div');
+      div.className = 'agend-card';
+      div.style.flexDirection = 'column';
+      div.style.gap = '0';
+      div.style.padding = '0';
+      div.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 14px">
+          <div class="agend-card-icon"><i class="fa-solid fa-mobile-screen" style="font-size:15px"></i></div>
+          <p style="font-size:13px;font-weight:700;margin:0;color:#1a1a1a;flex:1">${m.nome}</p>
+          <span style="font-size:12px;color:#bbb">→</span>
+        </div>
+        <div style="border-top:1px solid #f0eeeb;padding:6px 14px" onclick="event.stopPropagation()">
+          <button data-fp="modelo_id" data-fi="${m.id}" data-fn="${m.nome.replace(/"/g, '&quot;')}" onclick="window.agendShowCardFaq(this.dataset.fp,this.dataset.fi,this.dataset.fn)" style="background:none;border:none;cursor:pointer;font-size:11px;color:#1a6cff;font-family:Inter,sans-serif;font-weight:600;display:inline-flex;align-items:center;gap:4px"><i class="fa-solid fa-circle-question" style="font-size:10px"></i> Saiba mais sobre este modelo</button>
+        </div>`;
+      div.onclick = () => selectModelo(m);
+      return div;
+    });
+    cardsEl.innerHTML = '';
+    cards.forEach(c => cardsEl.appendChild(c));
   }
-  window.renderModeloPage = renderModeloPage;
 
-  window.agendSelectModeloCard = function(id, nome) {
-    document.querySelectorAll('.agend-modelo-card').forEach(c => c.classList.remove('selected'));
-    const card = document.getElementById('agend-mc-' + id);
-    if (card) card.classList.add('selected');
-    window.agendModeloSelected(id, nome);
-  };
-
-  window.agendModeloSelected = function (id, nome) {
-    const btn = document.getElementById('agend-modelo-btn');
-    const faqLink = document.getElementById('agend-modelo-faq-link');
-    if (id) {
-      sel.modelo = { id, nome };
-      btn.disabled = false; btn.style.opacity = '1'; btn.style.cursor = 'pointer';
-      if (faqLink) faqLink.style.display = '';
-    } else {
-      sel.modelo = null;
-      btn.disabled = true; btn.style.opacity = '0.4'; btn.style.cursor = 'not-allowed';
-      if (faqLink) faqLink.style.display = 'none';
-    }
-  };
-
-  window.agendConfirmarModelo = async function () {
-    if (!sel.modelo) return;
-    await loadServicos(sel.modelo.id);
-  };
+  async function selectModelo(m) {
+    sel.modelo = m;
+    await loadServicos(m.id);
+  }
 
   async function loadServicos(modeloId) {
     try {
