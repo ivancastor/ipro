@@ -86,9 +86,8 @@
           <h3 id="agend-modelo-title">Qual o modelo?</h3>
         </div>
         <p style="font-size:12px;color:#aaa;margin-bottom:14px">Selecione o modelo do seu dispositivo</p>
-        <select id="agend-modelo-select" class="agend-input" style="margin-bottom:10px" onchange="window.agendModeloSelected(this.value,this.options[this.selectedIndex].text)">
-          <option value="">— Selecione o modelo —</option>
-        </select>
+        <div id="agend-modelos-cards" style="display:flex;flex-direction:column;gap:7px;margin-bottom:10px"></div>
+        <div id="agend-modelos-paginacao" style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px"></div>
         <div id="agend-modelo-faq-link" style="display:none;margin-bottom:10px">
           <button onclick="window.agendShowFaqModelo()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#1a6cff;font-family:Inter,sans-serif;font-weight:600;text-align:left;padding:0;display:inline-flex;align-items:center;gap:4px">
             <i class="fa-solid fa-circle-question" style="font-size:11px"></i> Saiba mais sobre este modelo
@@ -388,6 +387,12 @@
     .agend-progress-dot.active{background:#1a6cff;width:24px;border-radius:4px}
     .agend-progress-dot.done{background:#1a6cff}
     .agend-section-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#aaa;margin-bottom:14px}
+    .agend-modelo-card{border:2px solid transparent;border-radius:14px;padding:11px 14px;cursor:pointer;transition:all .18s;background:#f7f7f8;display:flex;align-items:center;gap:12px}
+    .agend-modelo-card:hover{border-color:#1a6cff;background:#f0f4ff}
+    .agend-modelo-card.selected{border-color:#1a6cff;background:#eef3ff}
+    .agend-modelos-pag-btn{background:#f0f4ff;border:none;border-radius:10px;height:30px;min-width:30px;padding:0 10px;cursor:pointer;font-size:13px;color:#1a6cff;display:inline-flex;align-items:center;justify-content:center;transition:all .15s;font-family:Inter,sans-serif;font-weight:800;gap:4px}
+    .agend-modelos-pag-btn:hover{background:#1a6cff;color:#fff}
+    .agend-modelos-pag-num{font-size:13px;font-weight:700;color:#555;min-width:18px;text-align:center}
     .agend-card{border:2px solid transparent;border-radius:16px;padding:14px 16px;cursor:pointer;transition:all .18s;background:#f7f7f8;display:flex;align-items:center;gap:12px}
     .agend-card:hover{border-color:#1a6cff;background:#f0f4ff}
     .agend-card.selected{border-color:#1a6cff;background:#eef3ff}
@@ -529,9 +534,8 @@
               <h3 id="agend-modelo-title">Qual o modelo?</h3>
             </div>
             <p style="font-size:12px;color:#bbb;margin:4px 0 16px">Selecione o modelo do seu dispositivo</p>
-            <select id="agend-modelo-select" class="agend-input" style="margin-bottom:14px" onchange="window.agendModeloSelected(this.value,this.options[this.selectedIndex].text)">
-              <option value="">— Selecione o modelo —</option>
-            </select>
+            <div id="agend-modelos-cards" style="display:flex;flex-direction:column;gap:7px;margin-bottom:10px"></div>
+            <div id="agend-modelos-paginacao" style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px"></div>
             <div id="agend-modelo-faq-link" style="display:none;margin-bottom:14px">
               <button onclick="window.agendShowFaqModelo()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#1a6cff;font-family:Inter,sans-serif;font-weight:600;text-align:left;padding:0;display:inline-flex;align-items:center;gap:4px">
                 <i class="fa-solid fa-circle-question" style="font-size:11px"></i> Saiba mais sobre este modelo
@@ -1757,12 +1761,9 @@
       hideAllSub1();
       document.getElementById('agend-sub1-modelo').style.display = '';
       document.getElementById('agend-modelo-title').textContent = 'Qual o modelo do ' + p.nome + '?';
-      const selectEl = document.getElementById('agend-modelo-select');
-      selectEl.innerHTML = '<option value="">— Selecione o modelo —</option>';
-      activeModels.forEach(m => {
-        const opt = document.createElement('option');
-        opt.value = m.id; opt.textContent = m.nome; selectEl.appendChild(opt);
-      });
+      _modeloPageData = activeModels;
+      _modeloCurrentPage = 1;
+      renderModeloPage(1);
       const btn = document.getElementById('agend-modelo-btn');
       btn.disabled = true; btn.style.opacity = '0.4'; btn.style.cursor = 'not-allowed';
     } else {
@@ -1770,6 +1771,50 @@
       await loadServicos(p.id);
     }
   }
+
+  const MODELOS_PER_PAGE = 5;
+  let _modeloPageData = [];
+  let _modeloCurrentPage = 1;
+
+  function renderModeloPage(page) {
+    _modeloCurrentPage = page;
+    const total = _modeloPageData.length;
+    const totalPages = Math.ceil(total / MODELOS_PER_PAGE);
+    const start = (page - 1) * MODELOS_PER_PAGE;
+    const items = _modeloPageData.slice(start, start + MODELOS_PER_PAGE);
+    const cardsEl = document.getElementById('agend-modelos-cards');
+    const pagEl = document.getElementById('agend-modelos-paginacao');
+    if (!cardsEl) return;
+    cardsEl.innerHTML = items.map(m => `
+      <div class="agend-modelo-card" onclick="window.agendSelectModeloCard('${m.id}',${JSON.stringify(m.nome)})" id="agend-mc-${m.id}">
+        <div class="agend-card-icon" style="font-size:14px"><i class="fa-solid fa-mobile-screen"></i></div>
+        <span style="flex:1;font-size:14px;font-weight:600;color:#1a1a1a">${m.nome}</span>
+        <i class="fa-solid fa-chevron-right" style="font-size:10px;color:#ccc"></i>
+      </div>`).join('');
+    if (pagEl) {
+      if (totalPages <= 1) {
+        pagEl.innerHTML = '';
+      } else {
+        let h = '';
+        if (page > 1) h += `<button class="agend-modelos-pag-btn" onclick="window.renderModeloPage(${page - 1})">← ${page - 1}</button>`;
+        h += `<span class="agend-modelos-pag-num">${page}</span>`;
+        if (page < totalPages) h += `<button class="agend-modelos-pag-btn" onclick="window.renderModeloPage(${page + 1})">${page + 1} →</button>`;
+        pagEl.innerHTML = h;
+      }
+    }
+    if (sel.modelo) {
+      const c = document.getElementById('agend-mc-' + sel.modelo.id);
+      if (c) c.classList.add('selected');
+    }
+  }
+  window.renderModeloPage = renderModeloPage;
+
+  window.agendSelectModeloCard = function(id, nome) {
+    document.querySelectorAll('.agend-modelo-card').forEach(c => c.classList.remove('selected'));
+    const card = document.getElementById('agend-mc-' + id);
+    if (card) card.classList.add('selected');
+    window.agendModeloSelected(id, nome);
+  };
 
   window.agendModeloSelected = function (id, nome) {
     const btn = document.getElementById('agend-modelo-btn');

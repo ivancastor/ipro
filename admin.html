@@ -1132,6 +1132,7 @@ async function renderServicosView(container) {
           </div>
           <div class="flex gap-1.5 shrink-0" onclick="event.stopPropagation()">
             <button onclick="editServico('${s.id}')" class="w-7 h-7 bg-[#f0f4ff] hover:bg-[#1a6cff] hover:text-white rounded-lg flex items-center justify-center text-[#1a6cff] transition-colors" title="Editar"><i class="fa-solid fa-pen" style="font-size:10px"></i></button>
+            <button onclick="openDuplicarServicoUnico(${JSON.stringify(s).replace(/"/g,'&quot;')})" class="w-7 h-7 bg-[#f0f9ff] hover:bg-[#0ea5e9] hover:text-white rounded-lg flex items-center justify-center text-[#0ea5e9] transition-colors" title="Duplicar servi&ccedil;o para outros modelos"><i class="fa-solid fa-copy" style="font-size:10px"></i></button>
             <button onclick="deleteServicoInline('${s.id}','${m.id}')" class="w-7 h-7 bg-red-50 hover:bg-red-500 hover:text-white rounded-lg flex items-center justify-center text-red-400 transition-colors" title="Excluir"><i class="fa-solid fa-trash" style="font-size:10px"></i></button>
           </div>
           <i class="fa-solid fa-arrow-right text-xs text-[#1a6cff] opacity-0 group-hover:opacity-100 transition-all"></i>
@@ -3166,8 +3167,72 @@ async function confirmDuplicarModelo() {
 // ═══════════════════════════════════════════════════════════
 let _dupSvcModeloId = null;
 let _dupSvcAllServicos = [];
+let _dupSvcSingleMode = false;
+let _dupSvcOrigemModeloId = null;
+
+async function openDuplicarServicoUnico(svc) {
+  _dupSvcSingleMode = true;
+  _dupSvcAllServicos = [svc];
+  _dupSvcOrigemModeloId = adminDrill.modelo ? adminDrill.modelo.id : null;
+
+  document.getElementById('dup-svc-modelo-nome').textContent = svc.nome;
+  document.getElementById('dup-svc-progress').classList.add('hidden');
+  document.getElementById('dup-svc-err').classList.add('hidden');
+  document.getElementById('dup-servicos-list').innerHTML = '';
+  document.getElementById('dup-destino-list').innerHTML = '';
+  document.getElementById('dup-svc-section-servicos').classList.add('hidden');
+  document.getElementById('dup-svc-section-destino').classList.add('hidden');
+  const btn = document.getElementById('dup-svc-confirm-btn');
+  btn.disabled = false;
+  btn.innerHTML = '<i class="fa-solid fa-copy text-xs"></i> Duplicar para selecionados';
+  btn.onclick = confirmDuplicarServicos;
+  btn.className = 'flex-1 bg-[#1a6cff] hover:bg-[#0057e6] text-white font-semibold py-3 rounded-xl text-sm transition-colors flex items-center justify-center gap-2';
+
+  document.getElementById('dup-svc-loading').classList.remove('hidden');
+  showPopup('duplicar-servicos-modal');
+
+  try {
+    const todosOsProdutos = await API('/api/produtos');
+    const produtosComModelos = await Promise.all(
+      todosOsProdutos.map(async p => {
+        const modelos = await API('/api/modelos?produto_id=' + p.id).catch(() => []);
+        return { produto: p, modelos };
+      })
+    );
+    const destinoList = document.getElementById('dup-destino-list');
+    let html = '';
+    for (const { produto, modelos } of produtosComModelos) {
+      if (!modelos.length) continue;
+      html += `<div class="mb-3">
+        <p class="text-xs font-bold text-[#888] mb-1.5 px-1 flex items-center gap-1.5">
+          ${produto.imagem ? `<img loading="lazy" src="${produto.imagem}" onerror="this.style.display='none'" class="w-4 h-4 object-contain">` : ''}
+          ${produto.nome}
+        </p>
+        <div class="space-y-1.5">
+          ${modelos.map(m => {
+            const isOrigem = m.id === _dupSvcOrigemModeloId;
+            return `<label class="flex items-center gap-3 p-2.5 rounded-xl border-2 ${isOrigem ? 'border-[#e0ddd9] opacity-50 cursor-not-allowed' : 'border-[#e0ddd9] cursor-pointer hover:border-[#1a6cff] hover:bg-[#f8fbff]'} transition-all" style="user-select:none">
+              <input type="checkbox" name="dup-destino" value="${m.id}" ${isOrigem ? 'disabled' : ''} class="w-4 h-4 accent-[#1a6cff] shrink-0">
+              <span class="flex-1 text-sm font-semibold">${m.nome}${isOrigem ? ' <span class="text-[10px] font-semibold text-[#888] bg-[#f0f0f0] px-1.5 py-0.5 rounded-full ml-1">origem</span>' : ''}</span>
+            </label>`;
+          }).join('')}
+        </div>
+      </div>`;
+    }
+    destinoList.innerHTML = html || '<p class="text-sm text-[#999] text-center py-3">Nenhum modelo disponível.</p>';
+    document.getElementById('dup-svc-loading').classList.add('hidden');
+    document.getElementById('dup-svc-section-destino').classList.remove('hidden');
+  } catch(e) {
+    document.getElementById('dup-svc-loading').classList.add('hidden');
+    const errEl = document.getElementById('dup-svc-err');
+    errEl.textContent = 'Erro ao carregar: ' + e.message;
+    errEl.classList.remove('hidden');
+  }
+}
 
 async function openDuplicarServicos(modeloId, modeloNome) {
+  _dupSvcSingleMode = false;
+  _dupSvcOrigemModeloId = modeloId;
   _dupSvcModeloId = modeloId;
   _dupSvcAllServicos = [];
 
@@ -3264,7 +3329,7 @@ async function confirmDuplicarServicos() {
   const errEl = document.getElementById('dup-svc-err');
   errEl.classList.add('hidden');
 
-  if (!svcChecks.length) {
+  if (!_dupSvcSingleMode && !svcChecks.length) {
     errEl.textContent = 'Selecione pelo menos um serviço.';
     errEl.classList.remove('hidden');
     return;
@@ -3275,9 +3340,10 @@ async function confirmDuplicarServicos() {
     return;
   }
 
-  const selectedSvcIds = svcChecks.map(c => c.value);
   const targetModelIds = destChecks.map(c => c.value);
-  const selServicos = _dupSvcAllServicos.filter(s => selectedSvcIds.includes(s.id));
+  const selServicos = _dupSvcSingleMode
+    ? _dupSvcAllServicos
+    : _dupSvcAllServicos.filter(s => svcChecks.map(c => c.value).includes(s.id));
 
   const btn = document.getElementById('dup-svc-confirm-btn');
   const progEl = document.getElementById('dup-svc-progress');
