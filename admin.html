@@ -3026,7 +3026,7 @@ async function confirmDuplicarModelo() {
   const targetIds = checks.map(c => c.value);
 
   try {
-    // 1. Buscar modelo original + serviços + FAQs do modelo em paralelo
+    // 1. Buscar modelo original + serviços + 
     const [srcModelos, srcServicos, modeloFaqs] = await Promise.all([
       API('/api/modelos?produto_id=' + _duplicarProdutoAtualId),
       API('/api/servicos?modelo_id=' + _duplicarModeloId),
