@@ -34,7 +34,7 @@ const ASAAS_API_KEY      = process.env.ASAAS_API_KEY || "";
 const ASAAS_ENV          = process.env.ASAAS_ENV || "sandbox";
 const ASAAS_WEBHOOK_TOK  = process.env.ASAAS_WEBHOOK_TOKEN || "";
 const ASAAS_BASE         = ASAAS_ENV === "production"
-  ? "https://api.asaas.com/api/v3"
+  ? "https://api.asaas.com/v3"
   : "https://sandbox.asaas.com/api/v3";
 
 async function asaasRequest(method, endpoint, body) {
