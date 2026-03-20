@@ -1191,7 +1191,7 @@ async function renderOpcoesView(container) {
     <button onclick="toggleOpNewForm('${s.id}')" class="bg-[#2e7d32] hover:bg-[#1b5e20] text-white font-semibold px-4 py-2 rounded-xl text-sm flex items-center gap-2"><i class="fa-solid fa-plus text-xs"></i> Nova Opção</button>
   </div>`;
 
-  // Inline new option form
+  // Inline new option form====
   html += `<div id="op-new-form-${s.id}" class="hidden bg-white rounded-2xl border-2 border-[#2e7d32] p-5 space-y-3 mb-5 fade-in">
     <p class="text-sm font-bold text-[#1a4080]">Nova opção</p>
     <input type="text" id="op-new-nome-${s.id}" placeholder="Nome da opção *" class="w-full px-3 py-2 border border-[#e0ddd9] rounded-xl text-sm focus:outline-none focus:border-[#2e7d32]">
