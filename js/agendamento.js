@@ -1782,28 +1782,24 @@
   }
 
   function renderModeloCards(modelos) {
-    const cardsEl = document.getElementById('agend-modelos-cards');
-    if (!cardsEl) return;
-    const cards = modelos.map(m => {
-      const div = document.createElement('div');
-      div.className = 'agend-card';
-      div.style.flexDirection = 'column';
-      div.style.gap = '0';
-      div.style.padding = '0';
-      div.innerHTML = `
-        <div style="display:flex;align-items:center;gap:10px;padding:12px 14px">
-          <div class="agend-card-icon"><i class="fa-solid fa-mobile-screen" style="font-size:15px"></i></div>
-          <p style="font-size:13px;font-weight:700;margin:0;color:#1a1a1a;flex:1">${m.nome}</p>
-          <span style="font-size:12px;color:#bbb">→</span>
-        </div>
-        <div style="border-top:1px solid #f0eeeb;padding:6px 14px" onclick="event.stopPropagation()">
-          <button data-fp="modelo_id" data-fi="${m.id}" data-fn="${m.nome.replace(/"/g, '&quot;')}" onclick="window.agendShowCardFaq(this.dataset.fp,this.dataset.fi,this.dataset.fn)" style="background:none;border:none;cursor:pointer;font-size:11px;color:#1a6cff;font-family:Inter,sans-serif;font-weight:600;display:inline-flex;align-items:center;gap:4px"><i class="fa-solid fa-circle-question" style="font-size:10px"></i> Saiba mais sobre este modelo</button>
-        </div>`;
-      div.onclick = () => selectModelo(m);
-      return div;
+    const container = document.getElementById('agend-modelos-cards');
+    if (!container) return;
+    const sel$ = document.createElement('select');
+    sel$.className = 'agend-input';
+    sel$.style.fontSize = '14px';
+    sel$.innerHTML = '<option value="">— Escolher modelo —</option>';
+    modelos.forEach(m => {
+      const opt = document.createElement('option');
+      opt.value = m.id;
+      opt.textContent = m.nome;
+      sel$.appendChild(opt);
     });
-    cardsEl.innerHTML = '';
-    cards.forEach(c => cardsEl.appendChild(c));
+    sel$.onchange = () => {
+      const m = modelos.find(x => x.id === sel$.value);
+      if (m) selectModelo(m);
+    };
+    container.innerHTML = '';
+    container.appendChild(sel$);
   }
 
   async function selectModelo(m) {
@@ -1835,11 +1831,11 @@
       card.style.padding = '0';
       card.innerHTML = `
         <div style="display:flex;align-items:center;gap:10px;padding:12px 14px">
-          <div class="agend-card-icon"><img src="/images/maca.png" alt="" style="width:22px;height:22px;object-fit:contain"></div>
+          <div class="agend-card-icon"><img src="/images/maca.png" alt="" style="width:16px;height:16px;object-fit:contain"></div>
           <p style="font-size:13px;font-weight:700;margin:0;color:#1a1a1a;flex:1">${s.nome}</p>
           <span style="font-size:12px;color:#bbb">→</span>
         </div>
-        <div style="border-top:1px solid #f0eeeb;padding:6px 14px" onclick="event.stopPropagation()">
+        <div style="border-top:1px solid #f0eeeb;padding:6px 0;display:flex;justify-content:center" onclick="event.stopPropagation()">
           <button data-fp="servico_id" data-fi="${s.id}" data-fn="${s.nome.replace(/"/g, '&quot;')}" onclick="window.agendShowCardFaq(this.dataset.fp,this.dataset.fi,this.dataset.fn)" style="background:none;border:none;cursor:pointer;font-size:11px;color:#1a6cff;font-family:Inter,sans-serif;font-weight:600;display:inline-flex;align-items:center;gap:4px"><i class="fa-solid fa-circle-question" style="font-size:10px"></i> Saiba mais</button>
         </div>`;
       card.onclick = () => selectServico(s);
