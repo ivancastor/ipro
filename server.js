@@ -412,7 +412,13 @@ app.post("/api/opcoes", authAdmin, async (req, res) => {
 
 app.put("/api/opcoes/:id", authAdmin, async (req, res) => {
   const { nome, preco, descricao, tempo_estimado, ordem, ativo, pagamento_parcial } = req.body;
-  const updateObj = { nome, preco, descricao, tempo_estimado, ordem, ativo };
+  const updateObj = {};
+  if (nome !== undefined) updateObj.nome = nome;
+  if (preco !== undefined) updateObj.preco = preco;
+  if (descricao !== undefined) updateObj.descricao = descricao;
+  if (tempo_estimado !== undefined) updateObj.tempo_estimado = tempo_estimado;
+  if (ordem !== undefined) updateObj.ordem = ordem;
+  if (ativo !== undefined) updateObj.ativo = ativo;
   if (pagamento_parcial !== undefined) updateObj.pagamento_parcial = pagamento_parcial;
   const { data, error } = await supabase
     .from("opcoes").update(updateObj).eq("id", req.params.id).select().single();

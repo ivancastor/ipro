@@ -1454,17 +1454,27 @@ async function deleteOpcaoInline(id, svcId) {
 }
 
 async function togglePagamentoParcial(id, novoValor) {
-  const allOpcoes = Object.values(_opcoesCache).flat();
-  const o = allOpcoes.find(x => x.id === id);
-  if (!o) return;
   try {
-    const updated = await API('/api/opcoes/' + id, { method: 'PUT', body: { pagamento_parcial: novoValor } });
+    await API('/api/opcoes/' + id, { method: 'PUT', body: { pagamento_parcial: novoValor } });
     // Update cache
     for (const svcId of Object.keys(_opcoesCache)) {
       const idx = _opcoesCache[svcId].findIndex(x => x.id === id);
-      if (idx !== -1) { _opcoesCache[svcId][idx] = { ..._opcoesCache[svcId][idx], pagamento_parcial: updated.pagamento_parcial }; break; }
+      if (idx !== -1) { _opcoesCache[svcId][idx] = { ..._opcoesCache[svcId][idx], pagamento_parcial: novoValor }; break; }
     }
-    renderAdminView();
+    // Update button directly without full re-render
+    const btn = document.querySelector(`button[onclick*="togglePagamentoParcial('${id}'"]`);
+    if (btn) {
+      const next = !novoValor;
+      btn.setAttribute('onclick', `togglePagamentoParcial('${id}', ${next})`);
+      btn.title = novoValor ? 'Desabilitar entrada 20%' : 'Habilitar entrada 20% PIX';
+      if (novoValor) {
+        btn.className = btn.className.replace(/bg-\[#f0f0f2\]\s*text-\[#888\]\s*hover:bg-amber-50\s*hover:text-amber-600/g, 'bg-amber-100 text-amber-700 hover:bg-amber-200 border border-amber-300');
+      } else {
+        btn.className = btn.className.replace(/bg-amber-100\s*text-amber-700\s*hover:bg-amber-200\s*border\s*border-amber-300/g, 'bg-[#f0f0f2] text-[#888] hover:bg-amber-50 hover:text-amber-600');
+      }
+    } else {
+      renderAdminView();
+    }
   } catch (e) { alert('Erro ao atualizar: ' + e.message); }
 }
 

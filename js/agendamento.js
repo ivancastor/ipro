@@ -1012,10 +1012,13 @@
       const pixOvl = document.createElement('div');
       pixOvl.id = 'agend-pix-overlay';
       pixOvl.innerHTML = `<div id="agend-pix-box">
-        <div style="text-align:center;margin-bottom:18px">
-          <div style="width:52px;height:52px;border-radius:50%;background:#e8f0ff;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:26px">💳</div>
-          <h3 style="font-size:17px;font-weight:800;margin:0 0 4px;color:#1a1a1a">Pague a entrada via PIX</h3>
-          <p style="font-size:13px;color:#888;margin:0" id="agend-pix-valor-legenda">Carregando...</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+          <div style="flex:1;text-align:center">
+            <div style="width:52px;height:52px;border-radius:50%;background:#e8f0ff;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:26px">💳</div>
+            <h3 style="font-size:17px;font-weight:800;margin:0 0 4px;color:#1a1a1a">Pague a entrada via PIX</h3>
+            <p style="font-size:13px;color:#888;margin:0" id="agend-pix-valor-legenda">Carregando...</p>
+          </div>
+          <button onclick="window.agendClosePix(true)" style="position:absolute;top:20px;right:20px;width:32px;height:32px;border-radius:50%;background:#f0f0f2;border:none;cursor:pointer;font-size:16px;color:#888;display:flex;align-items:center;justify-content:center;font-family:Inter,sans-serif;line-height:1" title="Fechar e voltar">✕</button>
         </div>
         <img id="agend-pix-qr" src="" alt="QR Code PIX" style="display:none">
         <p style="font-size:11px;font-weight:700;color:#888;text-align:center;margin:6px 0 4px;text-transform:uppercase;letter-spacing:.05em">Ou copie o código PIX</p>
@@ -1840,6 +1843,13 @@
 
   async function selectServico(s) {
     sel.servico = s; sel.opcao = null; opcoesData = []; faqServicoData = [];
+    // Show opcao step immediately with loading state
+    hideAllSub1();
+    document.getElementById('agend-sub1-opcao').style.display = '';
+    document.getElementById('agend-opcao-title').textContent = s.nome;
+    document.getElementById('agend-opcao-subtitle').textContent = 'Escolha a qualidade da peça para ' + s.nome.toLowerCase();
+    const list = document.getElementById('agend-opcoes');
+    list.innerHTML = '<p style="font-size:13px;color:#999;text-align:center;padding:20px 0">Carregando opções...</p>';
     try {
       const [opcoesRes, faqRes] = await Promise.all([
         fetch('/api/opcoes?servico_id=' + s.id),
@@ -2336,10 +2346,16 @@
     if (ovl) ovl.classList.add('pix-open');
   };
 
-  window.agendClosePix = function() {
+  window.agendClosePix = function(reopen) {
     clearInterval(_pixPollTimer); clearInterval(_pixCountdownTimer);
     const ovl = document.getElementById('agend-pix-overlay');
     if (ovl) ovl.classList.remove('pix-open');
+    // Reopen agend modal at step 4 (revisar dados) when closing without payment
+    if (reopen) {
+      const agendOvl = document.getElementById('agend-overlay');
+      if (agendOvl) agendOvl.classList.add('agend-open');
+      window.agendGoStep(4);
+    }
   };
 
   window.agendPixCopyLink = function() {
