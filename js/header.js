@@ -123,29 +123,29 @@
                 <a href="reparo-de-face-id-iphone-campinas.html">Reparo de Face ID</a>
                 <a href="reparo-de-conector-de-carga-iphone-campinas.html">Reparo do Conector de Carga</a>
                 <a href="reparo-de-camera-traseira-iphone-campinas.html">Reparo de Câmera Traseira</a>
-                <a href="assistencia-iphone-campinas.html">Reparo de Câmera Frontal</a>
-                <a href="assistencia-iphone-campinas.html">Reparo de Alto-falantes</a>
-                <a href="assistencia-iphone-campinas.html">Reparo do Microfone</a>
+                <a href="reparo-de-camera-frontal-iphone-campinas.html">Reparo de Câmera Frontal</a>
+                <a href="reparo-de-alto-falante-iphone-campinas.html">Reparo de Alto-falantes</a>
+                <a href="reparo-de-microfone-iphone-campinas.html">Reparo do Microfone</a>
                 <a href="assistencia-iphone-campinas.html">Reparo de Placa Lógica</a>
-                <a href="assistencia-iphone-campinas.html">Troca do Sensor de Proximidade</a>
-                <a href="assistencia-iphone-campinas.html">Reparo do Botão Lateral / Volume</a>
-                <a href="assistencia-iphone-campinas.html">Diagnóstico Completo</a>
+                <a href="reparo-de-sensor-de-proximidade-iphone-campinas.html">Troca do Sensor de Proximidade</a>
+                <a href="reparo-de-botoes-iphone-campinas.html">Reparo do Botão Lateral / Volume</a>
+                <a href="diagnostico-completo-iphone-campinas.html">Diagnóstico Completo</a>
               </div>
               <!-- MacBook -->
               <div class="mega-services-panel" data-panel="macbook">
                 <a href="troca-de-tela-macbook-campinas.html">Substituição de Tela</a>
                 <a href="troca-de-bateria-macbook-campinas.html">Substituição de Bateria</a>
-                <a href="assistencia-macbook-campinas.html">Reparo de Placa Lógica</a>
-                <a href="assistencia-macbook-campinas.html">Reparo do Conector de Carga</a>
-                <a href="assistencia-macbook-campinas.html">Reparo de Alto-falantes</a>
+                <a href="reparo-de-placa-macbook-campinas.html">Reparo de Placa Lógica</a>
+                <a href="reparo-de-conector-de-carga-macbook-campinas.html">Reparo do Conector de Carga</a>
+                <a href="reparo-de-alto-falante-macbook-campinas.html">Reparo de Alto-falantes</a>
                 <a href="troca-de-teclado-touchpad-macbook-campinas.html">Substituição de Teclado</a>
                 <a href="troca-de-teclado-touchpad-macbook-campinas.html">Substituição de Trackpad</a>
                 <a href="limpeza-completa-macbook-campinas.html">Limpeza Interna Completa</a>
                 <a href="ins-de-ssd-m-sata-macbook-campinas.html">Upgrade de Armazenamento (SSD / M.2)</a>
-                <a href="assistencia-macbook-campinas.html">Reinstalação do macOS</a>
-                <a href="assistencia-macbook-campinas.html">Atualização do Sistema</a>
-                <a href="assistencia-macbook-campinas.html">Backup e Migração de Dados</a>
-                <a href="assistencia-macbook-campinas.html">Diagnóstico Completo de Hardware</a>
+                <a href="reinstalacao-macos-macbook-campinas.html">Reinstalação do macOS</a>
+                <a href="atualizacao-sistema-macbook-campinas.html">Atualização do Sistema</a>
+                <a href="backup-migracao-dados-macbook-campinas.html">Backup e Migração de Dados</a>
+                <a href="diagnostico-completo-macbook-campinas.html">Diagnóstico Completo de Hardware</a>
               </div>
               <!-- Apple Watch -->
               <div class="mega-services-panel" data-panel="applewatch">
@@ -154,22 +154,22 @@
                 <a href="troca-de-bateria-apple-watch-campinas.html">Substituição de Bateria</a>
                 <a href="assistencia-apple-watch-campinas.html">Reparo de Placa</a>
                 <a href="assistencia-apple-watch-campinas.html">Reparo do Conector de Carga</a>
-                <a href="assistencia-apple-watch-campinas.html">Reparo da Coroa Digital</a>
-                <a href="assistencia-apple-watch-campinas.html">Diagnóstico Completo</a>
+                <a href="reparo-de-coroa-digital-apple-watch-campinas.html">Reparo da Coroa Digital</a>
+                <a href="diagnostico-completo-apple-watch-campinas.html">Diagnóstico Completo</a>
               </div>
               <!-- iMac -->
               <div class="mega-services-panel" data-panel="imac">
                 <a href="reparo-de-placa-imac-campinas.html">Reparo de Placa Lógica</a>
                 <a href="reparo-de-fonte-imac-campinas.html">Reparo da Fonte de Alimentação</a>
                 <a href="troca-de-tela-imac-campinas.html">Substituição de Tela</a>
-                <a href="assistencia-imac-campinas.html">Substituição do Cooler / Ventoinha</a>
-                <a href="assistencia-imac-campinas.html">Upgrade de Memória (RAM)</a>
+                <a href="troca-de-cooler-imac-campinas.html">Substituição do Cooler / Ventoinha</a>
+                <a href="upgrade-de-ram-imac-campinas.html">Upgrade de Memória (RAM)</a>
                 <a href="upgrade-de-SSD-e-M-sata-imac-campinas.html">Upgrade de Armazenamento (SSD / M.2)</a>
                 <a href="limpeza-completa-imac-campinas.html">Limpeza Interna Completa</a>
-                <a href="assistencia-imac-campinas.html">Reinstalação do macOS</a>
-                <a href="assistencia-imac-campinas.html">Atualização do Sistema</a>
-                <a href="assistencia-imac-campinas.html">Backup e Recuperação de Dados</a>
-                <a href="assistencia-imac-campinas.html">Diagnóstico Completo de Hardware</a>
+                <a href="reinstalacao-macos-imac-campinas.html">Reinstalação do macOS</a>
+                <a href="atualizacao-sistema-imac-campinas.html">Atualização do Sistema</a>
+                <a href="backup-recuperacao-dados-imac-campinas.html">Backup e Recuperação de Dados</a>
+                <a href="diagnostico-completo-imac-campinas.html">Diagnóstico Completo de Hardware</a>
               </div>
               <!-- iPad -->
               <div class="mega-services-panel" data-panel="ipad">
@@ -180,13 +180,13 @@
                 <a href="reparo-de-face-id-ipad-campinas.html">Reparo de Face ID</a>
                 <a href="reparo-de-conector-de-carga-ipad-campinas.html">Reparo do Conector de Carga</a>
                 <a href="reparo-de-camera-traseira-ipad-campinas.html">Reparo de Câmera Traseira</a>
-                <a href="assistencia-ipad-campinas.html">Reparo de Câmera Frontal</a>
-                <a href="assistencia-ipad-campinas.html">Reparo de Alto-falantes</a>
+                <a href="reparo-de-camera-frontal-ipad-campinas.html">Reparo de Câmera Frontal</a>
+                <a href="reparo-de-alto-falante-ipad-campinas.html">Reparo de Alto-falantes</a>
                 <a href="assistencia-ipad-campinas.html">Reparo de Placa Lógica</a>
-                <a href="assistencia-ipad-campinas.html">Backup e Migração de Dados</a>
-                <a href="assistencia-ipad-campinas.html">Reinstalação do iPadOS</a>
-                <a href="assistencia-ipad-campinas.html">Atualização do Sistema</a>
-                <a href="assistencia-ipad-campinas.html">Diagnóstico Completo</a>
+                <a href="backup-recuperacao-dados-ipad-campinas.html">Backup e Migração de Dados</a>
+                <a href="atualizacao-reinstalacao-ipados-campinas.html">Reinstalação do iPadOS</a>
+                <a href="atualizacao-reinstalacao-ipados-campinas.html">Atualização do Sistema</a>
+                <a href="diagnostico-completo-ipad-campinas.html">Diagnóstico Completo</a>
               </div>
               <!-- Mac Mini -->
               <div class="mega-services-panel" data-panel="macmini">
@@ -195,10 +195,10 @@
                 <a href="upgrade-do-mac-mini-campinas.html">Upgrade de Hardware</a>
                 <a href="ins-de-ssd-ou-m-sata-mac-mini-campinas.html">Instalação de SSD / M.2</a>
                 <a href="limpeza-completa-mac-mini-campinas.html">Limpeza Interna Completa</a>
-                <a href="assistencia-mac-mini-campinas.html">Reinstalação do macOS</a>
-                <a href="assistencia-mac-mini-campinas.html">Atualização do Sistema</a>
-                <a href="assistencia-mac-mini-campinas.html">Backup e Recuperação de Dados</a>
-                <a href="assistencia-mac-mini-campinas.html">Diagnóstico Completo de Hardware</a>
+                <a href="reinstalacao-macos-mac-mini-campinas.html">Reinstalação do macOS</a>
+                <a href="atualizacao-sistema-mac-mini-campinas.html">Atualização do Sistema</a>
+                <a href="backup-recuperacao-dados-mac-mini-campinas.html">Backup e Recuperação de Dados</a>
+                <a href="diagnostico-completo-mac-mini-campinas.html">Diagnóstico Completo de Hardware</a>
               </div>
             </div>
             </div>
@@ -311,13 +311,13 @@
                   <a href="reparo-de-face-id-iphone-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Face ID</a>
                   <a href="reparo-de-conector-de-carga-iphone-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo do Conector de Carga</a>
                   <a href="reparo-de-camera-traseira-iphone-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Câmera Traseira</a>
-                  <a href="assistencia-iphone-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Câmera Frontal</a>
-                  <a href="assistencia-iphone-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Alto-falantes</a>
-                  <a href="assistencia-iphone-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo do Microfone</a>
+                  <a href="reparo-de-camera-frontal-iphone-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Câmera Frontal</a>
+                  <a href="reparo-de-alto-falante-iphone-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Alto-falantes</a>
+                  <a href="reparo-de-microfone-iphone-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo do Microfone</a>
                   <a href="assistencia-iphone-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Placa Lógica</a>
-                  <a href="assistencia-iphone-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Troca do Sensor de Proximidade</a>
-                  <a href="assistencia-iphone-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo do Botão Lateral / Volume</a>
-                  <a href="assistencia-iphone-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Diagnóstico Completo</a>
+                  <a href="reparo-de-sensor-de-proximidade-iphone-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Troca do Sensor de Proximidade</a>
+                  <a href="reparo-de-botoes-iphone-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo do Botão Lateral / Volume</a>
+                  <a href="diagnostico-completo-iphone-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Diagnóstico Completo</a>
                 </div>
               </div>
             </div>
@@ -331,17 +331,17 @@
                 <div class="pl-3 pb-2 space-y-0.5">
                   <a href="troca-de-tela-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Substituição de Tela</a>
                   <a href="troca-de-bateria-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Substituição de Bateria</a>
-                  <a href="assistencia-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Placa Lógica</a>
-                  <a href="assistencia-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo do Conector de Carga</a>
-                  <a href="assistencia-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Alto-falantes</a>
+                  <a href="reparo-de-placa-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Placa Lógica</a>
+                  <a href="reparo-de-conector-de-carga-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo do Conector de Carga</a>
+                  <a href="reparo-de-alto-falante-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Alto-falantes</a>
                   <a href="troca-de-teclado-touchpad-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Substituição de Teclado</a>
                   <a href="troca-de-teclado-touchpad-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Substituição de Trackpad</a>
                   <a href="limpeza-completa-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Limpeza Interna Completa</a>
                   <a href="ins-de-ssd-m-sata-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Upgrade de Armazenamento (SSD / M.2)</a>
-                  <a href="assistencia-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reinstalação do macOS</a>
-                  <a href="assistencia-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Atualização do Sistema</a>
-                  <a href="assistencia-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Backup e Migração de Dados</a>
-                  <a href="assistencia-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Diagnóstico Completo de Hardware</a>
+                  <a href="reinstalacao-macos-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reinstalação do macOS</a>
+                  <a href="atualizacao-sistema-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Atualização do Sistema</a>
+                  <a href="backup-migracao-dados-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Backup e Migração de Dados</a>
+                  <a href="diagnostico-completo-macbook-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Diagnóstico Completo de Hardware</a>
                 </div>
               </div>
             </div>
@@ -358,8 +358,8 @@
                   <a href="troca-de-bateria-apple-watch-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Substituição de Bateria</a>
                   <a href="assistencia-apple-watch-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Placa</a>
                   <a href="assistencia-apple-watch-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo do Conector de Carga</a>
-                  <a href="assistencia-apple-watch-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo da Coroa Digital</a>
-                  <a href="assistencia-apple-watch-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Diagnóstico Completo</a>
+                  <a href="reparo-de-coroa-digital-apple-watch-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo da Coroa Digital</a>
+                  <a href="diagnostico-completo-apple-watch-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Diagnóstico Completo</a>
                 </div>
               </div>
             </div>
@@ -374,14 +374,14 @@
                   <a href="reparo-de-placa-imac-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Placa Lógica</a>
                   <a href="reparo-de-fonte-imac-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo da Fonte de Alimentação</a>
                   <a href="troca-de-tela-imac-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Substituição de Tela</a>
-                  <a href="assistencia-imac-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Substituição do Cooler / Ventoinha</a>
-                  <a href="assistencia-imac-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Upgrade de Memória (RAM)</a>
+                  <a href="troca-de-cooler-imac-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Substituição do Cooler / Ventoinha</a>
+                  <a href="upgrade-de-ram-imac-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Upgrade de Memória (RAM)</a>
                   <a href="upgrade-de-SSD-e-M-sata-imac-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Upgrade de Armazenamento (SSD / M.2)</a>
                   <a href="limpeza-completa-imac-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Limpeza Interna Completa</a>
-                  <a href="assistencia-imac-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reinstalação do macOS</a>
-                  <a href="assistencia-imac-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Atualização do Sistema</a>
-                  <a href="assistencia-imac-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Backup e Recuperação de Dados</a>
-                  <a href="assistencia-imac-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Diagnóstico Completo de Hardware</a>
+                  <a href="reinstalacao-macos-imac-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reinstalação do macOS</a>
+                  <a href="atualizacao-sistema-imac-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Atualização do Sistema</a>
+                  <a href="backup-recuperacao-dados-imac-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Backup e Recuperação de Dados</a>
+                  <a href="diagnostico-completo-imac-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Diagnóstico Completo de Hardware</a>
                 </div>
               </div>
             </div>
@@ -400,13 +400,13 @@
                   <a href="reparo-de-face-id-ipad-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Face ID</a>
                   <a href="reparo-de-conector-de-carga-ipad-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo do Conector de Carga</a>
                   <a href="reparo-de-camera-traseira-ipad-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Câmera Traseira</a>
-                  <a href="assistencia-ipad-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Câmera Frontal</a>
-                  <a href="assistencia-ipad-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Alto-falantes</a>
+                  <a href="reparo-de-camera-frontal-ipad-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Câmera Frontal</a>
+                  <a href="reparo-de-alto-falante-ipad-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Alto-falantes</a>
                   <a href="assistencia-ipad-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reparo de Placa Lógica</a>
-                  <a href="assistencia-ipad-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Backup e Migração de Dados</a>
-                  <a href="assistencia-ipad-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reinstalação do iPadOS</a>
-                  <a href="assistencia-ipad-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Atualização do Sistema</a>
-                  <a href="assistencia-ipad-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Diagnóstico Completo</a>
+                  <a href="backup-recuperacao-dados-ipad-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Backup e Migração de Dados</a>
+                  <a href="atualizacao-reinstalacao-ipados-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reinstalação do iPadOS</a>
+                  <a href="atualizacao-reinstalacao-ipados-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Atualização do Sistema</a>
+                  <a href="diagnostico-completo-ipad-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Diagnóstico Completo</a>
                 </div>
               </div>
             </div>
@@ -423,10 +423,10 @@
                   <a href="upgrade-do-mac-mini-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Upgrade de Hardware</a>
                   <a href="ins-de-ssd-ou-m-sata-mac-mini-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Instalação de SSD / M.2</a>
                   <a href="limpeza-completa-mac-mini-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Limpeza Interna Completa</a>
-                  <a href="assistencia-mac-mini-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reinstalação do macOS</a>
-                  <a href="assistencia-mac-mini-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Atualização do Sistema</a>
-                  <a href="assistencia-mac-mini-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Backup e Recuperação de Dados</a>
-                  <a href="assistencia-mac-mini-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Diagnóstico Completo de Hardware</a>
+                  <a href="reinstalacao-macos-mac-mini-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Reinstalação do macOS</a>
+                  <a href="atualizacao-sistema-mac-mini-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Atualização do Sistema</a>
+                  <a href="backup-recuperacao-dados-mac-mini-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Backup e Recuperação de Dados</a>
+                  <a href="diagnostico-completo-mac-mini-campinas.html" class="block py-2 px-3 text-[12px] text-[#555] rounded-lg hover:bg-[#f0f4ff] hover:text-[#1a6cff] transition-colors">Diagnóstico Completo de Hardware</a>
                 </div>
               </div>
             </div>
