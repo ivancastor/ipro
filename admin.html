@@ -1489,10 +1489,12 @@ async function loadServicoOpcoes(svcId) {
   el.innerHTML = '';
   list.forEach(o => {
     const preco = o.preco ? ' · ' + parseFloat(o.preco).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '';
+    const declBadge = (o.declaracoes && o.declaracoes.length) ? `<span class="text-xs bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded-md font-medium ml-1">${o.declaracoes.length} decl.</span>` : '';
     const row = document.createElement('div');
     row.className = 'flex items-center gap-2 bg-[#f9f9fb] rounded-lg px-3 py-1.5';
     row.innerHTML = `<i class="fa-solid fa-tag text-[#2e7d32] text-xs shrink-0"></i>
       <span class="flex-1 text-xs font-medium">${o.nome}${preco}</span>
+      ${declBadge}
       ${o.tempo_estimado ? `<span class="text-xs text-[#bbb]">⏱ ${o.tempo_estimado}</span>` : ''}
       <button onclick="editOpcao('${o.id}')" class="w-6 h-6 bg-[#f0f4ff] hover:bg-[#1a6cff] hover:text-white rounded-md flex items-center justify-center text-[#1a6cff] transition-colors"><i class="fa-solid fa-pen" style="font-size:9px"></i></button>
       <button onclick="deleteOpcaoInline('${o.id}','${svcId}')" class="w-6 h-6 bg-red-50 hover:bg-red-500 hover:text-white rounded-md flex items-center justify-center text-red-400 transition-colors"><i class="fa-solid fa-trash" style="font-size:9px"></i></button>`;
@@ -1537,6 +1539,68 @@ async function togglePagamentoParcial(id, novoValor) {
       renderAdminView();
     }
   } catch (e) { alert('Erro ao atualizar: ' + e.message); }
+}
+
+// ═══════════════════════════════════════════════════════════
+// DECLARAÇÕES (Popup por opção de serviço)
+// ═══════════════════════════════════════════════════════════
+let _modalDeclaracoes = [];
+
+function renderDeclaracoesList() {
+  const el = document.getElementById('m-declaracoes-list');
+  if (!el) return;
+  if (!_modalDeclaracoes.length) {
+    el.innerHTML = '<p class="text-xs text-purple-400 italic">Nenhuma declaração adicionada.</p>';
+    return;
+  }
+  el.innerHTML = '';
+  _modalDeclaracoes.forEach((d, i) => {
+    const div = document.createElement('div');
+    div.className = 'bg-white border border-purple-100 rounded-xl p-3 relative';
+    div.innerHTML = `
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-xs font-bold text-purple-700">Etapa ${i + 1}</span>
+        <button type="button" onclick="removeDeclaracao(${i})" class="w-6 h-6 bg-red-50 hover:bg-red-500 hover:text-white rounded-md flex items-center justify-center text-red-400 transition-colors" title="Remover"><i class="fa-solid fa-trash" style="font-size:9px"></i></button>
+      </div>
+      <div class="mb-2">
+        <label class="block text-xs font-semibold text-[#555] mb-1">Título da etapa</label>
+        <input type="text" value="${(d.titulo || '').replace(/"/g, '&quot;')}" onchange="_modalDeclaracoes[${i}].titulo=this.value" class="w-full px-3 py-2 rounded-lg border border-[#e0ddd9] outline-none text-xs" placeholder="Ex: ATENÇÃO – LEIA ANTES DE CONTINUAR">
+      </div>
+      <div class="mb-2">
+        <label class="block text-xs font-semibold text-[#555] mb-1">Texto do corpo</label>
+        <textarea onchange="_modalDeclaracoes[${i}].texto=this.value" rows="3" class="w-full px-3 py-2 rounded-lg border border-[#e0ddd9] outline-none text-xs resize-none" placeholder="Texto explicativo exibido ao cliente...">${d.texto || ''}</textarea>
+      </div>
+      <div class="mb-2">
+        <label class="block text-xs font-semibold text-[#555] mb-1">Texto do checkbox</label>
+        <input type="text" value="${(d.texto_checkbox || '').replace(/"/g, '&quot;')}" onchange="_modalDeclaracoes[${i}].texto_checkbox=this.value" class="w-full px-3 py-2 rounded-lg border border-[#e0ddd9] outline-none text-xs" placeholder="Ex: Declaro que estou ciente de que...">
+      </div>
+      <p class="text-xs text-purple-400 mt-2 pt-2 border-t border-purple-50">Cada etapa sempre exige checkbox ✓ + digitar SIM para avançar</p>`;
+    el.appendChild(div);
+  });
+}
+
+function addDeclaracao() {
+  _modalDeclaracoes.push({ titulo: '', texto: '', texto_checkbox: '', condicional_pagamento: false });
+  renderDeclaracoesList();
+}
+
+function removeDeclaracao(index) {
+  _modalDeclaracoes.splice(index, 1);
+  renderDeclaracoesList();
+}
+
+async function duplicarDeclaracoesDe() {
+  // Build list of all opcoes with declarations from cache
+  const opcoes = Object.values(_opcoesCache).flat().filter(o => o.declaracoes && o.declaracoes.length > 0);
+  if (!opcoes.length) { alert('Nenhuma opção com declarações foi encontrada.'); return; }
+  const choices = opcoes.map((o, i) => `${i + 1}. ${o.nome}`).join('\n');
+  const pick = prompt('Escolha a opção de onde duplicar as declarações:\n\n' + choices + '\n\nDigite o número:');
+  if (!pick) return;
+  const idx = parseInt(pick) - 1;
+  if (idx < 0 || idx >= opcoes.length) { alert('Número inválido.'); return; }
+  const source = JSON.parse(JSON.stringify(opcoes[idx].declaracoes));
+  _modalDeclaracoes = _modalDeclaracoes.concat(source);
+  renderDeclaracoesList();
 }
 
 
@@ -1882,7 +1946,28 @@ function openModal(type, editData) {
           <div class="w-10 h-6 bg-gray-200 peer-checked:bg-amber-500 rounded-full peer peer-focus:ring-2 peer-focus:ring-amber-300 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
         </label>
       </div>
+      <!-- Declarações / Popups -->
+      <div class="bg-purple-50 border border-purple-200 rounded-xl p-4">
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <p class="text-xs font-semibold text-purple-800">Declarações / Popups</p>
+            <p class="text-xs text-purple-600 mt-0.5">Exibidas ao cliente antes de prosseguir com o agendamento</p>
+          </div>
+          <button type="button" onclick="addDeclaracao()" class="text-xs bg-purple-600 hover:bg-purple-700 text-white font-semibold px-3 py-1.5 rounded-lg transition-colors"><i class="fa-solid fa-plus mr-1"></i>Adicionar</button>
+        </div>
+        <div id="m-declaracoes-list" class="flex flex-col gap-3"></div>
+        <div class="mt-3 pt-3 border-t border-purple-200">
+          <button type="button" onclick="duplicarDeclaracoesDe()" class="text-xs text-purple-600 hover:text-purple-800 font-semibold"><i class="fa-solid fa-copy mr-1"></i>Duplicar de outra opção...</button>
+        </div>
+      </div>
       <button type="submit" class="w-full bg-[#1a6cff] hover:bg-[#0057e6] text-white font-semibold py-3.5 rounded-xl text-sm">Salvar</button>`;
+    // Load existing declarations
+    if (editData && editData.declaracoes) {
+      _modalDeclaracoes = JSON.parse(JSON.stringify(editData.declaracoes));
+    } else {
+      _modalDeclaracoes = [];
+    }
+    setTimeout(() => renderDeclaracoesList(), 0);
   } else if (type === 'faq') {
     // Detect context (produto, modelo, servico, opcao)
     let contextLabel = '';
@@ -2050,10 +2135,11 @@ document.getElementById('modal-form').addEventListener('submit', async e => {
     const tempo_estimado = document.getElementById('m-tempo').value.trim();
     const descricao = document.getElementById('m-descricao').value.trim();
     const pagamento_parcial = document.getElementById('m-pagamento-parcial')?.checked || false;
+    const declaracoes = _modalDeclaracoes.filter(d => d.titulo || d.texto);
     if (modalEditId) {
-      await API('/api/opcoes/' + modalEditId, { method: 'PUT', body: { nome, preco, descricao, tempo_estimado, ordem, ativo, pagamento_parcial } });
+      await API('/api/opcoes/' + modalEditId, { method: 'PUT', body: { nome, preco, descricao, tempo_estimado, ordem, ativo, pagamento_parcial, declaracoes } });
     } else {
-      await API('/api/opcoes', { method: 'POST', body: { servico_id: selectedServicoId, nome, preco, descricao, tempo_estimado, ordem, ativo, pagamento_parcial } });
+      await API('/api/opcoes', { method: 'POST', body: { servico_id: selectedServicoId, nome, preco, descricao, tempo_estimado, ordem, ativo, pagamento_parcial, declaracoes } });
     }
     await loadServicoOpcoes(selectedServicoId);
   } else if (modalType === 'nb-servico') {

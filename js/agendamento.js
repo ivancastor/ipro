@@ -278,7 +278,7 @@ var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empr
     const step4 = document.querySelector('.agend-step[data-step="4"]');
     if (step4) {
       step4.innerHTML = `
-        <button class="agend-back-btn" onclick="window.agendGoStep(3)">← Voltar</button>
+        <button class="agend-back-btn" onclick="window.agendStep4Back()">← Voltar</button>
         <p class="agend-section-label">Revisão de dados</p>
         <p style="font-size:13px;color:#666;margin-bottom:14px">Confira os dados do seu agendamento antes de prosseguir</p>
         <div id="agend-review" style="display:flex;flex-direction:column;gap:6px;margin-bottom:18px"></div>
@@ -508,6 +508,10 @@ var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empr
     .nb-radio-option{display:flex;align-items:center;gap:12px;padding:16px;border-radius:14px;border:2px solid #e8e8ea;cursor:pointer;transition:all .2s;background:#fafafa}
     .nb-radio-option:hover{border-color:#1a6cff;background:#f0f4ff}
     .nb-radio-option.selected{border-color:#1a6cff;background:#eef3ff}
+    #agend-decl-overlay{position:fixed;inset:0;z-index:9999999;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.8);backdrop-filter:blur(14px);opacity:0;pointer-events:none;transition:opacity .25s}
+    #agend-decl-overlay.decl-open{opacity:1;pointer-events:auto}
+    #agend-decl-box{background:#fff;border-radius:24px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;padding:28px;box-shadow:0 32px 80px rgba(0,0,0,.35);transform:scale(.95) translateY(8px);transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+    #agend-decl-overlay.decl-open #agend-decl-box{transform:scale(1) translateY(0)}
     .nb-radio-option input[type="radio"]{accent-color:#1a6cff;width:18px;height:18px;cursor:pointer}
     .nb-radio-label{font-size:14px;font-weight:700;color:#1a1a1a}
     .nb-radio-desc{font-size:12px;color:#888;margin-top:2px}
@@ -738,7 +742,7 @@ var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empr
 
         <!-- Step 4: Revisão -->
         <div class="agend-step" data-step="4" style="padding-top:20px">
-          <button class="agend-back-btn" onclick="window.agendGoStep(3)">← Voltar</button>
+          <button class="agend-back-btn" onclick="window.agendStep4Back()">← Voltar</button>
           <p class="agend-section-label">Revisão de dados</p>
           <p style="font-size:13px;color:#666;margin-bottom:18px">Confira os dados do seu agendamento antes de prosseguir</p>
           <div id="agend-review" style="display:flex;flex-direction:column;gap:7px;margin-bottom:20px"></div>
@@ -1084,6 +1088,14 @@ var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empr
       </div>`;
       document.body.appendChild(pixOvl);
     }
+
+    // Declarations overlay (dynamic content)
+    if (!document.getElementById('agend-decl-overlay')) {
+      const declOvl = document.createElement('div');
+      declOvl.id = 'agend-decl-overlay';
+      declOvl.innerHTML = `<div id="agend-decl-box"></div>`;
+      document.body.appendChild(declOvl);
+    }
   };
   window._createAgendOverlays();
 
@@ -1217,13 +1229,16 @@ var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empr
     c.innerHTML = '';
     c.style.cssText = 'display:block';
     const isNbOrcamento = isNotebook && notebookSel.tipoSolicitacao === 'orcamento';
-    const stepLabels = isNbOrcamento ? ['Serviço', 'Dados', 'Revisão'] : ['Serviço', 'Data', 'Dados', 'Revisão'];
+    const isNbAgendamento = isNotebook && notebookSel.tipoSolicitacao !== 'orcamento';
+    const stepLabels = isNbOrcamento ? ['Serviço', 'Dados', 'Revisão'] : isNbAgendamento ? ['Serviço', 'Data', 'Revisão'] : ['Serviço', 'Data', 'Dados', 'Revisão'];
     const totalSteps = stepLabels.length;
-    // Map real step to display step for nb-orcamento (1→1, 3→2, 4→3)
+    // Map real step to display step for nb-orcamento (1→1, 3→2, 4→3) and nb-agendamento (1→1, 2→2, 4→3)
     let displayStep = step;
     if (isNbOrcamento) {
       if (step === 3) displayStep = 2;
       else if (step === 4) displayStep = 3;
+    } else if (isNbAgendamento) {
+      if (step === 4) displayStep = 3;
     }
     // Single row: each column = [dot above, label below], connected by horizontal lines
     const row = document.createElement('div');
@@ -1295,10 +1310,11 @@ var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empr
       const nome = document.getElementById('agend-nome').value.trim();
       const wpp = document.getElementById('agend-whatsapp').value.trim();
       if (isNotebook) {
-        // Notebook: name, whatsapp and email required
-        const nbEmail = (document.getElementById('agend-nb-email')?.value || '').trim();
-        if (!nome || !wpp) { alert('Preencha nome e WhatsApp.'); return; }
-        if (!nbEmail || !nbEmail.includes('@')) { alert('Preencha um e-mail válido.'); return; }
+        // Notebook agendamento: contact data was collected in step 1, pre-fill hidden fields
+        if (!nome && notebookSel.nome) document.getElementById('agend-nome').value = notebookSel.nome;
+        if (!wpp && notebookSel.celular) document.getElementById('agend-whatsapp').value = notebookSel.celular;
+        const nbEmailField = document.getElementById('agend-nb-email');
+        if (nbEmailField && !nbEmailField.value && notebookSel.email) nbEmailField.value = notebookSel.email;
         buildReview();
       } else {
         const cpf = document.getElementById('agend-cpf').value.trim();
@@ -1531,6 +1547,83 @@ var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empr
     if (el) el.classList.remove('guide-open');
   };
 
+  // ─── Declarations popup ───────────────────────────────────
+  let _declQueue = [];    // filtered declaracoes for current opcao
+  let _declIndex = 0;     // current declaration step
+  let _declCallback = null; // fn to call when all accepted
+
+  window._agendStartDeclaracoes = function (declaracoes, pagamentoParcial, callback) {
+    _declQueue = (declaracoes || []).filter(d => !!(d.titulo || d.texto || d.texto_checkbox));
+    if (!_declQueue.length) { callback(); return; }
+    _declIndex = 0;
+    _declCallback = callback;
+    _renderDeclStep();
+  };
+
+  function _renderDeclStep() {
+    const d = _declQueue[_declIndex];
+    const box = document.getElementById('agend-decl-box');
+    if (!box) return;
+    const total = _declQueue.length;
+    const step = _declIndex + 1;
+    const checkLabel = d.texto_checkbox || 'Eu li e concordo com o exposto acima';
+
+    const html = `
+      <div style="text-align:center;margin-bottom:16px">
+        <div style="width:44px;height:44px;border-radius:50%;background:#fff3cd;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:22px">⚠️</div>
+        <h3 style="font-size:16px;font-weight:800;margin:0 0 4px;color:#1a1a1a">${d.titulo || 'Atenção'}</h3>
+        ${total > 1 ? `<p style="font-size:12px;color:#aaa;margin:0">Etapa ${step} de ${total}</p>` : ''}
+      </div>
+      <div style="background:#fffbeb;border:1.5px solid #fde68a;border-radius:16px;padding:16px;margin-bottom:18px">
+        <p style="font-size:13px;color:#78350f;line-height:1.75;margin:0;white-space:pre-line">${d.texto || ''}</p>
+      </div>
+      <label style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:12px;border:2px solid #e8e8ea;cursor:pointer;margin-bottom:14px;background:#fafafa;transition:border-color .15s" id="agend-decl-check-label" onclick="this.style.borderColor=document.getElementById('agend-decl-check').checked?'#e8e8ea':'#7c3aed'">
+        <input type="checkbox" id="agend-decl-check" style="accent-color:#7c3aed;width:18px;height:18px;margin-top:2px;flex-shrink:0" onchange="window._declValidate()">
+        <span style="font-size:13px;color:#1a1a1a;line-height:1.5;font-weight:600">${checkLabel}</span>
+      </label>
+      <div style="margin-bottom:16px">
+        <label style="font-size:11px;font-weight:700;color:#888;display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Para continuar, digite <strong style="color:#1a1a1a">SIM</strong> no campo abaixo</label>
+        <input type="text" id="agend-decl-sim" class="agend-input" placeholder="SIM" oninput="window._declValidate()" autocomplete="off" style="text-transform:uppercase">
+      </div>
+      <button id="agend-decl-btn" onclick="window._declNext()" disabled style="width:100%;padding:14px;border-radius:14px;background:#16a34a;color:#fff;font-size:14px;font-weight:700;border:none;cursor:not-allowed;opacity:.4;font-family:Inter,sans-serif;transition:all .2s;margin-bottom:8px">${step < total ? '✅ ACEITO E CONTINUAR' : '✅ ACEITO E CONTINUAR'}</button>
+      <button onclick="window._declCancel()" style="width:100%;padding:13px;border-radius:14px;background:#fff;border:2px solid #fca5a5;color:#dc2626;font-size:14px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;transition:all .2s">❌ NÃO ACEITO / VOLTAR</button>`;
+
+    box.innerHTML = html;
+    const ovl = document.getElementById('agend-decl-overlay');
+    if (ovl) ovl.classList.add('decl-open');
+  }
+
+  window._declValidate = function () {
+    const cb = document.getElementById('agend-decl-check');
+    const inp = document.getElementById('agend-decl-sim');
+    const valid = !!(cb && cb.checked && inp && inp.value.trim().toUpperCase() === 'SIM');
+    const btn = document.getElementById('agend-decl-btn');
+    if (btn) {
+      btn.disabled = !valid;
+      btn.style.opacity = valid ? '1' : '.4';
+      btn.style.cursor = valid ? 'pointer' : 'not-allowed';
+    }
+  };
+
+  window._declNext = function () {
+    _declIndex++;
+    if (_declIndex >= _declQueue.length) {
+      // All declarations accepted
+      const ovl = document.getElementById('agend-decl-overlay');
+      if (ovl) ovl.classList.remove('decl-open');
+      if (_declCallback) _declCallback();
+    } else {
+      _renderDeclStep();
+    }
+  };
+
+  window._declCancel = function () {
+    const ovl = document.getElementById('agend-decl-overlay');
+    if (ovl) ovl.classList.remove('decl-open');
+    _declQueue = [];
+    _declCallback = null;
+  };
+
   // ─── Format helpers ───────────────────────────────────────
   window.agendFormatCpf = function (el) {
     let v = el.value.replace(/\D/g, '').slice(0, 11);
@@ -1697,7 +1790,9 @@ var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empr
         if (nbPrecoDisplay) {
           if (svcPreco > 0) {
             const priceFormatted = svcPreco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-            nbPrecoDisplay.innerHTML = 'a partir de: ' + priceFormatted + '<div style="margin-top:5px;font-size:11px;font-weight:600;color:#dc2626;padding:2px 0">⚠️ valores podem mudar após análise técnica na assistência</div>';
+            const isDiagService = (this.value || '').toLowerCase().match(/diagn|or[çc]amento/);
+            const prefix = isDiagService ? '' : 'a partir de: ';
+            nbPrecoDisplay.innerHTML = prefix + priceFormatted + '<div style="margin-top:5px;font-size:11px;font-weight:600;color:#dc2626;padding:2px 0">⚠️ valores podem mudar após análise técnica na assistência</div>';
             nbPrecoDisplay.style.display = '';
           } else {
             nbPrecoDisplay.style.display = 'none';
@@ -1743,48 +1838,27 @@ var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empr
     if (!celular) { alert('Informe seu celular / WhatsApp.'); return; }
     const selectedSvcOpt = document.getElementById('agend-nb-servico')?.selectedOptions[0];
     const preco = parseFloat(selectedSvcOpt?.dataset?.nbSvcPreco) || 0;
-    const precoStr = preco > 0 ? preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : 'A confirmar';
-    const btns = document.querySelectorAll('[onclick="window.nbContinuar()"]');
-    btns.forEach(b => { b.disabled = true; b.textContent = 'Enviando...'; });
-    let msg = '💻 *NOVA SOLICITAÇÃO – NOTEBOOK*\n\n';
-    msg += '👤 *Nome:* ' + nome + '\n';
-    msg += '📱 *Celular:* ' + celular + '\n';
-    if (email) msg += '📧 *E-mail:* ' + email + '\n';
-    if (cpf) msg += '🪪 *CPF:* ' + cpf + '\n';
-    msg += '\n💻 *Notebook:* ' + modelo + '\n';
-    msg += '🔧 *Serviço:* ' + servico + '\n';
-    msg += '💰 *Valor a partir de:* ' + precoStr + '\n';
-    if (descricao) msg += '\n📝 *Descrição:* ' + descricao + '\n';
-    msg += '\n_iPro Assistência Apple – Campinas/SP_';
-    try {
-      const res = await fetch(EVO_API_URL + '/message/sendText/' + EVO_INSTANCE, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': EVO_API_KEY
-        },
-        body: JSON.stringify({
-          number: EVO_DEST_NUMBER,
-          text: msg
-        })
-      });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      btns.forEach(b => { b.disabled = false; b.textContent = 'Continuar →'; });
-      // Show success feedback
-      const wrap = document.getElementById('agend-sub1-notebook') || document.querySelector('.agend-step[data-step="1"]');
-      if (wrap) {
-        wrap.innerHTML = `
-          <div style="text-align:center;padding:40px 20px">
-            <div style="font-size:48px;margin-bottom:16px">✅</div>
-            <h3 style="font-size:20px;font-weight:700;color:#1a1a1a;margin-bottom:8px">Solicitação enviada!</h3>
-            <p style="font-size:14px;color:#666;line-height:1.5">Recebemos sua solicitação para <strong>${modelo}</strong>.<br>Em breve entraremos em contato.</p>
-          </div>`;
-      }
-    } catch (err) {
-      console.error('Evolution API error:', err);
-      btns.forEach(b => { b.disabled = false; b.textContent = 'Continuar →'; });
-      alert('Erro ao enviar solicitação. Tente novamente ou entre em contato pelo WhatsApp.');
-    }
+    // Store notebook contact data for later use
+    notebookSel.modelo = modelo;
+    notebookSel.servico = servico;
+    notebookSel.descricao = descricao;
+    notebookSel.preco = preco;
+    notebookSel.nome = nome;
+    notebookSel.cpf = cpf;
+    notebookSel.email = email;
+    notebookSel.celular = celular;
+    notebookSel.tipoSolicitacao = 'agendamento';
+    // Pre-fill step 3 hidden fields for review/submit
+    const nomeField = document.getElementById('agend-nome');
+    if (nomeField) nomeField.value = nome;
+    const wppField = document.getElementById('agend-whatsapp');
+    if (wppField) wppField.value = celular;
+    const nbEmailField = document.getElementById('agend-nb-email');
+    if (nbEmailField) nbEmailField.value = email;
+    // Go to step 2 (calendar) for date/time selection
+    showStep(2);
+    await loadCalendarMonth();
+    renderCalendar();
   };
 
   window.agendStep3Back = function() {
@@ -1796,6 +1870,16 @@ var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empr
     } else {
       // Agendamento (notebook or normal): back to date/time (step 2)
       showStep(2);
+    }
+  };
+
+  window.agendStep4Back = function() {
+    if (isNotebook) {
+      // Notebook: back to calendar (step 2), skip step 3
+      showStep(2);
+    } else {
+      // Regular: back to contact data (step 3)
+      showStep(3);
     }
   };
 
@@ -1972,9 +2056,16 @@ var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empr
         ${o.id ? `<div style="border-top:1px solid #f0eeeb;padding:6px 14px;margin-top:4px" onclick="event.stopPropagation()"><button data-fp="opcao_id" data-fi="${o.id}" data-fn="${o.nome.replace(/"/g, '&quot;')}" onclick="window.agendShowCardFaq(this.dataset.fp,this.dataset.fi,this.dataset.fn)" style="background:none;border:none;cursor:pointer;font-size:11px;color:#1a6cff;font-family:Inter,sans-serif;font-weight:600;display:inline-flex;align-items:center;gap:4px"><i class="fa-solid fa-circle-question" style="font-size:10px"></i> Saiba mais</button></div>` : ''}`;
       card.onclick = async () => {
         sel.opcao = o;
-        showStep(2);
-        await loadCalendarMonth();
-        renderCalendar();
+        const goCalendar = async () => {
+          showStep(2);
+          await loadCalendarMonth();
+          renderCalendar();
+        };
+        if (o.declaracoes && o.declaracoes.length) {
+          window._agendStartDeclaracoes(o.declaracoes, null, goCalendar);
+        } else {
+          await goCalendar();
+        }
       };
       list.appendChild(card);
     });
@@ -2132,7 +2223,15 @@ var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empr
           sel.horario = h;
           grid.querySelectorAll('.agend-time-slot').forEach(s => s.classList.remove('selected'));
           slot.classList.add('selected');
-          setTimeout(() => showStep(3), 300);
+          setTimeout(() => {
+            if (isNotebook) {
+              // Notebook: skip step 3, go directly to review
+              buildReview();
+              showStep(4);
+            } else {
+              showStep(3);
+            }
+          }, 300);
         };
       }
       grid.appendChild(slot);
@@ -2151,18 +2250,21 @@ var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empr
     if (isNotebook) {
       const tipoLabel = notebookSel.tipoSolicitacao === 'orcamento' ? 'Orçamento online' : 'Agendamento';
       const dateFormatted = sel.data ? new Date(sel.data + 'T12:00:00').toLocaleDateString('pt-BR') : '';
+      const isDiagNb = (notebookSel.servico || '').toLowerCase().match(/diagn|or[çc]amento/);
+      const nbPreco = notebookSel.preco || 0;
+      const nbPrecoStr = nbPreco > 0 ? (isDiagNb ? '' : 'a partir de ') + nbPreco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : null;
       items = [
         { l: 'Dispositivo', v: 'Notebook em geral' },
         { l: 'Modelo', v: notebookSel.modelo },
         { l: 'Serviço', v: notebookSel.servico },
         notebookSel.descricao ? { l: 'Descrição do defeito', v: notebookSel.descricao } : null,
-        notebookSel.preco > 0 ? { l: 'Valor estimado', v: notebookSel.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) } : null,
+        nbPrecoStr ? { l: 'Valor estimado', v: nbPrecoStr } : null,
         { l: 'Tipo', v: tipoLabel },
         notebookSel.tipoSolicitacao === 'agendamento' ? { l: 'Data', v: dateFormatted } : null,
         notebookSel.tipoSolicitacao === 'agendamento' && sel.horario ? { l: 'Horário', v: sel.horario.slice(0, 5) } : null,
-        { l: 'Nome', v: document.getElementById('agend-nome').value.trim() },
-        { l: 'E-mail', v: (document.getElementById('agend-nb-email')?.value || '').trim() },
-        { l: 'WhatsApp', v: document.getElementById('agend-whatsapp').value.trim() }
+        { l: 'Nome', v: notebookSel.nome || document.getElementById('agend-nome').value.trim() },
+        { l: 'E-mail', v: notebookSel.email || (document.getElementById('agend-nb-email')?.value || '').trim() },
+        { l: 'WhatsApp', v: notebookSel.celular || document.getElementById('agend-whatsapp').value.trim() }
       ].filter(Boolean);
     } else {
       const preco = sel.opcao && sel.opcao.preco ? parseFloat(sel.opcao.preco).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '';
@@ -2210,60 +2312,100 @@ var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empr
     btn.disabled = true; btn.textContent = 'Enviando...';
 
     try {
-      let body;
+      // ── NOTEBOOK: envio direto via WhatsApp para número específico ──
       if (isNotebook) {
-        body = {
-          produto_nome: 'Notebook em geral',
-          modelo_nome: notebookSel.modelo,
-          servico_nome: notebookSel.servico,
-          opcao_nome: '---',
-          opcao_preco: notebookSel.preco || 0,
-          opcao_descricao: '',
-          data: sel.data || null,
-          horario: sel.horario || null,
-          nome: document.getElementById('agend-nome').value.trim(),
-          cpf: '',
-          email: (document.getElementById('agend-nb-email')?.value || '').trim(),
-          whatsapp: document.getElementById('agend-whatsapp').value.trim(),
-          cep: '',
-          endereco_rua: '', endereco_numero: '', endereco_complemento: '',
-          endereco_bairro: '', endereco_cidade: '', endereco_uf: '',
-          descricao_defeito: notebookSel.descricao || '',
-          tipo_solicitacao: notebookSel.tipoSolicitacao || 'agendamento',
-          ciente_aviso_peca: null
-        };
-      } else {
-        const rua = (document.getElementById('agend-rua')?.value || '').trim();
-        const num = (document.getElementById('agend-numero')?.value || '').trim();
-        const comp = (document.getElementById('agend-complemento')?.value || '').trim();
-        const bairro = (document.getElementById('agend-bairro')?.value || '').trim();
-        const cidadeVal = (document.getElementById('agend-cidade')?.value || '').trim();
-        const ufVal = (document.getElementById('agend-uf')?.value || '').trim();
-        const cepVal = (document.getElementById('agend-cep')?.value || '').replace(/\D/g, '');
-        body = {
-          produto_nome: sel.produto ? sel.produto.nome : '',
-          modelo_nome: sel.modelo ? sel.modelo.nome : '',
-          servico_nome: sel.servico ? sel.servico.nome : '',
-          opcao_nome: sel.opcao ? sel.opcao.nome : '---',
-          opcao_preco: sel.opcao ? sel.opcao.preco : 0,
-          opcao_descricao: sel.opcao ? sel.opcao.descricao || '' : '',
-          data: sel.data,
-          horario: sel.horario,
-          nome: document.getElementById('agend-nome').value.trim(),
-          cpf: document.getElementById('agend-cpf').value.trim(),
-          email: document.getElementById('agend-email').value.trim(),
-          whatsapp: document.getElementById('agend-whatsapp').value.trim(),
-          cep: cepVal,
-          endereco_rua: rua,
-          endereco_numero: num,
-          endereco_complemento: comp,
-          endereco_bairro: bairro,
-          endereco_cidade: cidadeVal,
-          endereco_uf: ufVal,
-          ciente_aviso_peca: true,
-          tipo_solicitacao: 'agendamento'
-        };
+        const nome = notebookSel.nome || document.getElementById('agend-nome').value.trim();
+        const celular = notebookSel.celular || document.getElementById('agend-whatsapp').value.trim();
+        const email = notebookSel.email || '';
+        const cpf = notebookSel.cpf || '';
+        const modelo = notebookSel.modelo || '';
+        const servico = notebookSel.servico || '';
+        const descricao = notebookSel.descricao || '';
+        const preco = notebookSel.preco || 0;
+        const isDiag = servico.toLowerCase().match(/diagn|or[çc]amento/);
+        const precoStr = preco > 0 ? preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : 'A confirmar';
+        const precoLabel = isDiag ? ('💰 *Valor:* ' + precoStr) : ('💰 *Valor a partir de:* ' + precoStr);
+        const dataFmt = sel.data ? new Date(sel.data + 'T12:00:00').toLocaleDateString('pt-BR') : '';
+        const horaFmt = sel.horario ? sel.horario.slice(0, 5) : '';
+        let msg = '💻 *NOVO AGENDAMENTO – NOTEBOOK*\n\n';
+        msg += '👤 *Nome:* ' + nome + '\n';
+        msg += '📱 *Celular:* ' + celular + '\n';
+        if (email) msg += '📧 *E-mail:* ' + email + '\n';
+        if (cpf) msg += '🪪 *CPF:* ' + cpf + '\n';
+        msg += '\n💻 *Notebook:* ' + modelo + '\n';
+        msg += '🔧 *Serviço:* ' + servico + '\n';
+        msg += precoLabel + '\n';
+        if (dataFmt) msg += '📅 *Data:* ' + dataFmt + '\n';
+        if (horaFmt) msg += '⏰ *Horário:* ' + horaFmt + '\n';
+        if (descricao) msg += '\n📝 *Descrição:* ' + descricao + '\n';
+        msg += '\n_iPro Assistência Apple – Campinas/SP_';
+        // Enviar para o número específico do notebook
+        var NB_DEST_NUMBER = '5519996666898';
+        const res = await fetch(EVO_API_URL + '/message/sendText/' + encodeURIComponent(EVO_INSTANCE), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': EVO_API_KEY },
+          body: JSON.stringify({ number: NB_DEST_NUMBER, text: msg })
+        });
+        if (!res.ok) throw new Error('Erro ao enviar solicitação. Tente novamente.');
+        btn.disabled = false; btn.textContent = 'Prosseguir →';
+        // Fechar modal e mostrar sucesso específico notebook
+        window.closeAgendamento();
+        var nbSuccessOvl = document.getElementById('agend-terms-overlay');
+        if (nbSuccessOvl) {
+          var nbBox = document.getElementById('agend-terms-box');
+          if (nbBox) {
+            nbBox.innerHTML = '<div style="text-align:center;margin-bottom:20px">' +
+              '<div style="width:56px;height:56px;border-radius:50%;background:#e8f5e9;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:24px">✓</div>' +
+              '<h3 style="font-size:18px;font-weight:800;margin:0 0 4px;color:#1a1a1a">Solicitação enviada!</h3>' +
+              '<p style="font-size:13px;color:#888;margin:0">Recebemos seu agendamento para <strong>' + modelo + '</strong></p>' +
+            '</div>' +
+            '<div style="background:#fffbeb;border:1.5px solid #fde68a;border-radius:16px;padding:16px;margin-bottom:18px">' +
+              '<p style="font-size:13px;font-weight:700;color:#92400e;margin:0 0 10px">⚠️ Aviso importante</p>' +
+              '<ul style="font-size:12px;color:#78350f;line-height:1.9;margin:0;padding-left:16px">' +
+                '<li><strong>NÃO compareça à loja antes de receber a confirmação do agendamento.</strong></li>' +
+                '<li>Entraremos em contato via WhatsApp para confirmar dia e horário.</li>' +
+                '<li>O orçamento final pode variar após análise técnica presencial.</li>' +
+                '<li>Dúvidas? WhatsApp <strong>(19) 99406-3782</strong></li>' +
+              '</ul>' +
+            '</div>' +
+            '<button onclick="window.agendCloseTerms()" style="width:100%;padding:14px;border-radius:14px;background:#1a6cff;color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;font-family:Inter,sans-serif;" onmouseover="this.style.background=\'#0057e6\'" onmouseout="this.style.background=\'#1a6cff\'">Entendido, fechar</button>';
+          }
+          nbSuccessOvl.classList.add('terms-open');
+        }
+        return;
       }
+      // ── DISPOSITIVOS APPLE: fluxo normal via backend + admin ──
+      let body;
+      const rua = (document.getElementById('agend-rua')?.value || '').trim();
+      const num = (document.getElementById('agend-numero')?.value || '').trim();
+      const comp = (document.getElementById('agend-complemento')?.value || '').trim();
+      const bairro = (document.getElementById('agend-bairro')?.value || '').trim();
+      const cidadeVal = (document.getElementById('agend-cidade')?.value || '').trim();
+      const ufVal = (document.getElementById('agend-uf')?.value || '').trim();
+      const cepVal = (document.getElementById('agend-cep')?.value || '').replace(/\D/g, '');
+      body = {
+        produto_nome: sel.produto ? sel.produto.nome : '',
+        modelo_nome: sel.modelo ? sel.modelo.nome : '',
+        servico_nome: sel.servico ? sel.servico.nome : '',
+        opcao_nome: sel.opcao ? sel.opcao.nome : '---',
+        opcao_preco: sel.opcao ? sel.opcao.preco : 0,
+        opcao_descricao: sel.opcao ? sel.opcao.descricao || '' : '',
+        data: sel.data,
+        horario: sel.horario,
+        nome: document.getElementById('agend-nome').value.trim(),
+        cpf: document.getElementById('agend-cpf').value.trim(),
+        email: document.getElementById('agend-email').value.trim(),
+        whatsapp: document.getElementById('agend-whatsapp').value.trim(),
+        cep: cepVal,
+        endereco_rua: rua,
+        endereco_numero: num,
+        endereco_complemento: comp,
+        endereco_bairro: bairro,
+        endereco_cidade: cidadeVal,
+        endereco_uf: ufVal,
+        ciente_aviso_peca: true,
+        tipo_solicitacao: 'agendamento'
+      };
       // Append terms acceptance data if available
       if (window._termosAceiteData) {
         Object.assign(body, window._termosAceiteData);
@@ -2318,28 +2460,6 @@ var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empr
       window.closeAgendamento();
       const saved = await res.json();
       window._agendWhatsappLink = saved.whatsappLink || null;
-
-      // ── Evolution API: confirmação para o CLIENTE ──────────────
-      try {
-        const clientRaw = body.whatsapp.replace(/\D/g, '');
-        const clientNum = clientRaw.length <= 11 ? '55' + clientRaw : clientRaw;
-        const dataFmt = body.data ? new Date(body.data + 'T12:00:00').toLocaleDateString('pt-BR') : '';
-        let confirmMsg = '✅ *Agendamento confirmado!*\n\n';
-        confirmMsg += '📱 *Dispositivo:* ' + body.produto_nome + '\n';
-        if (body.modelo_nome) confirmMsg += '🔹 *Modelo:* ' + body.modelo_nome + '\n';
-        confirmMsg += '🔧 *Serviço:* ' + body.servico_nome + '\n';
-        if (dataFmt) confirmMsg += '📅 *Data:* ' + dataFmt + '\n';
-        if (body.horario) confirmMsg += '🕐 *Horário:* ' + body.horario.slice(0, 5) + '\n';
-        confirmMsg += '\n📍 *Local:* Rua Jorge Krug, 69 — Vila Itapura, Campinas/SP\n';
-        confirmMsg += '📞 *(19) 99406-3782*\n\n';
-        confirmMsg += '_iPro Assistência Apple — Campinas/SP_';
-        fetch(EVO_API_URL + '/message/sendText/' + encodeURIComponent(EVO_INSTANCE), {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'apikey': EVO_API_KEY },
-          body: JSON.stringify({ number: clientNum, text: confirmMsg })
-        }).catch(function(e) { console.warn('Evolution client confirm error:', e); });
-      } catch (evoErr) { console.warn('Evolution confirm setup error:', evoErr); }
-      // ──────────────────────────────────────────────────────────
 
       const termsOvl = document.getElementById('agend-terms-overlay');
       if (termsOvl) termsOvl.classList.add('terms-open');

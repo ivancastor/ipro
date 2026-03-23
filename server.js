@@ -403,15 +403,17 @@ app.get("/api/opcoes", async (req, res) => {
 });
 
 app.post("/api/opcoes", authAdmin, async (req, res) => {
-  const { servico_id, nome, preco, descricao, tempo_estimado, ordem, ativo } = req.body;
+  const { servico_id, nome, preco, descricao, tempo_estimado, ordem, ativo, declaracoes } = req.body;
+  const ins = { servico_id, nome, preco: preco || 0, descricao: descricao || "", tempo_estimado: tempo_estimado || "", ordem: ordem || 0, ativo: ativo !== false };
+  if (declaracoes !== undefined) ins.declaracoes = declaracoes;
   const { data, error } = await supabase
-    .from("opcoes").insert({ servico_id, nome, preco: preco || 0, descricao: descricao || "", tempo_estimado: tempo_estimado || "", ordem: ordem || 0, ativo: ativo !== false }).select().single();
+    .from("opcoes").insert(ins).select().single();
   if (error) return res.status(500).json({ error: error.message });
   res.json(data);
 });
 
 app.put("/api/opcoes/:id", authAdmin, async (req, res) => {
-  const { nome, preco, descricao, tempo_estimado, ordem, ativo, pagamento_parcial } = req.body;
+  const { nome, preco, descricao, tempo_estimado, ordem, ativo, pagamento_parcial, declaracoes } = req.body;
   const updateObj = {};
   if (nome !== undefined) updateObj.nome = nome;
   if (preco !== undefined) updateObj.preco = preco;
@@ -420,6 +422,7 @@ app.put("/api/opcoes/:id", authAdmin, async (req, res) => {
   if (ordem !== undefined) updateObj.ordem = ordem;
   if (ativo !== undefined) updateObj.ativo = ativo;
   if (pagamento_parcial !== undefined) updateObj.pagamento_parcial = pagamento_parcial;
+  if (declaracoes !== undefined) updateObj.declaracoes = declaracoes;
   const { data, error } = await supabase
     .from("opcoes").update(updateObj).eq("id", req.params.id).select().single();
   if (error) return res.status(500).json({ error: error.message });

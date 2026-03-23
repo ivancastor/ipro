@@ -63,6 +63,7 @@ CREATE TABLE IF NOT EXISTS opcoes (
   ordem INT DEFAULT 0,
   ativo BOOLEAN DEFAULT true,
   pagamento_parcial BOOLEAN DEFAULT false,
+  declaracoes JSONB DEFAULT '[]'::jsonb,
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
