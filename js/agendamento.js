@@ -1149,7 +1149,12 @@ var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empr
       return;
     }
     document.getElementById('agend-avisos-overlay').classList.remove('avisos-open');
-    // Show termos popup
+    // Notebook/outros: vai direto para envio via WhatsApp, sem etapa de termos
+    if (isNotebook) {
+      window.agendSubmit();
+      return;
+    }
+    // Dispositivos Apple: mostra popup de termos e assinatura
     window.agendShowTermos();
   };
 
