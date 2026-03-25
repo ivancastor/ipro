@@ -3544,6 +3544,8 @@ async function confirmDuplicarModelo() {
               tempo_estimado: op.tempo_estimado ?? null,
               ativo: op.ativo,
               ordem: op.ordem ?? 0,
+              pagamento_parcial: op.pagamento_parcial ?? false,
+              declaracoes: op.declaracoes ?? [],
             }}).catch(() => null);
             if (newOp) {
               await Promise.all(opFaqs.map(faq => API('/api/faq', { method: 'POST', body: {
@@ -3802,6 +3804,8 @@ async function confirmDuplicarServicos() {
               tempo_estimado: op.tempo_estimado ?? null,
               ativo: op.ativo,
               ordem: op.ordem ?? 0,
+              pagamento_parcial: op.pagamento_parcial ?? false,
+              declaracoes: op.declaracoes ?? [],
             }}).catch(() => null);
             if (newOp) {
               await Promise.all(opFaqs.map(faq => API('/api/faq', { method: 'POST', body: {
