@@ -197,6 +197,17 @@ function processFile(filePath, filename) {
     inserts += `  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />\n`;
   }
 
+  // Favicon
+  if (!html.includes('rel="icon"')) {
+    inserts += `  <link rel="icon" href="images/logonova.png" type="image/png" />\n`;
+    inserts += `  <link rel="apple-touch-icon" href="images/logonova.png" />\n`;
+  }
+
+  // theme-color
+  if (!html.includes('theme-color')) {
+    inserts += `  <meta name="theme-color" content="#1a1a1a" />\n`;
+  }
+
   // Preload hero background image (service pages with page-hero.js)
   if (heroBg && !html.includes(`rel="preload" as="image"`)) {
     inserts += `  <link rel="preload" as="image" href="${heroBg}" fetchpriority="high" />\n`;

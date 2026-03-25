@@ -238,6 +238,33 @@ function buildAgendamentoMsg(agend) {
 app.use(express.json({ limit: "10mb" }));
 app.use(express.static(__dirname));
 
+// ── Sitemap (auto-generated) ─────────────────────────────
+app.get("/sitemap.xml", (req, res) => {
+  const fs = require("fs");
+  const EXCLUDE = new Set(["admin.html", "termos.html", "conectar-whatsapp.html"]);
+  const BASE = "https://ipro.net.br";
+  const files = fs.readdirSync(__dirname)
+    .filter(f => f.endsWith(".html") && !EXCLUDE.has(f))
+    .sort();
+  const now = new Date().toISOString().split("T")[0];
+
+  // Priority map: homepage > main sections > service pages
+  const PRIORITY = { "index.html": "1.0", "agendamento.html": "0.9", "servicos.html": "0.9",
+    "quemSomos.html": "0.8", "contato.html": "0.8", "seminovos.html": "0.8" };
+
+  const urls = files.map(f => {
+    const loc = f === "index.html" ? BASE + "/" : BASE + "/" + f;
+    const priority = PRIORITY[f] || "0.7";
+    const changefreq = f === "index.html" ? "daily" : "weekly";
+    return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
+  });
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>`;
+  res.setHeader("Content-Type", "application/xml; charset=utf-8");
+  res.setHeader("Cache-Control", "public, max-age=3600");
+  res.send(xml);
+});
+
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 20 * 1024 * 1024 } });
 
 // ── Auth middleware ──────────────────────────────────────
