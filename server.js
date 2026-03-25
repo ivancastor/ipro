@@ -715,10 +715,12 @@ app.post("/api/agendamentos", async (req, res) => {
   }
   if (error) return res.status(500).json({ error: error.message });
 
-  // Send WhatsApp confirmation — notebook goes to operations team, Apple devices go to client
+  // Send WhatsApp confirmation
   const msg = buildAgendamentoMsg(data);
-  const waDest = isNotebookBooking ? NB_DEST_NUMBER : data.whatsapp;
-  const wResult = await sendWhatsApp(waDest, msg);
+  let wResult = await sendWhatsApp(data.whatsapp, msg); // sempre envia para o cliente
+  if (isNotebookBooking) {
+    await sendWhatsApp(NB_DEST_NUMBER, msg); // também envia para a equipe operacional
+  }
   const whatsappSent = wResult.ok;
   const whatsappLink = `https://api.whatsapp.com/send?phone=${normalizePhone(data.whatsapp)}&text=${encodeURIComponent(msg)}`;
 
