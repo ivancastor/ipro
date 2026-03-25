@@ -670,6 +670,23 @@ app.post("/api/agendamentos", async (req, res) => {
   }
   // Notebook: data e horário são opcionais
 
+  // ── NOTEBOOK: apenas WhatsApp, sem salvar no banco ───────────
+  if (isNotebookBooking) {
+    const nbData = {
+      nome, whatsapp, email: email || '', cpf: cpf || '',
+      produto_nome, modelo_nome: modelo_nome || '',
+      servico_nome, opcao_nome: opcao_nome || '---', opcao_preco: opcao_preco || 0,
+      data: dt || null, horario: horario || null,
+      descricao_defeito: descricao_defeito || '',
+      tipo_solicitacao: tipo_solicitacao || 'agendamento'
+    };
+    const msg = buildAgendamentoMsg(nbData);
+    const wClient = await sendWhatsApp(whatsapp, msg);
+    await sendWhatsApp(NB_DEST_NUMBER, msg);
+    const whatsappLink = `https://api.whatsapp.com/send?phone=${normalizePhone(whatsapp)}&text=${encodeURIComponent(msg)}`;
+    return res.json({ whatsappLink, whatsappSent: wClient.ok });
+  }
+
   // Verificar se o horário já foi reservado (apenas para agendamento com data)
   if (!isOrcamento && dt && horario) {
     const { data: clash } = await supabase
@@ -717,10 +734,7 @@ app.post("/api/agendamentos", async (req, res) => {
 
   // Send WhatsApp confirmation
   const msg = buildAgendamentoMsg(data);
-  let wResult = await sendWhatsApp(data.whatsapp, msg); // sempre envia para o cliente
-  if (isNotebookBooking) {
-    await sendWhatsApp(NB_DEST_NUMBER, msg); // também envia para a equipe operacional
-  }
+  let wResult = await sendWhatsApp(data.whatsapp, msg);
   const whatsappSent = wResult.ok;
   const whatsappLink = `https://api.whatsapp.com/send?phone=${normalizePhone(data.whatsapp)}&text=${encodeURIComponent(msg)}`;
 

@@ -51,7 +51,6 @@ var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empr
     box.innerHTML = `
       <div class="agend-header">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:8px">
-          <button id="agend-header-back-btn" onclick="window.agendHeaderBack()" style="display:none;align-items:center;gap:5px;background:none;border:none;cursor:pointer;font-size:12px;color:#888;font-weight:700;font-family:Inter,sans-serif;padding:5px 8px 5px 0;flex-shrink:0;transition:color .15s" onmouseover="this.style.color='#1a6cff'" onmouseout="this.style.color='#888'">← Voltar</button>
           <h2 id="agend-title" style="font-size:16px;font-weight:800;margin:0;color:#1a1a1a;letter-spacing:-.2px;flex:1;text-align:center">Selecione o serviço</h2>
           <button onclick="window.agendShowGuide()" style="font-size:11px;color:#1a6cff;background:#f0f4ff;border:none;cursor:pointer;font-family:Inter,sans-serif;font-weight:700;display:inline-flex;align-items:center;gap:4px;padding:5px 11px;border-radius:20px;flex-shrink:0" onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#f0f4ff'">&#9432; Como funciona?</button>
         </div>
