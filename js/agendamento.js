@@ -1,4 +1,4 @@
-// ═══════════════════════════════════════════════════════════
+﻿// ═══════════════════════════════════════════════════════════
 // iPro Agendamento — Multi-step booking form modal
 // Fluxo: Produto → Modelo (dropdown) → Serviço (+ FAQ) →
 //        Opção/Qualidade → Data (calendário azul/vermelho)
@@ -9,7 +9,7 @@
 var EVO_API_URL      = 'https://evolution.cosmosomsoc.lat';  // URL do servidor Evolution
 var EVO_API_KEY      = 'D3CAE83B749A-4871-AD6A-52D92D228C46'; // API Key global
 var EVO_INSTANCE     = 'sv distribuidora';                    // Nome da instância
-var EVO_DEST_NUMBER  = '5519994063782';                       // Número da empresa (DDI+DDD+número)
+var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empresa (DDI+DDD+número)
 // ─────────────────────────────────────────────────────────────
 
 (function () {

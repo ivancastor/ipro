@@ -1,4 +1,4 @@
-$basePath = "c:\Users\crist\Desktop\projeto-ipro\ipro"
+﻿$basePath = "c:\Users\crist\Desktop\projeto-ipro\ipro"
 
 # ====================================================================================
 # 1. index.html — add .nav-card img filter
@@ -42,7 +42,7 @@ $newNav = @'
         </div>
         <!-- Atendimento -->
         <div class="nav-item">
-          <a href="https://api.whatsapp.com/send?phone=5519994063782&text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20atendimento." target="_blank" rel="noopener" class="nav-icon-btn" aria-label="Atendimento">
+          <a href="https://api.whatsapp.com/send?phone=5519996666898&text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20atendimento." target="_blank" rel="noopener" class="nav-icon-btn" aria-label="Atendimento">
             <img src="images/comentario-alt-middle.svg" width="24" height="24" alt="">
           </a>
           <div class="nav-card"><img src="images/comentario-alt-middle.svg" style="flex-shrink:0;" width="14" height="14" alt="">Atendimento</div>
@@ -63,7 +63,7 @@ $newNav = @'
         </div>
         <!-- Contato -->
         <div class="nav-item">
-          <a href="https://api.whatsapp.com/send?phone=5519994063782&text=Ol%C3%A1!%20Vim%20do%20site.%20" target="_blank" rel="noopener" class="nav-icon-btn" aria-label="Contato">
+          <a href="https://api.whatsapp.com/send?phone=5519996666898&text=Ol%C3%A1!%20Vim%20do%20site.%20" target="_blank" rel="noopener" class="nav-icon-btn" aria-label="Contato">
             <img src="images/circulo-telefone-flip.svg" width="22" height="24" alt="">
           </a>
           <div class="nav-card"><img src="images/circulo-telefone-flip.svg" style="flex-shrink:0;" width="13" height="15" alt="">Contato</div>
@@ -223,7 +223,7 @@ $mobilePanelServicos = @'
         </span>
         <span class="text-[15px] font-medium whitespace-nowrap">Reparos</span>
       </a>
-      <a href="https://api.whatsapp.com/send?phone=5519994063782&text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20atendimento." target="_blank" rel="noopener" class="mob-item flex items-center gap-2 py-[13px]">
+      <a href="https://api.whatsapp.com/send?phone=5519996666898&text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20atendimento." target="_blank" rel="noopener" class="mob-item flex items-center gap-2 py-[13px]">
         <span class="mob-icon flex items-center justify-center shrink-0">
           <img src="images/comentario-alt-middle.svg" width="24" height="24" alt="">
         </span>
@@ -241,7 +241,7 @@ $mobilePanelServicos = @'
         </span>
         <span class="text-[15px] font-medium whitespace-nowrap">Depoimentos</span>
       </a>
-      <a href="https://api.whatsapp.com/send?phone=5519994063782&text=Ol%C3%A1!%20Vim%20do%20site.%20" target="_blank" rel="noopener" class="mob-item flex items-center gap-2 py-[13px]">
+      <a href="https://api.whatsapp.com/send?phone=5519996666898&text=Ol%C3%A1!%20Vim%20do%20site.%20" target="_blank" rel="noopener" class="mob-item flex items-center gap-2 py-[13px]">
         <span class="mob-icon flex items-center justify-center shrink-0">
           <img src="images/circulo-telefone-flip.svg" width="22" height="24" alt="">
         </span>
@@ -251,7 +251,7 @@ $mobilePanelServicos = @'
 
     <!-- WhatsApp CTA -->
     <div class="px-5 pb-8 pt-4">
-      <a href="https://api.whatsapp.com/send?phone=5519994063782&text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20atendimento." target="_blank" rel="noopener"
+      <a href="https://api.whatsapp.com/send?phone=5519996666898&text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20atendimento." target="_blank" rel="noopener"
          class="flex items-center justify-center gap-3 w-full bg-[#1a6cff] hover:bg-[#005de8] active:bg-[#004cc5] text-white text-[15px] font-semibold rounded-2xl px-6 py-4 transition-colors duration-200">
         <i class="fa-brands fa-whatsapp text-xl"></i>
         Agendar atendimento
@@ -293,7 +293,7 @@ $mobilePanelQuem = @'
         </span>
         <span class="text-[15px] font-medium whitespace-nowrap">Reparos</span>
       </a>
-      <a href="https://api.whatsapp.com/send?phone=5519994063782&text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20atendimento." target="_blank" rel="noopener" class="mob-item flex items-center gap-2 py-[13px]">
+      <a href="https://api.whatsapp.com/send?phone=5519996666898&text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20atendimento." target="_blank" rel="noopener" class="mob-item flex items-center gap-2 py-[13px]">
         <span class="mob-icon flex items-center justify-center shrink-0">
           <img src="images/comentario-alt-middle.svg" width="24" height="24" alt="">
         </span>
@@ -311,7 +311,7 @@ $mobilePanelQuem = @'
         </span>
         <span class="text-[15px] font-medium whitespace-nowrap">Depoimentos</span>
       </a>
-      <a href="https://api.whatsapp.com/send?phone=5519994063782&text=Ol%C3%A1!%20Vim%20do%20site.%20" target="_blank" rel="noopener" class="mob-item flex items-center gap-2 py-[13px]">
+      <a href="https://api.whatsapp.com/send?phone=5519996666898&text=Ol%C3%A1!%20Vim%20do%20site.%20" target="_blank" rel="noopener" class="mob-item flex items-center gap-2 py-[13px]">
         <span class="mob-icon flex items-center justify-center shrink-0">
           <img src="images/circulo-telefone-flip.svg" width="22" height="24" alt="">
         </span>
@@ -321,7 +321,7 @@ $mobilePanelQuem = @'
 
     <!-- WhatsApp CTA -->
     <div class="px-5 pb-8 pt-4">
-      <a href="https://api.whatsapp.com/send?phone=5519994063782&text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20atendimento." target="_blank" rel="noopener"
+      <a href="https://api.whatsapp.com/send?phone=5519996666898&text=Ol%C3%A1!%20Gostaria%20de%20agendar%20um%20atendimento." target="_blank" rel="noopener"
          class="flex items-center justify-center gap-3 w-full bg-[#1a6cff] hover:bg-[#005de8] active:bg-[#004cc5] text-white text-[15px] font-semibold rounded-2xl px-6 py-4 transition-colors duration-200">
         <i class="fa-brands fa-whatsapp text-xl"></i>
         Agendar atendimento

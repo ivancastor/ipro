@@ -1,4 +1,4 @@
-require("dotenv").config();
+﻿require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
@@ -1223,7 +1223,7 @@ async function processAsaasPagamento(paymentId) {
 
   const msg = buildAgendamentoMsg(agend);
   sendWhatsApp(agend.whatsapp, msg).catch(e => console.error("[Asaas] WA cliente:", e.message));
-  const adminPhone = process.env.WHATSAPP_NUMERO || "5519994063782";
+  const adminPhone = process.env.WHATSAPP_NUMERO || "5519996666898";
   sendWhatsApp(adminPhone, `\uD83D\uDD14 *NOVO AGENDAMENTO \u2014 PAGAMENTO CONFIRMADO*\n\n${msg}`).catch(() => {});
 
   if (bk.email) {
