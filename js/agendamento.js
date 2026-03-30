@@ -1546,12 +1546,12 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
     if (target) target.classList.add('agend-active');
     renderProgress();
     _updateHeaderBack();
-    if (isNotebook) {
-      const nbTitles = { 1: 'Notebook em geral', 2: 'Escolha data e horário', 3: 'Seus dados', 4: 'Revisão' };
-      document.getElementById('agend-title').textContent = nbTitles[n] || 'Notebook em geral';
+    if (n === 1) {
+      _updateSubStepTitle();
     } else {
-      const titles = { 1: 'Selecione o serviço', 2: 'Escolha data e horário', 3: 'Seus dados', 4: 'Revisão' };
-      document.getElementById('agend-title').textContent = titles[n] || 'Agendar atendimento';
+      const titles = { 2: 'Escolha data e horário', 3: 'Seus dados', 4: 'Revisão' };
+      const titleEl = document.getElementById('agend-title');
+      if (titleEl) titleEl.textContent = titles[n] || 'Agendar atendimento';
     }
     document.getElementById('agend-progress').style.display = 'flex';
     // Toggle step 3 extra fields (hidden for notebook, visible for normal)
@@ -1568,11 +1568,11 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
   window.agendGoStep = function (n) {
     if (n === 1) {
       if (isNotebook) {
-        hideAllSub1(); document.getElementById('agend-sub1-notebook').style.display = '';
+        _showSub1('notebook');
       } else if (sel.opcao && opcoesData.filter(o => o.ativo !== false).length > 0) {
-        hideAllSub1(); document.getElementById('agend-sub1-opcao').style.display = '';
+        _showSub1('opcao');
       } else if (sel.servico) {
-        hideAllSub1(); document.getElementById('agend-sub1-servico').style.display = '';
+        _showSub1('servico');
       }
     }
     if (n === 4) {
@@ -1594,7 +1594,8 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
         const cidade = (document.getElementById('agend-cidade')?.value || '').trim();
         if (!nome || !cpf || !email || !wpp || !wpp2) { alert('Preencha todos os campos obrigatórios.'); return; }
         if (wpp !== wpp2) { alert('Os números de WhatsApp não conferem.'); return; }
-        if (!email.includes('@')) { alert('E-mail inválido.'); return; }
+        if (!_validarEmail(email)) { alert('E-mail inválido. Verifique e tente novamente.'); return; }
+        if (!_validarCpf(cpf)) { alert('CPF inválido. Verifique os dígitos e tente novamente.'); return; }
         if (cep.length !== 8 || !cidade) { alert('Informe um CEP válido.'); return; }
         if (!numero) { alert('Informe o número do endereço.'); return; }
         buildReview();
@@ -1607,6 +1608,26 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
     ['agend-sub1-produto', 'agend-sub1-modelo', 'agend-sub1-servico', 'agend-sub1-opcao', 'agend-sub1-notebook']
       .forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
     setTimeout(_updateHeaderBack, 0);
+  }
+
+  function _updateSubStepTitle() {
+    const titleEl = document.getElementById('agend-title');
+    if (!titleEl) return;
+    const map = { notebook: 'Notebook em geral', opcao: 'Qualidade da peça', servico: 'Qual serviço deseja?', modelo: 'Qual o modelo?', produto: 'Qual é seu dispositivo?' };
+    for (const name of ['notebook','opcao','servico','modelo','produto']) {
+      const el = document.getElementById('agend-sub1-' + name);
+      if (el && el.style.display !== 'none') { titleEl.textContent = map[name]; return; }
+    }
+    titleEl.textContent = 'Qual é seu dispositivo?';
+  }
+
+  function _showSub1(name) {
+    const map = { produto: 'Qual é seu dispositivo?', modelo: 'Qual o modelo?', servico: 'Qual serviço deseja?', opcao: 'Qualidade da peça', notebook: 'Notebook em geral' };
+    hideAllSub1();
+    const el = document.getElementById('agend-sub1-' + name);
+    if (el) el.style.display = '';
+    const titleEl = document.getElementById('agend-title');
+    if (titleEl) titleEl.textContent = map[name] || 'Agendar atendimento';
   }
 
   function _updateHeaderBack() {
@@ -1647,21 +1668,18 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
       const el = document.getElementById(id); if (el) { el.innerHTML = ''; el.dataset.open = '0'; }
     });
     if (to === 'produto') {
-      hideAllSub1();
-      document.getElementById('agend-sub1-produto').style.display = '';
+      _showSub1('produto');
       sel.modelo = null; sel.servico = null; sel.opcao = null;
     } else if (to === 'modelo') {
-      hideAllSub1();
       if (modelosData.filter(m => m.ativo !== false).length > 0) {
-        document.getElementById('agend-sub1-modelo').style.display = '';
+        _showSub1('modelo');
       } else {
-        document.getElementById('agend-sub1-produto').style.display = '';
+        _showSub1('produto');
         sel.modelo = null;
       }
       sel.servico = null; sel.opcao = null;
     } else if (to === 'servico') {
-      hideAllSub1();
-      document.getElementById('agend-sub1-servico').style.display = '';
+      _showSub1('servico');
       sel.opcao = null;
     }
   };
@@ -1689,10 +1707,8 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
     if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Prosseguir →'; }
     const errDiv = document.getElementById('agend-submit-error');
     if (errDiv) errDiv.style.display = 'none';
-    showStep(1); // render title + progress dots immediately
-    hideAllSub1();
-    const subProd = document.getElementById('agend-sub1-produto');
-    if (subProd) subProd.style.display = '';
+    _showSub1('produto');
+    showStep(1); // render progress dots and mark step active
     const grid = document.getElementById('agend-produtos');
     if (grid) grid.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;padding:30px;gap:10px"><div style="width:20px;height:20px;border:2.5px solid #1a6cff;border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite"></div><span style="font-size:13px;color:#aaa">Carregando dispositivos...</span></div>';
     await loadProdutos();
@@ -2059,6 +2075,23 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
     el.value = v;
   };
 
+  function _validarCpf(cpf) {
+    const d = cpf.replace(/\D/g, '');
+    if (d.length !== 11 || /^(\d)\1{10}$/.test(d)) return false;
+    let s = 0;
+    for (let i = 0; i < 9; i++) s += +d[i] * (10 - i);
+    let r = (s * 10) % 11; if (r >= 10) r = 0;
+    if (r !== +d[9]) return false;
+    s = 0;
+    for (let i = 0; i < 10; i++) s += +d[i] * (11 - i);
+    r = (s * 10) % 11; if (r >= 10) r = 0;
+    return r === +d[10];
+  }
+
+  function _validarEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+  }
+
   window.agendFormatPhone = function (el) {
     let v = el.value.replace(/\D/g, '').slice(0, 11);
     if (v.length > 10) v = v.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
@@ -2191,8 +2224,7 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
       const res = await fetch('/api/notebook-servicos');
       notebookServicos = (await res.json()).filter(s => s.ativo !== false);
     } catch { notebookServicos = []; }
-    hideAllSub1();
-    document.getElementById('agend-sub1-notebook').style.display = '';
+    _showSub1('notebook');
     // Populate service dropdown
     const selEl = document.getElementById('agend-nb-servico');
     if (selEl) {
@@ -2262,6 +2294,7 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
     if (!servico) { alert('Selecione o tipo de serviço.'); return; }
     if (!nome) { alert('Informe seu nome completo.'); return; }
     if (!celular) { alert('Informe seu celular / WhatsApp.'); return; }
+    if (email && !_validarEmail(email)) { alert('E-mail inválido. Verifique e tente novamente.'); return; }
     const selectedSvcOpt = document.getElementById('agend-nb-servico')?.selectedOptions[0];
     const preco = parseFloat(selectedSvcOpt?.dataset?.nbSvcPreco) || 0;
     // Store notebook contact data for later use
@@ -2290,9 +2323,8 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
   window.agendStep3Back = function() {
     if (isNotebook && notebookSel.tipoSolicitacao === 'orcamento') {
       // Orçamento: back to notebook sub-step (step 1)
+      _showSub1('notebook');
       showStep(1);
-      hideAllSub1();
-      document.getElementById('agend-sub1-notebook').style.display = '';
     } else {
       // Agendamento (notebook or normal): back to date/time (step 2)
       showStep(2);
@@ -2330,8 +2362,7 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
     } catch { modelosData = []; }
     const activeModels = modelosData.filter(m => m.ativo !== false);
     if (activeModels.length > 0) {
-      hideAllSub1();
-      document.getElementById('agend-sub1-modelo').style.display = '';
+      _showSub1('modelo');
       document.getElementById('agend-modelo-title').textContent = 'Qual o modelo do ' + p.nome + '?';
       renderModeloCards(activeModels);
     } else {
@@ -2370,8 +2401,7 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
     try {
       const res = await fetch('/api/servicos?modelo_id=' + modeloId); servicosData = await res.json();
     } catch { servicosData = []; }
-    hideAllSub1();
-    document.getElementById('agend-sub1-servico').style.display = '';
+    _showSub1('servico');
     const list = document.getElementById('agend-servicos');
     list.innerHTML = '';
     const active = servicosData.filter(s => s.ativo !== false);
@@ -2429,8 +2459,7 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
   async function selectServico(s) {
     sel.servico = s; sel.opcao = null; opcoesData = []; faqServicoData = [];
     // Show opcao step immediately with loading state
-    hideAllSub1();
-    document.getElementById('agend-sub1-opcao').style.display = '';
+    _showSub1('opcao');
     document.getElementById('agend-opcao-title').textContent = s.nome;
     document.getElementById('agend-opcao-subtitle').textContent = 'Escolha a qualidade da peça para ' + s.nome.toLowerCase();
     const list = document.getElementById('agend-opcoes');
