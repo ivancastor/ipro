@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS modelos (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   produto_id UUID NOT NULL REFERENCES produtos(id) ON DELETE CASCADE,
   nome TEXT NOT NULL,
+  grupo TEXT DEFAULT NULL,   -- série/grupo para seleção em 2 etapas (ex: "iPhone 14")
   ordem INT DEFAULT 0,
   ativo BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT now()

@@ -61,6 +61,7 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
         <!-- Step 1: Produto → Modelo → Serviço → Opção -->
         <div class="agend-step agend-active" data-step="1">
           <div id="agend-sub1-produto" style="padding-top:20px"></div>
+          <div id="agend-sub1-grupo" style="display:none;padding-top:20px"></div>
           <div id="agend-sub1-modelo" style="display:none;padding-top:20px"></div>
           <div id="agend-sub1-servico" style="display:none;padding-top:20px"></div>
           <div id="agend-sub1-opcao" style="display:none;padding-top:20px"></div>
@@ -85,11 +86,23 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
         <div id="agend-produtos" class="agend-prod-grid"></div>
       `;
     }
+    // Step 1: Grupo (séries)
+    const grupoDiv = document.getElementById('agend-sub1-grupo');
+    if (grupoDiv) {
+      grupoDiv.innerHTML = `
+        <button class="agend-back-btn" onclick="window.agendBack('produto')">← Voltar</button>
+        <div class="agend-step-header">
+          <h3 id="agend-grupo-title">Qual a série?</h3>
+        </div>
+        <p style="font-size:12px;color:#aaa;margin-bottom:14px">Selecione a série do dispositivo</p>
+        <div id="agend-grupos-cards" style="display:flex;flex-direction:column;gap:8px"></div>
+      `;
+    }
     // Step 1: Modelo
     const modeloDiv = document.getElementById('agend-sub1-modelo');
     if (modeloDiv) {
       modeloDiv.innerHTML = `
-        <button class="agend-back-btn" onclick="window.agendBack('produto')">← Voltar</button>
+        <button class="agend-back-btn" onclick="window.agendBack('grupo')">← Voltar</button>
         <div class="agend-step-header">
           <h3 id="agend-modelo-title">Qual o modelo?</h3>
         </div>
@@ -306,7 +319,7 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
 
     // Reset all booking state for fresh start
     step = 1;
-    sel = { produto: null, modelo: null, servico: null, opcao: null, data: null, horario: null, cienteAvisoPeca: null };
+    sel = { produto: null, grupo: null, modelo: null, servico: null, opcao: null, data: null, horario: null, cienteAvisoPeca: null };
     isNotebook = false;
     notebookSel = { modelo: '', servico: '', descricao: '', tipoSolicitacao: 'agendamento' };
     currentMonth = new Date();
@@ -351,7 +364,7 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
   // ─── State ────────────────────────────────────────────────
   let step = 1;
   let produtos = [], modelosData = [], servicosData = [], opcoesData = [], faqServicoData = [];
-  let sel = { produto: null, modelo: null, servico: null, opcao: null, data: null, horario: null, cienteAvisoPeca: null };
+  let sel = { produto: null, grupo: null, modelo: null, servico: null, opcao: null, data: null, horario: null, cienteAvisoPeca: null };
   let isNotebook = false;
   let notebookServicos = [];
   let notebookSel = { modelo: '', servico: '', descricao: '', tipoSolicitacao: 'agendamento' };
@@ -575,8 +588,16 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
             <p style="font-size:12px;color:#bbb;margin:4px 0 18px">Toque no aparelho para continuar</p>
             <div id="agend-produtos" class="agend-prod-grid"></div>
           </div>
-          <div id="agend-sub1-modelo" style="display:none;padding-top:20px">
+          <div id="agend-sub1-grupo" style="display:none;padding-top:20px">
             <button class="agend-back-btn" onclick="window.agendBack('produto')">← Voltar</button>
+            <div class="agend-step-header">
+              <h3 id="agend-grupo-title">Qual a série?</h3>
+            </div>
+            <p style="font-size:12px;color:#bbb;margin:4px 0 16px">Selecione a série do dispositivo</p>
+            <div id="agend-grupos-cards" style="display:flex;flex-direction:column;gap:8px"></div>
+          </div>
+          <div id="agend-sub1-modelo" style="display:none;padding-top:20px">
+            <button class="agend-back-btn" onclick="window.agendBack('grupo')">← Voltar</button>
             <div class="agend-step-header">
               <h3 id="agend-modelo-title">Qual o modelo?</h3>
             </div>
@@ -1605,7 +1626,7 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
   };
 
   function hideAllSub1() {
-    ['agend-sub1-produto', 'agend-sub1-modelo', 'agend-sub1-servico', 'agend-sub1-opcao', 'agend-sub1-notebook']
+    ['agend-sub1-produto', 'agend-sub1-grupo', 'agend-sub1-modelo', 'agend-sub1-servico', 'agend-sub1-opcao', 'agend-sub1-notebook']
       .forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
     setTimeout(_updateHeaderBack, 0);
   }
@@ -1613,8 +1634,8 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
   function _updateSubStepTitle() {
     const titleEl = document.getElementById('agend-title');
     if (!titleEl) return;
-    const map = { notebook: 'Notebook em geral', opcao: 'Qualidade da peça', servico: 'Qual serviço deseja?', modelo: 'Qual o modelo?', produto: 'Qual é seu dispositivo?' };
-    for (const name of ['notebook','opcao','servico','modelo','produto']) {
+    const map = { notebook: 'Notebook em geral', opcao: 'Qualidade da peça', servico: 'Qual serviço deseja?', modelo: 'Qual o modelo?', grupo: 'Qual a série?', produto: 'Qual é seu dispositivo?' };
+    for (const name of ['notebook','opcao','servico','modelo','grupo','produto']) {
       const el = document.getElementById('agend-sub1-' + name);
       if (el && el.style.display !== 'none') { titleEl.textContent = map[name]; return; }
     }
@@ -1622,7 +1643,7 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
   }
 
   function _showSub1(name) {
-    const map = { produto: 'Qual é seu dispositivo?', modelo: 'Qual o modelo?', servico: 'Qual serviço deseja?', opcao: 'Qualidade da peça', notebook: 'Notebook em geral' };
+    const map = { produto: 'Qual é seu dispositivo?', grupo: 'Qual a série?', modelo: 'Qual o modelo?', servico: 'Qual serviço deseja?', opcao: 'Qualidade da peça', notebook: 'Notebook em geral' };
     hideAllSub1();
     const el = document.getElementById('agend-sub1-' + name);
     if (el) el.style.display = '';
@@ -1645,11 +1666,13 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
 
   window.agendHeaderBack = function() {
     if (step === 1) {
+      const grupo = document.getElementById('agend-sub1-grupo');
       const modelo = document.getElementById('agend-sub1-modelo');
       const servico = document.getElementById('agend-sub1-servico');
       const opcao = document.getElementById('agend-sub1-opcao');
       const notebook = document.getElementById('agend-sub1-notebook');
-      if (modelo && modelo.style.display !== 'none') window.agendBack('produto');
+      if (grupo && grupo.style.display !== 'none') window.agendBack('produto');
+      else if (modelo && modelo.style.display !== 'none') window.agendBack('grupo');
       else if (servico && servico.style.display !== 'none') window.agendBack('modelo');
       else if (opcao && opcao.style.display !== 'none') window.agendBack('servico');
       else if (notebook && notebook.style.display !== 'none') window.agendBack('produto');
@@ -1669,7 +1692,18 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
     });
     if (to === 'produto') {
       _showSub1('produto');
-      sel.modelo = null; sel.servico = null; sel.opcao = null;
+      sel.grupo = null; sel.modelo = null; sel.servico = null; sel.opcao = null;
+    } else if (to === 'grupo') {
+      // Go back to grupo step if grupos exist, otherwise go to produto
+      const activeModels = modelosData.filter(m => m.ativo !== false);
+      const hasGrupos = activeModels.some(m => m.grupo);
+      sel.grupo = null; sel.modelo = null; sel.servico = null; sel.opcao = null;
+      if (hasGrupos) {
+        _showSub1('grupo');
+      } else {
+        _showSub1('produto');
+        sel.produto = null;
+      }
     } else if (to === 'modelo') {
       if (modelosData.filter(m => m.ativo !== false).length > 0) {
         _showSub1('modelo');
@@ -1689,7 +1723,7 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
     overlay.classList.add('agend-open');
     document.body.style.overflow = 'hidden';
     step = 1;
-    sel = { produto: null, modelo: null, servico: null, opcao: null, data: null, horario: null, cienteAvisoPeca: null };
+    sel = { produto: null, grupo: null, modelo: null, servico: null, opcao: null, data: null, horario: null, cienteAvisoPeca: null };
     isNotebook = false;
     notebookSel = { modelo: '', servico: '', descricao: '', preco: 0, tipoSolicitacao: 'agendamento' };
     currentMonth = new Date();
@@ -2215,7 +2249,7 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
     let _nbNome = 'Notebook em geral';
     try { const r = await fetch('/api/notebook-config'); const c = await r.json(); _nbNome = c.nome || _nbNome; } catch {}
     sel.produto = { nome: _nbNome };
-    sel.modelo = null; sel.servico = null; sel.opcao = null;
+    sel.grupo = null; sel.modelo = null; sel.servico = null; sel.opcao = null;
     document.querySelectorAll('.agend-card-big').forEach(c => c.classList.remove('selected'));
     const nbCard = document.getElementById('agend-prod-card-notebook');
     if (nbCard) nbCard.classList.add('selected');
@@ -2356,18 +2390,64 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
   };
 
   async function selectProduto(p) {
-    sel.produto = p; sel.modelo = null; sel.servico = null; sel.opcao = null;
+    sel.produto = p; sel.grupo = null; sel.modelo = null; sel.servico = null; sel.opcao = null;
     try {
       const res = await fetch('/api/modelos?produto_id=' + p.id); modelosData = await res.json();
     } catch { modelosData = []; }
     const activeModels = modelosData.filter(m => m.ativo !== false);
     if (activeModels.length > 0) {
-      _showSub1('modelo');
-      document.getElementById('agend-modelo-title').textContent = 'Qual o modelo do ' + p.nome + '?';
-      renderModeloCards(activeModels);
+      // Check if any model has a 'grupo' defined — use 2-step selection if so
+      const gruposSet = new Set();
+      activeModels.forEach(m => { if (m.grupo) gruposSet.add(m.grupo); });
+      const grupos = Array.from(gruposSet);
+      if (grupos.length > 1) {
+        // Multiple series → show group selector first
+        _showSub1('grupo');
+        const titleEl = document.getElementById('agend-grupo-title');
+        if (titleEl) titleEl.textContent = 'Qual a série do ' + p.nome + '?';
+        renderGrupoCards(grupos, activeModels);
+      } else {
+        // No grouping or single group → go directly to model dropdown
+        _showSub1('modelo');
+        const titleEl = document.getElementById('agend-modelo-title');
+        if (titleEl) titleEl.textContent = 'Qual o modelo do ' + p.nome + '?';
+        renderModeloCards(activeModels);
+      }
     } else {
       sel.modelo = null;
       await loadServicos(p.id);
+    }
+  }
+
+  function renderGrupoCards(grupos, allActiveModels) {
+    const container = document.getElementById('agend-grupos-cards');
+    if (!container) return;
+    container.innerHTML = '';
+    grupos.forEach(g => {
+      const modelsInGroup = allActiveModels.filter(m => m.grupo === g);
+      const card = document.createElement('button');
+      card.style.cssText = 'width:100%;text-align:left;padding:14px 16px;border-radius:14px;border:1.5px solid #e0ddd9;background:#fff;cursor:pointer;font-family:Inter,sans-serif;display:flex;align-items:center;justify-content:space-between;transition:all .15s;';
+      card.innerHTML = `<span style="font-size:14px;font-weight:700;color:#1a1a1a">${g}</span><span style="font-size:12px;color:#bbb">${modelsInGroup.length > 1 ? modelsInGroup.length + ' modelos' : ''} →</span>`;
+      card.onmouseover = () => { card.style.borderColor = '#1a6cff'; card.style.background = '#f0f4ff'; };
+      card.onmouseout = () => { card.style.borderColor = '#e0ddd9'; card.style.background = '#fff'; };
+      card.onclick = () => selectGrupo(g, modelsInGroup);
+      container.appendChild(card);
+    });
+  }
+
+  async function selectGrupo(grupoNome, modelsInGroup) {
+    sel.grupo = grupoNome;
+    if (!modelsInGroup) {
+      modelsInGroup = modelosData.filter(m => m.ativo !== false && m.grupo === grupoNome);
+    }
+    if (modelsInGroup.length === 1) {
+      // Only one model in this series → skip modelo step and go directly
+      await selectModelo(modelsInGroup[0]);
+    } else {
+      _showSub1('modelo');
+      const titleEl = document.getElementById('agend-modelo-title');
+      if (titleEl) titleEl.textContent = 'Qual o modelo ' + grupoNome + '?';
+      renderModeloCards(modelsInGroup);
     }
   }
 

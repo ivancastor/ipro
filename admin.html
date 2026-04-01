@@ -1132,6 +1132,7 @@ async function renderModelosView(container) {
           <div class="flex-1 min-w-0">
             <span class="text-sm font-semibold group-hover:text-[#1a6cff] transition-colors">${m.nome}</span>
             <span class="ml-2 text-xs px-2 py-0.5 rounded-full ${m.ativo ? 'bg-green-100 text-green-700' : 'bg-[#f0f0f0] text-[#aaa]'}">${m.ativo ? 'Ativo' : 'Inativo'}</span>
+            ${m.grupo ? `<span class="ml-1 text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-500 border border-blue-100">série: ${m.grupo}</span>` : ''}
           </div>
           <div class="flex gap-1.5 shrink-0" onclick="event.stopPropagation()">
             <button onclick="editModelo('${m.id}')" class="w-7 h-7 bg-[#f0f4ff] hover:bg-[#1a6cff] hover:text-white rounded-lg flex items-center justify-center text-[#1a6cff] transition-colors" title="Editar"><i class="fa-solid fa-pen" style="font-size:10px"></i></button>
@@ -1870,6 +1871,8 @@ function openModal(type, editData) {
     form.innerHTML = `
       <div><label class="block text-xs font-semibold text-[#555] mb-1.5">Nome *</label>
       <input type="text" id="m-nome" required class="w-full px-4 py-3 rounded-xl border border-[#e0ddd9] outline-none text-sm" value="${editData ? editData.nome : ''}" placeholder="Ex: iPhone 14 Pro"></div>
+      <div><label class="block text-xs font-semibold text-[#555] mb-1.5">Série / Grupo <span class="font-normal text-[#aaa]">(para agrupamento na tela de seleção)</span></label>
+      <input type="text" id="m-grupo" class="w-full px-4 py-3 rounded-xl border border-[#e0ddd9] outline-none text-sm" value="${editData && editData.grupo ? editData.grupo : ''}" placeholder="Ex: iPhone 14  (deixe em branco para não agrupar)"></div>
       <div class="grid grid-cols-2 gap-4">
         <div><label class="block text-xs font-semibold text-[#555] mb-1.5">Ordem</label>
         <input type="number" id="m-ordem" class="w-full px-4 py-3 rounded-xl border border-[#e0ddd9] outline-none text-sm" value="${editData ? editData.ordem : 0}"></div>
@@ -2105,10 +2108,11 @@ document.getElementById('modal-form').addEventListener('submit', async e => {
     }
     loadProdutos();
   } else if (modalType === 'modelo') {
+    const grupo = (document.getElementById('m-grupo')?.value || '').trim() || null;
     if (modalEditId) {
-      await API('/api/modelos/' + modalEditId, { method: 'PUT', body: { nome, ordem, ativo } });
+      await API('/api/modelos/' + modalEditId, { method: 'PUT', body: { nome, ordem, ativo, grupo } });
     } else {
-      await API('/api/modelos', { method: 'POST', body: { produto_id: selectedProdutoId, nome, ordem, ativo } });
+      await API('/api/modelos', { method: 'POST', body: { produto_id: selectedProdutoId, nome, ordem, ativo, grupo } });
     }
     const mdl = await API('/api/modelos?produto_id=' + selectedProdutoId);
     _modelosCache[selectedProdutoId] = mdl;

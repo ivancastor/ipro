@@ -335,17 +335,19 @@ app.get("/api/modelos", async (req, res) => {
 });
 
 app.post("/api/modelos", authAdmin, async (req, res) => {
-  const { produto_id, nome, ordem, ativo } = req.body;
+  const { produto_id, nome, ordem, ativo, grupo } = req.body;
   const { data, error } = await supabase
-    .from("modelos").insert({ produto_id, nome, ordem: ordem || 0, ativo: ativo !== false }).select().single();
+    .from("modelos").insert({ produto_id, nome, ordem: ordem || 0, ativo: ativo !== false, grupo: grupo || null }).select().single();
   if (error) return res.status(500).json({ error: error.message });
   res.json(data);
 });
 
 app.put("/api/modelos/:id", authAdmin, async (req, res) => {
-  const { nome, ordem, ativo } = req.body;
+  const { nome, ordem, ativo, grupo } = req.body;
+  const updateFields = { nome, ordem, ativo };
+  if (grupo !== undefined) updateFields.grupo = grupo || null;
   const { data, error } = await supabase
-    .from("modelos").update({ nome, ordem, ativo }).eq("id", req.params.id).select().single();
+    .from("modelos").update(updateFields).eq("id", req.params.id).select().single();
   if (error) return res.status(500).json({ error: error.message });
   res.json(data);
 });
