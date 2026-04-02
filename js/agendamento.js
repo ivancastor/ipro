@@ -2425,11 +2425,13 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
     container.innerHTML = '';
     grupos.forEach(g => {
       const modelsInGroup = allActiveModels.filter(m => m.grupo === g);
-      const card = document.createElement('button');
-      card.style.cssText = 'width:100%;text-align:left;padding:14px 16px;border-radius:14px;border:1.5px solid #e0ddd9;background:#fff;cursor:pointer;font-family:Inter,sans-serif;display:flex;align-items:center;justify-content:space-between;transition:all .15s;';
-      card.innerHTML = `<span style="font-size:14px;font-weight:700;color:#1a1a1a">${g}</span><span style="font-size:12px;color:#bbb">${modelsInGroup.length > 1 ? modelsInGroup.length + ' modelos' : ''} →</span>`;
-      card.onmouseover = () => { card.style.borderColor = '#1a6cff'; card.style.background = '#f0f4ff'; };
-      card.onmouseout = () => { card.style.borderColor = '#e0ddd9'; card.style.background = '#fff'; };
+      const card = document.createElement('div');
+      card.className = 'agend-card';
+      card.innerHTML = `
+        <div class="agend-card-icon"><img src="/images/maca.png" alt="" style="width:16px;height:16px;object-fit:contain"></div>
+        <p style="font-size:13px;font-weight:700;margin:0;color:#1a1a1a;flex:1">${g}</p>
+        ${modelsInGroup.length > 1 ? `<span style="font-size:11px;color:#bbb;margin-right:4px">${modelsInGroup.length} modelos</span>` : ''}
+        <span style="font-size:12px;color:#bbb">→</span>`;
       card.onclick = () => selectGrupo(g, modelsInGroup);
       container.appendChild(card);
     });
@@ -2454,22 +2456,44 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
   function renderModeloCards(modelos) {
     const container = document.getElementById('agend-modelos-cards');
     if (!container) return;
-    const sel$ = document.createElement('select');
-    sel$.className = 'agend-input';
-    sel$.style.fontSize = '14px';
-    sel$.innerHTML = '<option value="">— Escolher modelo —</option>';
-    modelos.forEach(m => {
-      const opt = document.createElement('option');
-      opt.value = m.id;
-      opt.textContent = m.nome;
-      sel$.appendChild(opt);
-    });
-    sel$.onchange = () => {
-      const m = modelos.find(x => x.id === sel$.value);
-      if (m) selectModelo(m);
-    };
     container.innerHTML = '';
-    container.appendChild(sel$);
+
+    const LIMIT = 6;
+    const principais = modelos.slice(0, LIMIT);
+    const extras = modelos.slice(LIMIT);
+
+    function buildModeloCard(m) {
+      const card = document.createElement('div');
+      card.className = 'agend-card';
+      card.innerHTML = `
+        <div class="agend-card-icon"><img src="/images/maca.png" alt="" style="width:16px;height:16px;object-fit:contain"></div>
+        <p style="font-size:13px;font-weight:700;margin:0;color:#1a1a1a;flex:1">${m.nome}</p>
+        <span style="font-size:12px;color:#bbb">→</span>`;
+      card.onclick = () => selectModelo(m);
+      return card;
+    }
+
+    principais.forEach(m => container.appendChild(buildModeloCard(m)));
+
+    if (extras.length) {
+      const outrosBtn = document.createElement('button');
+      outrosBtn.style.cssText = 'width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 16px;background:#f5f5f7;border:1.5px dashed #d0ccc8;border-radius:14px;cursor:pointer;font-size:13px;font-weight:700;color:#555;font-family:Inter,sans-serif;margin-top:2px;transition:background .2s';
+      outrosBtn.innerHTML = '<i class="fa-solid fa-chevron-down" style="font-size:11px;color:#1a6cff"></i> Mais modelos';
+      outrosBtn.onmouseenter = () => { outrosBtn.style.background = '#ebebed'; };
+      outrosBtn.onmouseleave = () => { outrosBtn.style.background = '#f5f5f7'; };
+
+      const extrasWrap = document.createElement('div');
+      extrasWrap.style.cssText = 'display:none;flex-direction:column;gap:8px;margin-top:2px';
+      extras.forEach(m => extrasWrap.appendChild(buildModeloCard(m)));
+
+      outrosBtn.onclick = () => {
+        extrasWrap.style.display = 'flex';
+        outrosBtn.style.display = 'none';
+      };
+
+      container.appendChild(outrosBtn);
+      container.appendChild(extrasWrap);
+    }
   }
 
   async function selectModelo(m) {
