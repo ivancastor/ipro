@@ -1,4 +1,4 @@
-﻿require("dotenv").config();
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
@@ -1335,10 +1335,9 @@ app.post("/api/asaas/webhook", async (req, res) => {
 });
 
 // ─────────────────────────────────────────────────────────
-// Fallback: serve index.html para rotas não-API
-app.get('*', (req, res) => {
-  res.redirect('/');
-});
+// Fallback: serve index.html para rotas não-API (SPA/static)
+// ─────────────────────────────────────────────────────────
+app.get("*", (req, res, next) => {
   // Não interceptar chamadas de API
   if (req.path.startsWith("/api/")) return next();
   const filePath = path.join(__dirname, req.path === "/" ? "index.html" : req.path);
