@@ -67,8 +67,8 @@
   ],
   "routes": [
   {
-    "src": "/([^\\.]+)",
-    "dest": "/$1.html"
+    "src": "^/agendamento/?$",
+    "dest": "/agendamento.html"
   },
   {
     "src": "/(.*)",
