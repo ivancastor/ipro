@@ -1337,6 +1337,13 @@ app.post("/api/asaas/webhook", async (req, res) => {
 // ─────────────────────────────────────────────────────────
 // Fallback: serve index.html para rotas não-API (SPA/static)
 // ─────────────────────────────────────────────────────────
+const path = require('path');
+
+app.get('/agendamento', (req, res) => {
+  return res.sendFile(path.join(__dirname, 'agendamento.html'));
+});
+
+// seu fallback continua igual
 app.get("*", (req, res, next) => {
   // Não interceptar chamadas de API
   if (req.path.startsWith("/api/")) return next();
