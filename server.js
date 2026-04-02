@@ -1340,19 +1340,20 @@ app.get("*", (req, res) => {
   const path = require("path");
   const fs = require("fs");
 
-  // tenta servir arquivo .html automaticamente
-  const filePath = path.join(__dirname, req.path + ".html");
+  // trata raiz primeiro
+  if (req.path === "/" || req.path === "") {
+    return res.sendFile(path.join(__dirname, "index.html"));
+  }
+
+  // remove barra inicial
+  const cleanPath = req.path.replace(/^\/+/, "");
+
+  const filePath = path.join(__dirname, cleanPath + ".html");
 
   if (fs.existsSync(filePath)) {
     return res.sendFile(filePath);
   }
 
-  // se for raiz → index
-  if (req.path === "/" || req.path === "") {
-    return res.sendFile(path.join(__dirname, "index.html"));
-  }
-
-  // não existe → 404
   return res.status(404).send("Página não encontrada");
 });
   // Não interceptar chamadas de API
