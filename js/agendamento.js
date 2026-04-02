@@ -95,7 +95,14 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
           <h3 id="agend-grupo-title">Qual a série?</h3>
         </div>
         <p style="font-size:12px;color:#aaa;margin-bottom:14px">Selecione a série do dispositivo</p>
-        <div id="agend-grupos-cards" style="display:flex;flex-direction:column;gap:8px"></div>
+        <div class="agend-custom-dropdown" id="agend-grupo-dropdown">
+          <div class="agend-card agend-dropdown-trigger" onclick="window.agendToggleDropdown('agend-grupo-dropdown')">
+            <div class="agend-card-icon"><img src="/images/maca.png" alt="" style="width:16px;height:16px;object-fit:contain"></div>
+            <p style="font-size:13px;font-weight:600;margin:0;color:#aaa;flex:1">— Selecione a série —</p>
+            <i class="fa-solid fa-chevron-down agend-dropdown-chevron" style="font-size:11px;color:#1a6cff"></i>
+          </div>
+          <div class="agend-dropdown-panel" id="agend-grupo-panel" style="display:none"></div>
+        </div>
       `;
     }
     // Step 1: Modelo
@@ -107,7 +114,14 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
           <h3 id="agend-modelo-title">Qual o modelo?</h3>
         </div>
         <p style="font-size:12px;color:#aaa;margin-bottom:14px">Selecione o modelo do seu dispositivo</p>
-        <div id="agend-modelos-cards" style="display:flex;flex-direction:column;gap:8px"></div>
+        <div class="agend-custom-dropdown" id="agend-modelo-dropdown">
+          <div class="agend-card agend-dropdown-trigger" onclick="window.agendToggleDropdown('agend-modelo-dropdown')">
+            <div class="agend-card-icon"><img src="/images/maca.png" alt="" style="width:16px;height:16px;object-fit:contain"></div>
+            <p style="font-size:13px;font-weight:600;margin:0;color:#aaa;flex:1">— Selecione o modelo —</p>
+            <i class="fa-solid fa-chevron-down agend-dropdown-chevron" style="font-size:11px;color:#1a6cff"></i>
+          </div>
+          <div class="agend-dropdown-panel" id="agend-modelo-panel" style="display:none"></div>
+        </div>
       `;
     }
     // Step 1: Serviço
@@ -442,7 +456,7 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
     .agend-card{border:2px solid #b8ccf7;border-radius:16px;padding:14px 16px;cursor:pointer;transition:all .18s;background:#f7f7f8;display:flex;align-items:center;gap:12px}
     .agend-card:hover{border-color:#1a6cff;background:#f0f4ff}
     .agend-card.selected{border-color:#1a6cff;background:#eef3ff}
-    .agend-card-icon{width:38px;height:38px;border-radius:12px;background:#e8eeff;display:flex;align-items:center;justify-content:center;font-size:16px;color:#1a6cff;flex-shrink:0}
+    .agend-card-icon{width:48px;height:48px;border-radius:14px;background:#e8eeff;display:flex;align-items:center;justify-content:center;font-size:20px;color:#1a6cff;flex-shrink:0}
     .agend-card-big{border:2px solid #f0eeeb;border-radius:20px;overflow:hidden;cursor:pointer;transition:all .22s;background:#fafafa;text-align:center;display:flex;flex-direction:column;gap:0;padding:0}
     .agend-card-big:hover{border-color:#1a6cff;transform:translateY(-4px);box-shadow:0 12px 32px rgba(26,108,255,.15)}
     .agend-card-big:hover .agend-card-big-img{transform:scale(1.06)}
@@ -473,6 +487,15 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
     .agend-input{width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid #e8e8ea;outline:none;font-size:14px;font-family:Inter,sans-serif;transition:border-color .2s,box-shadow .2s;background:#fafafa;color:#1a1a1a;box-sizing:border-box}
     .agend-input:focus{border-color:#1a6cff;background:#fff;box-shadow:0 0 0 3px rgba(26,108,255,.12)}
     select.agend-input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;cursor:pointer}
+    .agend-custom-dropdown{position:relative}
+    .agend-dropdown-trigger{cursor:pointer;user-select:none}
+    .agend-dropdown-trigger.open{border-color:#1a6cff;background:#f0f4ff;border-bottom-left-radius:0;border-bottom-right-radius:0}
+    .agend-dropdown-chevron{flex-shrink:0;transition:transform .2s}
+    .agend-dropdown-trigger.open .agend-dropdown-chevron{transform:rotate(180deg)}
+    .agend-dropdown-panel{position:static;left:0;right:0;z-index:200;background:#fff;border:2px solid #1a6cff;border-top:none;border-bottom-left-radius:16px;border-bottom-right-radius:16px;overflow-y:auto;max-height:280px;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+    .agend-dropdown-panel .agend-card{border-radius:0;border-color:transparent;border-bottom:1px solid #f0eeeb;margin:0}
+    .agend-dropdown-panel .agend-card:last-child{border-bottom:none;border-bottom-left-radius:14px;border-bottom-right-radius:14px}
+    .agend-dropdown-panel .agend-card:hover{background:#f0f4ff;border-color:transparent}
     .agend-back-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;font-size:12px;color:#888;font-weight:600;margin-bottom:18px;font-family:Inter,sans-serif;padding:4px 0;transition:color .15s}
     .agend-back-btn:hover{color:#1a6cff}
     .agend-step-divider{height:1px;background:#f0eeeb;margin:20px 0}
@@ -594,7 +617,14 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
               <h3 id="agend-grupo-title">Qual a série?</h3>
             </div>
             <p style="font-size:12px;color:#bbb;margin:4px 0 16px">Selecione a série do dispositivo</p>
-            <div id="agend-grupos-cards" style="display:flex;flex-direction:column;gap:8px"></div>
+            <div class="agend-custom-dropdown" id="agend-grupo-dropdown">
+              <div class="agend-card agend-dropdown-trigger" onclick="window.agendToggleDropdown('agend-grupo-dropdown')">
+                <div class="agend-card-icon"><img src="/images/maca.png" alt="" style="width:16px;height:16px;object-fit:contain"></div>
+                <p style="font-size:13px;font-weight:600;margin:0;color:#aaa;flex:1">— Selecione a série —</p>
+                <i class="fa-solid fa-chevron-down agend-dropdown-chevron" style="font-size:11px;color:#1a6cff"></i>
+              </div>
+              <div class="agend-dropdown-panel" id="agend-grupo-panel" style="display:none"></div>
+            </div>
           </div>
           <div id="agend-sub1-modelo" style="display:none;padding-top:20px">
             <button class="agend-back-btn" onclick="window.agendBack('grupo')">← Voltar</button>
@@ -602,7 +632,14 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
               <h3 id="agend-modelo-title">Qual o modelo?</h3>
             </div>
             <p style="font-size:12px;color:#bbb;margin:4px 0 16px">Selecione o modelo do seu dispositivo</p>
-            <div id="agend-modelos-cards" style="display:flex;flex-direction:column;gap:8px"></div>
+            <div class="agend-custom-dropdown" id="agend-modelo-dropdown">
+              <div class="agend-card agend-dropdown-trigger" onclick="window.agendToggleDropdown('agend-modelo-dropdown')">
+                <div class="agend-card-icon"><img src="/images/maca.png" alt="" style="width:16px;height:16px;object-fit:contain"></div>
+                <p style="font-size:13px;font-weight:600;margin:0;color:#aaa;flex:1">— Selecione o modelo —</p>
+                <i class="fa-solid fa-chevron-down agend-dropdown-chevron" style="font-size:11px;color:#1a6cff"></i>
+              </div>
+              <div class="agend-dropdown-panel" id="agend-modelo-panel" style="display:none"></div>
+            </div>
           </div>
           <div id="agend-sub1-servico" style="display:none;padding-top:20px">
             <button class="agend-back-btn" onclick="window.agendBack('modelo')">← Voltar</button>
@@ -2389,6 +2426,30 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
     await selectProduto(sel.produto);
   };
 
+  window.agendToggleDropdown = function(id) {
+    const dropdown = document.getElementById(id);
+    if (!dropdown) return;
+    const trigger = dropdown.querySelector('.agend-dropdown-trigger');
+    const panel = dropdown.querySelector('.agend-dropdown-panel');
+    const isOpen = trigger && trigger.classList.contains('open');
+    // Close all first
+    window.agendCloseAllDropdowns();
+    if (!isOpen) {
+      if (trigger) trigger.classList.add('open');
+      if (panel) panel.style.display = 'block';
+    }
+  };
+
+  window.agendCloseAllDropdowns = function() {
+    document.querySelectorAll('.agend-dropdown-trigger.open').forEach(t => t.classList.remove('open'));
+    document.querySelectorAll('.agend-dropdown-panel').forEach(p => { p.style.display = 'none'; });
+  };
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.agend-custom-dropdown')) window.agendCloseAllDropdowns();
+  }, true);
+
   async function selectProduto(p) {
     sel.produto = p; sel.grupo = null; sel.modelo = null; sel.servico = null; sel.opcao = null;
     try {
@@ -2420,9 +2481,10 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
   }
 
   function renderGrupoCards(grupos, allActiveModels) {
-    const container = document.getElementById('agend-grupos-cards');
-    if (!container) return;
-    container.innerHTML = '';
+    const panel = document.getElementById('agend-grupo-panel');
+    if (!panel) return;
+    panel.innerHTML = '';
+    window._agendGrupoModels = allActiveModels;
     grupos.forEach(g => {
       const modelsInGroup = allActiveModels.filter(m => m.grupo === g);
       const card = document.createElement('div');
@@ -2432,8 +2494,8 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
         <p style="font-size:13px;font-weight:700;margin:0;color:#1a1a1a;flex:1">${g}</p>
         ${modelsInGroup.length > 1 ? `<span style="font-size:11px;color:#bbb;margin-right:4px">${modelsInGroup.length} modelos</span>` : ''}
         <span style="font-size:12px;color:#bbb">→</span>`;
-      card.onclick = () => selectGrupo(g, modelsInGroup);
-      container.appendChild(card);
+      card.onclick = () => { window.agendCloseAllDropdowns(); selectGrupo(g, modelsInGroup); };
+      panel.appendChild(card);
     });
   }
 
@@ -2454,46 +2516,20 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
   }
 
   function renderModeloCards(modelos) {
-    const container = document.getElementById('agend-modelos-cards');
-    if (!container) return;
-    container.innerHTML = '';
-
-    const LIMIT = 6;
-    const principais = modelos.slice(0, LIMIT);
-    const extras = modelos.slice(LIMIT);
-
-    function buildModeloCard(m) {
+    const panel = document.getElementById('agend-modelo-panel');
+    if (!panel) return;
+    panel.innerHTML = '';
+    window._agendModelosList = modelos;
+    modelos.forEach(m => {
       const card = document.createElement('div');
       card.className = 'agend-card';
       card.innerHTML = `
         <div class="agend-card-icon"><img src="/images/maca.png" alt="" style="width:16px;height:16px;object-fit:contain"></div>
         <p style="font-size:13px;font-weight:700;margin:0;color:#1a1a1a;flex:1">${m.nome}</p>
         <span style="font-size:12px;color:#bbb">→</span>`;
-      card.onclick = () => selectModelo(m);
-      return card;
-    }
-
-    principais.forEach(m => container.appendChild(buildModeloCard(m)));
-
-    if (extras.length) {
-      const outrosBtn = document.createElement('button');
-      outrosBtn.style.cssText = 'width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 16px;background:#f5f5f7;border:1.5px dashed #d0ccc8;border-radius:14px;cursor:pointer;font-size:13px;font-weight:700;color:#555;font-family:Inter,sans-serif;margin-top:2px;transition:background .2s';
-      outrosBtn.innerHTML = '<i class="fa-solid fa-chevron-down" style="font-size:11px;color:#1a6cff"></i> Mais modelos';
-      outrosBtn.onmouseenter = () => { outrosBtn.style.background = '#ebebed'; };
-      outrosBtn.onmouseleave = () => { outrosBtn.style.background = '#f5f5f7'; };
-
-      const extrasWrap = document.createElement('div');
-      extrasWrap.style.cssText = 'display:none;flex-direction:column;gap:8px;margin-top:2px';
-      extras.forEach(m => extrasWrap.appendChild(buildModeloCard(m)));
-
-      outrosBtn.onclick = () => {
-        extrasWrap.style.display = 'flex';
-        outrosBtn.style.display = 'none';
-      };
-
-      container.appendChild(outrosBtn);
-      container.appendChild(extrasWrap);
-    }
+      card.onclick = () => { window.agendCloseAllDropdowns(); selectModelo(m); };
+      panel.appendChild(card);
+    });
   }
 
   async function selectModelo(m) {

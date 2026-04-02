@@ -27,7 +27,7 @@ const supabase = createClient(
 // ── Evolution API (WhatsApp automático) ──────────────────
 const EVOLUTION_URL      = process.env.EVOLUTION_API_URL  || "https://evolution.cosmosomsoc.lat";
 const EVOLUTION_INSTANCE = process.env.EVOLUTION_INSTANCE || "sv distribuidora";
-const EVOLUTION_APIKEY   = process.env.EVOLUTION_APIKEY   || "D3CAE83B749A-4871-AD6A-52D92D228C46";
+const EVOLUTION_APIKEY   = process.env.EVOLUTION_APIKEY   || "7D0C582D4B38-4AB4-AD6D-03958C9DB338";
 const NB_DEST_NUMBER     = process.env.NB_DEST_NUMBER     || "5519996666898";
 
 // ── Asaas Payment ─────────────────────────────────────────
@@ -710,10 +710,9 @@ app.post("/api/agendamentos", async (req, res) => {
       tipo_solicitacao: tipo_solicitacao || 'agendamento'
     };
     const msg = buildAgendamentoMsg(nbData);
-    const wClient = await sendWhatsApp(whatsapp, msg);
-    await sendWhatsApp(NB_DEST_NUMBER, msg);
+    const wNb = await sendWhatsApp(NB_DEST_NUMBER, msg);
     const whatsappLink = `https://api.whatsapp.com/send?phone=${normalizePhone(whatsapp)}&text=${encodeURIComponent(msg)}`;
-    return res.json({ whatsappLink, whatsappSent: wClient.ok });
+    return res.json({ whatsappLink, whatsappSent: wNb.ok });
   }
 
   // Verificar se o horário já foi reservado (apenas para agendamento com data)
