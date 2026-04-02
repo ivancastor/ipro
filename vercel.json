@@ -67,7 +67,11 @@
   ],
   "routes": [
   {
-    "src": "^/agendamento/?$",
+    "src": "^/agendamento$",
+    "dest": "/agendamento.html"
+  },
+  {
+    "src": "^/agendamento/$",
     "dest": "/agendamento.html"
   },
   {
