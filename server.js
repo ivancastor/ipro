@@ -1336,23 +1336,8 @@ app.post("/api/asaas/webhook", async (req, res) => {
 
 // ─────────────────────────────────────────────────────────
 // Fallback: serve index.html para rotas não-API
-app.get("*", (req, res) => {
-  const path = require("path");
-
-  // raiz
-  if (req.path === "/" || req.path === "") {
-    return res.sendFile(path.join(__dirname, "index.html"));
-  }
-
-  // tenta servir .html direto
-  return res.sendFile(
-    path.join(__dirname, req.path + ".html"),
-    (err) => {
-      if (err) {
-        return res.status(404).send("Página não encontrada");
-      }
-    }
-  );
+app.get('*', (req, res) => {
+  res.redirect('/');
 });
   // Não interceptar chamadas de API
   if (req.path.startsWith("/api/")) return next();
