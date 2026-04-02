@@ -1,12 +1,9 @@
 {
   "version": 2,
-  "builds": [
+ "builds": [
   {
     "src": "server.js",
-    "use": "@vercel/node",
-    "config": {
-      "includeFiles": ["*.html"]
-    }
+    "use": "@vercel/node"
   }
 ],
   "headers": [
