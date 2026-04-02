@@ -1337,7 +1337,24 @@ app.post("/api/asaas/webhook", async (req, res) => {
 // ─────────────────────────────────────────────────────────
 // Fallback: serve index.html para rotas não-API (SPA/static)
 // ─────────────────────────────────────────────────────────
-app.get("*", (req, res, next) => {
+const fs = require('fs');
+const path = require('path');
+
+// Primeiro tenta resolver .html automaticamente
+app.get('/:page', (req, res, next) => {
+  const filePath = path.join(__dirname, req.params.page + '.html');
+
+  if (fs.existsSync(filePath)) {
+    return res.sendFile(filePath);
+  }
+
+  next();
+});
+
+// Fallback final (não manda mais pra home)
+app.get('*', (req, res) => {
+  res.status(404).send('Página não encontrada');
+});
   // Não interceptar chamadas de API
   if (req.path.startsWith("/api/")) return next();
   const filePath = path.join(__dirname, req.path === "/" ? "index.html" : req.path);
