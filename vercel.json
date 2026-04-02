@@ -67,11 +67,8 @@
   ],
  "routes": [
   {
-    "handle": "filesystem"
-  },
-  {
     "src": "^/agendamento/?$",
-    "dest": "/agendamento.html"
+    "dest": "server.js"
   },
   {
     "src": "/(.*)",
