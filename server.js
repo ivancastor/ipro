@@ -1337,15 +1337,7 @@ app.post("/api/asaas/webhook", async (req, res) => {
 // ─────────────────────────────────────────────────────────
 // Fallback: serve index.html para rotas não-API (SPA/static)
 // ─────────────────────────────────────────────────────────
-const path = require('path');
-
-app.get('/agendamento', (req, res) => {
-  return res.sendFile(path.join(__dirname, 'agendamento.html'));
-});
-
-app.get("*", (req, res) => {
-  return res.sendFile(path.join(__dirname, "index.html"));
-});
+app.get("*", (req, res, next) => {
   // Não interceptar chamadas de API
   if (req.path.startsWith("/api/")) return next();
   const filePath = path.join(__dirname, req.path === "/" ? "index.html" : req.path);
