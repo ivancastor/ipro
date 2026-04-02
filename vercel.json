@@ -65,7 +65,10 @@
       ]
     }
   ],
-  "routes": [
+ "routes": [
+  {
+    "handle": "filesystem"
+  },
   {
     "src": "^/agendamento/?$",
     "dest": "/agendamento.html"
