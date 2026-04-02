@@ -62,11 +62,7 @@
       ]
     }
   ],
- "routes": [
-  {
-    "src": "^/agendamento/?$",
-    "dest": "server.js"
-  },
+"routes": [
   {
     "src": "/(.*)",
     "dest": "server.js"
