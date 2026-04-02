@@ -1343,8 +1343,9 @@ app.get('/agendamento', (req, res) => {
   return res.sendFile(path.join(__dirname, 'agendamento.html'));
 });
 
-// seu fallback continua igual
-app.get("*", (req, res, next) => {
+app.get("*", (req, res) => {
+  return res.sendFile(path.join(__dirname, "index.html"));
+});
   // Não interceptar chamadas de API
   if (req.path.startsWith("/api/")) return next();
   const filePath = path.join(__dirname, req.path === "/" ? "index.html" : req.path);
