@@ -71,8 +71,11 @@
     "dest": "/agendamento.html"
   },
   {
+    "handle": "filesystem"
+  },
+  {
     "src": "/(.*)",
-    "dest": "server.js"
+    "dest": "/server.js"
   }
 ]
 }
