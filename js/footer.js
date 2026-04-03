@@ -26,7 +26,7 @@
             <a href="https://www.facebook.com/iproassistenciaapple" target="_blank" rel="noopener" aria-label="Facebook" class="text-white/30 hover:text-[#1a6cff] transition-colors">
               <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 16C0 24.8 7.2 32 16 32C24.8 32 32 24.8 32 16C32 7.2 24.8 0 16 0C7.2 0 0 7.2 0 16ZM17.4313 17.165V25.1182H14.0313V17.165H11.2278V14.0884H14.0909V11.7664C14.0909 9.15405 15.7611 7.70264 18.2664 7.70264C19.4594 7.70264 20.4734 7.76074 20.7716 7.81885V10.6052H19.0418C17.6699 10.6052 17.4313 11.2439 17.4313 12.1145V14.0884H20.6523L20.2348 17.165H17.4313Z"/></svg>
             </a>
-            <a href="https://www.tiktok.com/@ipro" target="_blank" rel="noopener" aria-label="TikTok" class="text-white/30 hover:text-[#1a6cff] transition-colors">
+            <a href="https://www.tiktok.com/@ipropremium" target="_blank" rel="noopener" aria-label="TikTok" class="text-white/30 hover:text-[#1a6cff] transition-colors">
               <svg width="20" height="20" viewBox="0 0 32 37" fill="currentColor"><path d="M30.9279 8.03797C27.0869 8.03797 23.962 4.91307 23.962 1.07206C23.962 0.479916 23.4818 0 22.89 0H17.1483C16.5561 0 16.0762 0.479916 16.0762 1.07206V24.6122C16.0762 26.8703 14.2392 28.7073 11.9809 28.7073C9.72284 28.7073 7.88581 26.8703 7.88581 24.6122C7.88581 22.3539 9.72284 20.5169 11.9809 20.5169C12.573 20.5169 13.0529 20.037 13.0529 19.4448V13.7032C13.0529 13.1113 12.573 12.6311 11.9809 12.6311C5.37456 12.6311 0 18.0059 0 24.6122C0 31.2186 5.37456 36.5931 11.9809 36.5931C18.5872 36.5931 23.962 31.2186 23.962 24.6122V14.1923C26.0958 15.33 28.47 15.9238 30.9279 15.9238C31.5201 15.9238 32 15.4439 32 14.8517V9.11003C32 8.51816 31.5201 8.03797 30.9279 8.03797Z"/></svg>
             </a>
           </div>
@@ -69,7 +69,7 @@
           <p class="text-xs text-white/30 mb-2">Seg. a Sex. · 10h–12h / 13:30h–16:30h</p>
           <p class="text-xs text-yellow-400/80 mb-4">⚠ Atendimento somente com agendamento</p>
           <div class="flex flex-col gap-2">
-            <a href="https://api.whatsapp.com/send?phone=5519996666898" target="_blank" rel="noopener"
+            <a href="https://api.whatsapp.com/send?phone=5519994063782" target="_blank" rel="noopener"
                class="inline-flex items-center gap-2 text-sm text-white/60 hover:text-[#1a6cff] transition-colors">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
               (19) 99406-3782
@@ -101,7 +101,7 @@
           <div>
             <p class="text-white/50 font-semibold uppercase tracking-widest text-[10px] mb-3">Reparo de iPhone</p>
             <ul class="space-y-2">
-              <li><a href="assistencia-iphone-campinas.html" class="hover:text-white/70 transition-colors">Assistência técnica</a></li>
+              <li><a href="assistencia-iphone-campinas.html" class="hover:text-white/70 transition-colors">Assistência técnica em iPhone</a></li>
               <li><a href="troca-de-tela-iphone-campinas.html" class="hover:text-white/70 transition-colors">Substituição de Tela</a></li>
               <li><a href="troca-de-bateria-iphone-campinas.html" class="hover:text-white/70 transition-colors">Substituição de Bateria</a></li>
               <li><a href="troca-de-vidro-frontal-iphone-campinas.html" class="hover:text-white/70 transition-colors">Troca de Vidro Frontal</a></li>
@@ -122,7 +122,7 @@
           <div>
             <p class="text-white/50 font-semibold uppercase tracking-widest text-[10px] mb-3">Reparo de MacBook</p>
             <ul class="space-y-2">
-              <li><a href="assistencia-macbook-campinas.html" class="hover:text-white/70 transition-colors">Assistência técnica</a></li>
+              <li><a href="assistencia-macbook-campinas.html" class="hover:text-white/70 transition-colors">Assistência técnica Macbook</a></li>
               <li><a href="troca-de-tela-macbook-campinas.html" class="hover:text-white/70 transition-colors">Substituição de Tela</a></li>
               <li><a href="troca-de-bateria-macbook-campinas.html" class="hover:text-white/70 transition-colors">Substituição de Bateria</a></li>
               <li><a href="reparo-de-placa-macbook-campinas.html" class="hover:text-white/70 transition-colors">Reparo de Placa Lógica</a></li>
@@ -141,7 +141,7 @@
           <div>
             <p class="text-white/50 font-semibold uppercase tracking-widest text-[10px] mb-3">Reparo de Apple Watch</p>
             <ul class="space-y-2">
-              <li><a href="assistencia-apple-watch-campinas.html" class="hover:text-white/70 transition-colors">Assistência técnica</a></li>
+              <li><a href="assistencia-apple-watch-campinas.html" class="hover:text-white/70 transition-colors">Assistência técnica Apple Watch</a></li>
               <li><a href="troca-de-tela-apple-watch-campinas.html" class="hover:text-white/70 transition-colors">Substituição de Tela</a></li>
               <li><a href="troca-de-vidro-touch-apple-watch-campinas.html" class="hover:text-white/70 transition-colors">Substituição de Vidro / Touch</a></li>
               <li><a href="troca-de-bateria-apple-watch-campinas.html" class="hover:text-white/70 transition-colors">Substituição de Bateria</a></li>
@@ -154,7 +154,7 @@
           <div>
             <p class="text-white/50 font-semibold uppercase tracking-widests text-[10px] mb-3">Reparo de iMac</p>
             <ul class="space-y-2">
-              <li><a href="assistencia-imac-campinas.html" class="hover:text-white/70 transition-colors">Assistência técnica</a></li>
+              <li><a href="assistencia-imac-campinas.html" class="hover:text-white/70 transition-colors">Assistência técnica iMac</a></li>
               <li><a href="reparo-de-placa-imac-campinas.html" class="hover:text-white/70 transition-colors">Reparo de Placa Lógica</a></li>
               <li><a href="reparo-de-fonte-imac-campinas.html" class="hover:text-white/70 transition-colors">Reparo da Fonte de Alimentação</a></li>
               <li><a href="troca-de-tela-imac-campinas.html" class="hover:text-white/70 transition-colors">Substituição de Tela</a></li>
@@ -171,7 +171,7 @@
           <div>
             <p class="text-white/50 font-semibold uppercase tracking-widest text-[10px] mb-3">Reparo de iPad</p>
             <ul class="space-y-2">
-              <li><a href="assistencia-ipad-campinas.html" class="hover:text-white/70 transition-colors">Assistência técnica</a></li>
+              <li><a href="assistencia-ipad-campinas.html" class="hover:text-white/70 transition-colors">Assistência técnica iPad</a></li>
               <li><a href="troca-de-tela-ipad-campinas.html" class="hover:text-white/70 transition-colors">Substituição de Tela</a></li>
               <li><a href="troca-de-bateria-ipad-campinas.html" class="hover:text-white/70 transition-colors">Substituição de Bateria</a></li>
               <li><a href="troca-de-vidro-frontal-ipad-campinas.html" class="hover:text-white/70 transition-colors">Troca de Vidro Frontal</a></li>
@@ -191,7 +191,7 @@
           <div>
             <p class="text-white/50 font-semibold uppercase tracking-widest text-[10px] mb-3">Reparo de Mac Mini</p>
             <ul class="space-y-2">
-              <li><a href="assistencia-mac-mini-campinas.html" class="hover:text-white/70 transition-colors">Assistência técnica</a></li>
+              <li><a href="assistencia-mac-mini-campinas.html" class="hover:text-white/70 transition-colors">Assistência técnica Mac Mini</a></li>
               <li><a href="reparo-de-placa-mac-mini-campinas.html" class="hover:text-white/70 transition-colors">Reparo de Placa Lógica</a></li>
               <li><a href="reballing-de-cpu-mac-mini-campinas.html" class="hover:text-white/70 transition-colors">Reballing de CPU</a></li>
               <li><a href="upgrade-do-mac-mini-campinas.html" class="hover:text-white/70 transition-colors">Upgrade de Hardware</a></li>
