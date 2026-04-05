@@ -1346,6 +1346,18 @@ app.get("*", (req, res, next) => {
   });
 });
 
+const fs = require("fs");
+const path = require("path");
+
+app.get("/:page", (req, res, next) => {
+  const filePath = path.join(__dirname, req.params.page + ".html");
+
+  if (fs.existsSync(filePath)) {
+    return res.sendFile(filePath);
+  }
+
+  next();
+});
 // ─────────────────────────────────────────────────────────
 if (require.main === module) {
   app.listen(PORT, () => {
