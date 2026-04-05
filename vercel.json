@@ -64,8 +64,15 @@
   ],
 "routes": [
   {
+    "handle": "filesystem"
+  },
+  {
+    "src": "/([a-zA-Z0-9\\-\\/]+)",
+    "dest": "/$1.html"
+  },
+  {
     "src": "/(.*)",
-    "dest": "server.js"
+    "dest": "/server.js"
   }
 ]
 }
