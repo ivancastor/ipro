@@ -237,23 +237,6 @@ function buildAgendamentoMsg(agend) {
 }
 app.use(express.json({ limit: "10mb" }));
 app.use(express.static(__dirname));
-app.use(express.json({ limit: "10mb" }));
-app.use(express.static(__dirname));
-
-// 👇 COLE EXATAMENTE AQUI
-const fs = require("fs");
-
-app.get("/:page", (req, res, next) => {
-  if (req.path.startsWith("/api")) return next();
-
-  const filePath = path.join(__dirname, req.params.page + ".html");
-
-  if (fs.existsSync(filePath)) {
-    return res.sendFile(filePath);
-  }
-
-  next();
-});
 
 // ── Sitemap (auto-generated) ─────────────────────────────
 app.get("/sitemap.xml", (req, res) => {
@@ -1363,17 +1346,7 @@ app.get("*", (req, res, next) => {
   });
 });
 
-const fs = require("fs");
 
-app.get("/:page", (req, res, next) => {
-  const filePath = path.join(__dirname, req.params.page + ".html");
-
-  if (fs.existsSync(filePath)) {
-    return res.sendFile(filePath);
-  }
-
-  next();
-});
 // ─────────────────────────────────────────────────────────
 if (require.main === module) {
   app.listen(PORT, () => {
