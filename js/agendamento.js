@@ -1,4 +1,4 @@
-﻿// ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
 // iPro Agendamento — Multi-step booking form modal
 // Fluxo: Produto → Modelo (dropdown) → Serviço (+ FAQ) →
 //        Opção/Qualidade → Data (calendário azul/vermelho)
@@ -2950,28 +2950,9 @@ var EVO_DEST_NUMBER  = '5519996666898';                       // Número da empr
         }
         msg += SEP + '\n\n';
         msg += 'Em breve entraremos em contato para confirmação do agendamento.';
-        // Enviar via backend (evita expor API key no browser)
-        const nbBody = {
-          produto_nome: 'Notebook',
-          modelo_nome: modelo,
-          servico_nome: servico,
-          opcao_nome: '---',
-          opcao_preco: preco,
-          data: sel.data || null,
-          horario: sel.horario || null,
-          nome: nome,
-          cpf: cpf || '',
-          email: email || '',
-          whatsapp: celular,
-          descricao_defeito: descricao,
-          tipo_solicitacao: notebookSel.tipoSolicitacao || 'agendamento'
-        };
-        const res = await fetch('/api/agendamentos', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(nbBody)
-        });
-        if (!res.ok) throw new Error('Erro ao enviar solicitação. Tente novamente.');
+        // Abrir WhatsApp com a mensagem montada (sem API backend)
+        const waNumber = '5519996666898';
+        window.open('https://wa.me/' + waNumber + '?text=' + encodeURIComponent(msg), '_blank');
         btn.disabled = false; btn.textContent = 'Prosseguir →';
         // Fechar modal e mostrar sucesso específico notebook
         window.closeAgendamento();
