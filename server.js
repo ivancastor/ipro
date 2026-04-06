@@ -237,7 +237,16 @@ function buildAgendamentoMsg(agend) {
 }
 app.use(express.json({ limit: "10mb" }));
 app.use(express.static(__dirname));
-
+// ── Clean URLs: /pagina → /pagina.html ───────────────────
+app.use((req, res, next) => {
+  const url = req.path;
+  // Skip API routes, files with extensions, and root
+  if (url.startsWith('/api/') || path.extname(url) || url === '/') return next();
+  const htmlFile = path.join(__dirname, url + '.html');
+  const fs = require('fs');
+  if (fs.existsSync(htmlFile)) return res.sendFile(htmlFile);
+  next();
+});
 // ── Sitemap (auto-generated) ─────────────────────────────
 app.get("/sitemap.xml", (req, res) => {
   const fs = require("fs");
