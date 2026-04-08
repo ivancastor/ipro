@@ -30,10 +30,6 @@ const EVOLUTION_INSTANCE = process.env.EVOLUTION_INSTANCE || "sv distribuidora";
 const EVOLUTION_APIKEY   = process.env.EVOLUTION_APIKEY   || "7D0C582D4B38-4AB4-AD6D-03958C9DB338";
 const NB_DEST_NUMBER     = process.env.NB_DEST_NUMBER     || "5519996666898";
 
-// ── Evolution API — instância Notebook (ipho dois) ───────
-const NB_EVOLUTION_INSTANCE = process.env.NB_EVOLUTION_INSTANCE || "ipho dois";
-const NB_EVOLUTION_APIKEY   = process.env.NB_EVOLUTION_APIKEY   || "23AC664C1831-4F63-B25E-3878CE95C685";
-
 // ── Asaas Payment ─────────────────────────────────────────
 const ASAAS_API_KEY      = process.env.ASAAS_API_KEY || "";
 const ASAAS_ENV          = process.env.ASAAS_ENV || "sandbox";
@@ -86,34 +82,6 @@ function normalizePhone(phone) {
   if (digits.startsWith("55") && digits.length >= 12) return digits;
   // Caso contrário, adiciona 55
   return "55" + digits;
-}
-
-// Envia pelo número do notebook (ipho dois → para si mesmo)
-async function sendWhatsAppNb(text) {
-  const number = normalizePhone(NB_DEST_NUMBER);
-  const url = `${EVOLUTION_URL}/message/sendText/${encodeURIComponent(NB_EVOLUTION_INSTANCE)}`;
-  const payload = { number, text };
-  console.log("[Evolution/NB] ▶ Enviando mensagem para notebook");
-  console.log("[Evolution/NB]   Instância:", NB_EVOLUTION_INSTANCE);
-  console.log("[Evolution/NB]   Para:", number);
-  console.log("[Evolution/NB]   Mensagem:", text.substring(0, 80) + (text.length > 80 ? "..." : ""));
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "apikey": NB_EVOLUTION_APIKEY },
-      body: JSON.stringify(payload),
-    });
-    const body = await res.text();
-    if (!res.ok) {
-      console.error("[Evolution/NB] ✗ Falha HTTP", res.status, body);
-      return { ok: false, status: res.status, body };
-    }
-    console.log("[Evolution/NB] ✓ Enviado com sucesso", res.status, body.substring(0, 200));
-    return { ok: true, status: res.status, body };
-  } catch (e) {
-    console.error("[Evolution/NB] ✗ Erro de conexão:", e.message);
-    return { ok: false, status: 0, body: e.message };
-  }
 }
 
 async function sendWhatsApp(phone, text) {
@@ -269,7 +237,6 @@ function buildAgendamentoMsg(agend) {
 }
 app.use(express.json({ limit: "10mb" }));
 app.use(express.static(__dirname));
-
 // ── Clean URLs: /pagina → /pagina.html ───────────────────
 app.use((req, res, next) => {
   const url = req.path;
@@ -280,9 +247,7 @@ app.use((req, res, next) => {
   if (fs.existsSync(htmlFile)) return res.sendFile(htmlFile);
   next();
 });
-
 // ── Sitemap (auto-generated) ─────────────────────────────
-/*
 app.get("/sitemap.xml", (req, res) => {
   const fs = require("fs");
   const EXCLUDE = new Set(["admin.html", "termos.html", "conectar-whatsapp.html"]);
@@ -308,7 +273,6 @@ app.get("/sitemap.xml", (req, res) => {
   res.setHeader("Cache-Control", "public, max-age=3600");
   res.send(xml);
 });
-*/
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 20 * 1024 * 1024 } });
 
@@ -755,7 +719,7 @@ app.post("/api/agendamentos", async (req, res) => {
       tipo_solicitacao: tipo_solicitacao || 'agendamento'
     };
     const msg = buildAgendamentoMsg(nbData);
-    const wNb = await sendWhatsAppNb(msg);
+    const wNb = await sendWhatsApp(NB_DEST_NUMBER, msg);
     const whatsappLink = `https://api.whatsapp.com/send?phone=${normalizePhone(whatsapp)}&text=${encodeURIComponent(msg)}`;
     return res.json({ whatsappLink, whatsappSent: wNb.ok });
   }
@@ -767,7 +731,7 @@ app.post("/api/agendamentos", async (req, res) => {
       .select("id")
       .eq("data", dt)
       .eq("horario", horario)
-      .in("status", ["pendente", "aprovado", "reagendado", "em_andamento"])
+      .in("status", ["pendente", "aprovado"])
       .limit(1);
     if (clash && clash.length > 0) {
       return res.status(409).json({ error: "slot_taken", message: "Este horário acabou de ser reservado por outro cliente. Por favor, escolha outro horário." });
@@ -850,53 +814,10 @@ app.put("/api/agendamentos/:id/aprovar", authAdmin, async (req, res) => {
     .from("agendamentos").update({ status: "aprovado" }).eq("id", req.params.id).select().single();
   if (fetchErr) return res.status(500).json({ error: fetchErr.message });
 
-  // Build approval-specific confirmation message
-  const SEP_A = '━━━━━━━━━━━━━━━━━━';
-  const isNotebook = agend.produto_nome && agend.produto_nome.toLowerCase().includes('notebook');
-  const isOrcamento = agend.tipo_solicitacao === 'orcamento';
-  const dataFormatted = agend.data ? new Date(agend.data + 'T12:00:00').toLocaleDateString('pt-BR') : '—';
-  const horaFormatted = agend.horario ? agend.horario.slice(0, 5) : '—';
-  const modeloStr = agend.modelo_nome || '—';
-  const emoji = isNotebook ? '💻' : '📱';
-
-  let msg;
-  if (isOrcamento) {
-    msg =
-      `${emoji} *ORÇAMENTO APROVADO!*\n\n` +
-      `Olá ${agend.nome}, seu pedido de orçamento foi *aprovado* pela nossa equipe! 🎉\n\n` +
-      `${SEP_A}\n` +
-      `👤 *DADOS DO CLIENTE*\n` +
-      `Nome: ${agend.nome}\n` +
-      `Telefone: ${agend.whatsapp}\n` +
-      `${SEP_A}\n` +
-      `${emoji} *EQUIPAMENTO E SERVIÇO*\n` +
-      `Equipamento: ${agend.produto_nome}\n` +
-      `Modelo: ${modeloStr}\n` +
-      `Serviço: ${agend.servico_nome}\n` +
-      `${SEP_A}\n\n` +
-      `✅ *Status: Aprovado*\n\n` +
-      `Nossa equipe entrará em contato em breve com os detalhes do orçamento. Fique atento ao WhatsApp!`;
-  } else {
-    msg =
-      `${emoji} *AGENDAMENTO CONFIRMADO!*\n\n` +
-      `Olá ${agend.nome}, seu agendamento foi *confirmado* pela nossa equipe! 🎉\n\n` +
-      `${SEP_A}\n` +
-      `👤 *DADOS DO CLIENTE*\n` +
-      `Nome: ${agend.nome}\n` +
-      `Telefone: ${agend.whatsapp}\n` +
-      `${SEP_A}\n` +
-      `${emoji} *EQUIPAMENTO E SERVIÇO*\n` +
-      `Equipamento: ${agend.produto_nome}\n` +
-      `Modelo: ${modeloStr}\n` +
-      `Serviço: ${agend.servico_nome}${agend.opcao_nome && agend.opcao_nome !== '---' ? ' - ' + agend.opcao_nome : ''}\n` +
-      `${SEP_A}\n` +
-      `📅 *DATA E HORÁRIO CONFIRMADOS*\n` +
-      `Data: ${dataFormatted}\n` +
-      `Horário: ${horaFormatted}\n` +
-      `${SEP_A}\n\n` +
-      `✅ *Status: Confirmado*\n\n` +
-      `Aguardamos você! Lembre-se de chegar no horário agendado. Em caso de dúvidas, entre em contato pelo WhatsApp.`;
-  }
+  // Build approval message (reuse helper, swap status line)
+  let msg = buildAgendamentoMsg(agend)
+    .replace('⏳ Orçamento recebido. Aguarde a confirmação.', '✅ Orçamento aprovado. Entraremos em contato com os detalhes.')
+    .replace('⏳ Agendamento recebido. Aguarde a confirmação.', '✅ Agendamento aprovado com sucesso!');
 
   const wResult = await sendWhatsApp(agend.whatsapp, msg);
   const whatsappSent = wResult.ok;
@@ -912,73 +833,7 @@ app.put("/api/agendamentos/:id/recusar", authAdmin, async (req, res) => {
   const { data, error } = await supabase
     .from("agendamentos").update({ status: "recusado" }).eq("id", req.params.id).select().single();
   if (error) return res.status(500).json({ error: error.message });
-  if (data) {
-    const SEP = '━━━━━━━━━━━━━━━━━━';
-    const msg =
-      `📱 *ATUALIZAÇÃO DO SEU ATENDIMENTO*\n\n` +
-      `Olá ${data.nome}, infelizmente não será possível realizar o atendimento conforme solicitado.\n\n` +
-      `${SEP}\n` +
-      `📱 *DISPOSITIVO*\n` +
-      `Dispositivo: ${data.produto_nome}\n` +
-      (data.modelo_nome ? `Modelo: ${data.modelo_nome}\n` : '') +
-      `Serviço: ${data.servico_nome}\n` +
-      `${SEP}\n\n` +
-      `📊 *STATUS DO PEDIDO:*\n\n` +
-      `❌ Recusado — Não foi possível confirmar o atendimento.\n\n` +
-      `Para mais informações, entre em contato pelo WhatsApp.`;
-    await sendWhatsApp(data.whatsapp, msg);
-  }
   res.json(data);
-});
-
-// Admin marca em andamento
-app.put("/api/agendamentos/:id/em-andamento", authAdmin, async (req, res) => {
-  const { data, error } = await supabase
-    .from("agendamentos").update({ status: "em_andamento" }).eq("id", req.params.id).select().single();
-  if (error) return res.status(500).json({ error: error.message });
-  const SEP = '━━━━━━━━━━━━━━━━━━';
-  const msg =
-    `📱 *ATUALIZAÇÃO DO SEU ATENDIMENTO*\n\n` +
-    `Olá ${data.nome}, seu dispositivo está em andamento! 🔧\n\n` +
-    `${SEP}\n` +
-    `🔧 *DISPOSITIVO EM MANUTENÇÃO*\n` +
-    `Dispositivo: ${data.produto_nome}\n` +
-    (data.modelo_nome ? `Modelo: ${data.modelo_nome}\n` : '') +
-    `Serviço: ${data.servico_nome}\n` +
-    `${SEP}\n\n` +
-    `📊 *STATUS DO PEDIDO:*\n\n` +
-    `🔧 Em andamento — Seu dispositivo está sendo reparado.\n\n` +
-    `Assim que o serviço for concluído, entraremos em contato.`;
-  const wResult = await sendWhatsApp(data.whatsapp, msg);
-  const whatsappSent = wResult.ok;
-  const whatsappLink = `https://api.whatsapp.com/send?phone=${normalizePhone(data.whatsapp)}&text=${encodeURIComponent(msg)}`;
-  res.json({ ...data, whatsappSent, whatsappLink, _evolutionStatus: wResult.status, _evolutionBody: wResult.body });
-});
-
-// Admin cancela
-app.put("/api/agendamentos/:id/cancelar", authAdmin, async (req, res) => {
-  const { motivo } = req.body || {};
-  const { data, error } = await supabase
-    .from("agendamentos").update({ status: "cancelado" }).eq("id", req.params.id).select().single();
-  if (error) return res.status(500).json({ error: error.message });
-  const SEP = '━━━━━━━━━━━━━━━━━━';
-  const msg =
-    `📱 *ATUALIZAÇÃO DO SEU ATENDIMENTO*\n\n` +
-    `Olá ${data.nome}, informamos que o seu agendamento foi cancelado.\n\n` +
-    `${SEP}\n` +
-    `📱 *DISPOSITIVO*\n` +
-    `Dispositivo: ${data.produto_nome}\n` +
-    (data.modelo_nome ? `Modelo: ${data.modelo_nome}\n` : '') +
-    `Serviço: ${data.servico_nome}\n` +
-    `${SEP}\n\n` +
-    `📊 *STATUS DO PEDIDO:*\n\n` +
-    `❌ Cancelado.` +
-    (motivo ? `\n\n📝 Motivo: ${motivo}` : '') +
-    `\n\nPara reagendar ou mais informações, entre em contato pelo WhatsApp.`;
-  const wResult = await sendWhatsApp(data.whatsapp, msg);
-  const whatsappSent = wResult.ok;
-  const whatsappLink = `https://api.whatsapp.com/send?phone=${normalizePhone(data.whatsapp)}&text=${encodeURIComponent(msg)}`;
-  res.json({ ...data, whatsappSent, whatsappLink, _evolutionStatus: wResult.status, _evolutionBody: wResult.body });
 });
 
 // Admin remarca (não cria novo, apenas muda data/horário mantendo o mesmo registro)
@@ -999,7 +854,7 @@ app.put("/api/agendamentos/:id/remarcar", authAdmin, async (req, res) => {
     .select("id")
     .eq("data", nova_data)
     .eq("horario", novo_horario)
-    .in("status", ["pendente", "aprovado", "reagendado", "em_andamento"])
+    .in("status", ["pendente", "aprovado"])
     .neq("id", req.params.id)
     .limit(1);
 
@@ -1010,7 +865,7 @@ app.put("/api/agendamentos/:id/remarcar", authAdmin, async (req, res) => {
 
   const { data, error } = await supabase
     .from("agendamentos")
-    .update({ data: nova_data, horario: novo_horario, status: "reagendado" })
+    .update({ data: nova_data, horario: novo_horario, status: "pendente" })
     .eq("id", req.params.id)
     .select()
     .single();
@@ -1048,8 +903,7 @@ app.put("/api/agendamentos/:id/remarcar", authAdmin, async (req, res) => {
       `⚡ Prioridade: ${`Rápido`}\n\n` +
       `${SEP_R}\n\n` +
       `📊 STATUS DO PEDIDO:\n\n` +
-      `📅 Reagendado — Nova data e horário confirmados.` +
-      `\nData: ${newDate} às ${newHora}` +
+      `⚠️ Alteração de data e horário solicitada.` +
       (extraMsg ? `\n\n📝 Mensagem da iPro:\n${extraMsg}` : '');
     const wResult = await sendWhatsApp(agendOld.whatsapp, msg);
     whatsappSent = wResult.ok;
@@ -1133,7 +987,7 @@ app.get("/api/horarios-disponiveis", async (req, res) => {
 
   // Pegar agendamentos já feitos nesse dia (aprovados + pendentes)
   const { data: agends } = await supabase
-    .from("agendamentos").select("horario").eq("data", dateStr).in("status", ["pendente", "aprovado", "reagendado", "em_andamento"]);
+    .from("agendamentos").select("horario").eq("data", dateStr).in("status", ["pendente", "aprovado"]);
 
   const ocupados = new Set((agends || []).map(a => a.horario));
   const horarios = (horariosConfig || []).map(h => ({
@@ -1161,7 +1015,7 @@ app.get("/api/disponibilidade", async (req, res) => {
   const [bloqRes, horRes, agendRes, regrasRes] = await Promise.all([
     supabase.from("dias_bloqueados").select("*").gte("data", startDate).lte("data", endDate),
     supabase.from("horarios").select("dia_semana, horario").eq("ativo", true),
-    supabase.from("agendamentos").select("data, horario").gte("data", startDate).lte("data", endDate).in("status", ["pendente", "aprovado", "reagendado", "em_andamento"]),
+    supabase.from("agendamentos").select("data, horario").gte("data", startDate).lte("data", endDate).in("status", ["pendente", "aprovado"]),
     supabase.from("regras_recorrentes").select("dia_semana, tipo, motivo")
   ]);
 
@@ -1500,6 +1354,7 @@ app.get("*", (req, res, next) => {
     if (err) res.sendFile(path.join(__dirname, "index.html"));
   });
 });
+
 
 // ─────────────────────────────────────────────────────────
 if (require.main === module) {
