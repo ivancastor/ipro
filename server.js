@@ -282,6 +282,7 @@ app.use((req, res, next) => {
 });
 
 // ── Sitemap (auto-generated) ─────────────────────────────
+/*
 app.get("/sitemap.xml", (req, res) => {
   const fs = require("fs");
   const EXCLUDE = new Set(["admin.html", "termos.html", "conectar-whatsapp.html"]);
@@ -307,6 +308,7 @@ app.get("/sitemap.xml", (req, res) => {
   res.setHeader("Cache-Control", "public, max-age=3600");
   res.send(xml);
 });
+*/
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 20 * 1024 * 1024 } });
 
