@@ -1,6 +1,20 @@
 {
   "version": 2,
   "cleanUrls": true,
+
+  "redirects": [
+    {
+      "source": "http://ipro.net.br/(.*)",
+      "destination": "https://www.ipro.net.br/$1",
+      "permanent": true
+    },
+    {
+      "source": "https://ipro.net.br/(.*)",
+      "destination": "https://www.ipro.net.br/$1",
+      "permanent": true
+    }
+  ],
+
   "builds": [
     {
       "src": "server.js",
@@ -10,6 +24,7 @@
       }
     }
   ],
+
   "headers": [
     {
       "source": "/images/(.*)",
@@ -38,6 +53,7 @@
       ]
     }
   ],
+
   "routes": [
     {
       "handle": "filesystem"
