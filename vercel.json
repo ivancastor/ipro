@@ -1,20 +1,6 @@
 {
   "version": 2,
   "cleanUrls": true,
-
-  "redirects": [
-  {
-    "source": "/(.*)",
-    "has": [
-      {
-        "type": "host",
-        "value": "ipro.net.br"
-      }
-    ],
-    "destination": "https://www.ipro.net.br/$1",
-    "permanent": true
-  }
-]
   
   "builds": [
     {
