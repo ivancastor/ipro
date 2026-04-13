@@ -197,29 +197,28 @@ tailwind.config = {
 
   <!-- PRODUCT DETAIL POPUP -->
   <div id="product-popup" class="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center sm:p-4 opacity-0 pointer-events-none transition-opacity duration-300" style="background:rgba(0,0,0,0.65);backdrop-filter:blur(10px);">
-    <div class="bg-white sm:rounded-3xl rounded-t-3xl shadow-2xl w-full sm:max-w-4xl flex flex-col relative transform translate-y-4 sm:translate-y-0 sm:scale-95 transition-all duration-300 opacity-0 max-h-[90vh]" id="product-popup-inner">
+    <div class="bg-white sm:rounded-3xl rounded-t-3xl shadow-2xl w-full sm:max-w-4xl flex flex-col relative transform translate-y-4 sm:translate-y-0 sm:scale-95 transition-transform duration-300" style="max-height:92dvh" id="product-popup-inner">
       <button onclick="closeProductPopup()" class="absolute top-4 right-4 w-10 h-10 bg-[#f5f5f7] hover:bg-[#e0e0e0] rounded-full flex items-center justify-center transition-colors z-10">
         <svg class="w-5 h-5 text-[#1a1a1a]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
       <!-- drag handle mobile -->
       <div class="flex justify-center pt-3 pb-1 sm:hidden"><div class="w-10 h-1 bg-[#ddd] rounded-full"></div></div>
-     <div class="overflow-y-auto flex-1 p-6 sm:p-10">
+      <div class="overflow-y-auto flex-1 p-5 sm:p-8">
         <!-- Title at the top, centered, full-width -->
         <h2 id="popup-title" class="text-xl sm:text-4xl font-bold text-[#1a1a1a] tracking-tight mb-3 sm:mb-4 text-center leading-tight pr-8 sm:pr-0"></h2>
         <!-- Badges -->
-       <div class="flex items-center justify-center gap-2 mb-6">
-
-  <span class="text-[12px] text-[#6e6e73] bg-[#f5f5f7] px-3 py-1.5 rounded-full">
-    1 ano de garantia
-  </span>
-
-  <span class="text-[12px] text-[#6e6e73] bg-[#f5f5f7] px-3 py-1.5 rounded-full">
-    18x sem juros
-  </span>
-
-</div>
+        <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-5 sm:mb-7">
+          <span class="inline-flex items-center gap-1.5 bg-[#e8f5e9] text-[#2e7d32] text-xs sm:text-sm font-bold px-3 sm:px-5 py-2 sm:py-2.5 rounded-full">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            1 ano de garantia
+          </span>
+          <span class="inline-flex items-center gap-1.5 bg-[#e3f2fd] text-[#1565c0] text-xs sm:text-sm font-bold px-3 sm:px-5 py-2 sm:py-2.5 rounded-full">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+            18x sem juros
+          </span>
+        </div>
         <!-- Photo + Info columns -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
           <!-- LEFT: Gallery -->
           <div>
             <div class="relative rounded-2xl overflow-hidden bg-[#f5f5f7] mb-3 sm:mb-4 flex items-center justify-center" style="min-height:220px;">
@@ -229,34 +228,29 @@ tailwind.config = {
             <div class="flex gap-2 overflow-x-auto pb-2" id="popup-thumbs"></div>
           </div>
           <!-- RIGHT: Info (title moved to top) -->
-          <div class="flex flex-col w-full items-center text-center">
+          <div class="flex flex-col">
             <p id="popup-desc"
-class="
-text-[15px]
-text-[#6e6e73]
-leading-relaxed
-whitespace-pre-line
-w-full
-">
+   class="
+   text-[14px] md:text-[15px]
+   text-[#444]
+   leading-relaxed
+   whitespace-pre-line
+   break-words
+   max-w-full
+   space-y-2
+   ">
 </p><br>
-            <div class="mb-6" id="popup-specs"></div>
-
-<div class="mt-auto pt-6">
-
-  <div id="popup-old-price" class="text-sm text-[#86868b] line-through"></div>
-
-  <div id="popup-price" class="text-[34px] sm:text-[38px] font-semibold text-[#1d1d1f] tracking-tight mb-1"></div>
-
-  <div id="popup-installments" class="text-sm text-[#6e6e73] mb-6"></div>
-
-  <a id="popup-whatsapp" href="#" target="_blank" rel="noopener"
-     class="flex items-center justify-center gap-2 border border-[#d2d2d7] text-[#1d1d1f] font-medium py-3.5 rounded-full tracking-tight transition-all duration-200 text-sm w-full hover:bg-[#1d1d1f] hover:text-white hover:scale-[1.02] active:scale-[0.98]">
-    
-    Comprar via WhatsApp
-
-  </a>
-
-</div>
+            <div class="space-y-3 mb-6" id="popup-specs"></div>
+            <div class="mt-auto border-t border-[#eee] pt-5">
+              <div id="popup-old-price" class="text-sm text-[#aaa] line-through"></div>
+              <div id="popup-price" class="text-3xl font-bold text-[#1a1a1a] mb-1"></div>
+              <div id="popup-installments" class="text-sm text-[#888] mb-5"></div>
+              <a id="popup-whatsapp" href="#" target="_blank" rel="noopener"
+                 class="flex items-center justify-center gap-2 bg-[#1a1a1a] hover:bg-[#1a6cff] text-white font-semibold py-4 rounded-xl transition-colors text-sm w-full">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Comprar via WhatsApp
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -315,65 +309,27 @@ w-full
         const oldPriceFormatted = prod.precoOriginal ? prod.precoOriginal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '';
 
         const card = document.createElement('div');
-        card.className = 'group bg-white rounded-3xl overflow-hidden flex flex-col border border-[#e5e5e7] shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer';
+        card.className = 'group bg-[#f9f9f9] rounded-3xl overflow-hidden flex flex-col hover:shadow-2xl hover:shadow-black/10 hover:-translate-y-1 transition-all duration-300 cursor-pointer';
         card.setAttribute('data-aos', '');
         card.onclick = () => openProductPopup(idx);
         card.innerHTML = `
-         <div class="relative bg-[#f5f5f7] flex items-center justify-center p-4 h-[160px] sm:h-[200px]">
-
-  <!-- IMAGEM (SEM CORTE / CENTRALIZADA) -->
-  <img 
-    loading="lazy" 
-    src="${mainImg}" 
-    alt="${prod.titulo || ''}" 
-    class="w-full max-h-44 sm:max-h-56 object-contain transition-transform duration-500 group-hover:scale-105"
-  >
-
-  <!-- DESCONTO (MAIS CLEAN) -->
-  ${discount > 0 ? `
-  <span class="absolute top-3 left-3 bg-black/80 backdrop-blur text-white text-[11px] font-medium px-3 py-1 rounded-full">
-    ${discount}% OFF
-  </span>` : ''}
-
-</div>
-
-<div class="p-4 sm:p-5 flex flex-col flex-1 text-center">
-
-  <!-- TÍTULO (APPLE STYLE) -->
-  <h3 class="text-sm font-medium text-[#1d1d1f] leading-snug mb-2 break-words">
-    ${prod.titulo || 'Produto'}
-  </h3>
-
-  <!-- GARANTIA (DISCRETA) -->
-  <span class="text-[12px] text-[#6e6e73] mb-4">
-    1 ano de garantia
-  </span>
-
-  <!-- PREÇO (DESTAQUE REAL) -->
-<div class="mt-auto w-full flex flex-col">
-
-    ${prod.precoOriginal ? `
-    <div class="text-sm text-[#86868b] line-through">
-      ${oldPriceFormatted}
-    </div>` : ''}
-
-    <div class="text-2xl font-semibold text-[#1d1d1f]">
-      ${priceFormatted}
-    </div>
-
-    <div class="text-sm text-[#6e6e73] mb-4">
-      ou 18x de ${installment}
-    </div>
-
-    <!-- BOTÃO (APPLE STYLE) -->
-  <div class="w-full flex justify-center mt-2">
-
-  <button class="w-full text-center border border-[#d2d2d7] text-[#1d1d1f] text-sm font-medium rounded-full py-2.5 transition-all duration-200 hover:bg-[#1d1d1f] hover:text-white active:scale-[0.98]">
-    Ver detalhes
-  </button>
-
-</div>
-</div>
+          <div class="relative overflow-hidden">
+            <img loading="lazy" src="${mainImg}" alt="${prod.titulo || ''}" class="w-full h-32 sm:h-52 object-cover group-hover:scale-105 transition-transform duration-500">
+            ${discount > 0 ? `<span class="absolute top-2 left-2 sm:top-3 sm:left-3 bg-[#1a6cff] text-white text-[10px] sm:text-xs font-bold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full">${discount}% OFF</span>` : ''}
+            <img loading="lazy" src="images/verificado.png" alt="Verificado" class="absolute bottom-2 right-2 w-6 h-6 sm:w-7 sm:h-7">
+          </div>
+          <div class="p-3 sm:p-6 flex flex-col flex-1">
+            <h3 class="text-xs sm:text-sm font-semibold tracking-tight text-[#1a1a1a] mb-2 sm:mb-3 leading-snug">${prod.titulo || 'Produto'}</h3>
+            <div class="flex items-center gap-1.5 mb-3">
+              <span class="bg-[#e8f5e9] text-[#2e7d32] text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full">1 ano garantia</span>
+            </div>
+            <div class="mt-auto">
+              ${prod.precoOriginal ? `<div class="text-xs text-[#aaa] line-through mb-0.5">${oldPriceFormatted}</div>` : ''}
+              <div class="text-xl font-bold text-[#1a1a1a] mb-0.5">${priceFormatted}</div>
+              <div class="text-xs text-[#888] mb-4">18x ${installment} sem juros</div>
+              <span class="block text-center bg-[#1a1a1a] hover:bg-[#1a6cff] text-white text-sm font-semibold rounded-xl py-2.5 transition-colors duration-200">Ver detalhes</span>
+            </div>
+          </div>
         `;
         grid.appendChild(card);
       });
@@ -428,19 +384,7 @@ w-full
       specsDiv.innerHTML = '';
       if (prod.especificacoes && prod.especificacoes.length) {
         prod.especificacoes.forEach(spec => {
-          specsDiv.innerHTML += `
-  <div class="flex items-center justify-between py-3 px-4 border-b border-[#e5e5e7] text-sm">
-    
-    <span class="text-[#6e6e73]">
-      ${spec.label}
-    </span>
-
-    <span class="text-[#1d1d1f] font-medium">
-      ${spec.valor}
-    </span>
-
-  </div>
-`;
+          specsDiv.innerHTML += `<div class="flex items-center justify-between py-2.5 px-4 bg-[#f5f5f7] rounded-xl text-sm"><span class="text-[#777]">${spec.label}</span><span class="font-semibold text-[#1a1a1a]">${spec.valor}</span></div>`;
         });
       }
 
@@ -461,8 +405,7 @@ w-full
       const inner = document.getElementById('product-popup-inner');
       popup.style.opacity = '1';
       popup.style.pointerEvents = 'auto';
-    inner.style.transform = window.innerWidth < 640 ? 'translateY(0)' : 'scale(1)';
-inner.style.opacity = '1';
+      inner.style.transform = window.innerWidth < 640 ? 'translateY(0)' : 'scale(1)';
       document.body.style.overflow = 'hidden';
     }
 
@@ -471,8 +414,7 @@ inner.style.opacity = '1';
       const inner = document.getElementById('product-popup-inner');
       popup.style.opacity = '0';
       popup.style.pointerEvents = 'none';
-     inner.style.transform = window.innerWidth < 640 ? 'translateY(4rem)' : 'scale(0.95)';
-inner.style.opacity = '0';
+      inner.style.transform = window.innerWidth < 640 ? 'translateY(4rem)' : 'scale(0.95)';
       document.body.style.overflow = '';
     }
 
