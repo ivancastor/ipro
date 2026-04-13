@@ -292,7 +292,7 @@ tailwind.config = {
       noProducts.classList.add('hidden');
 
       seminovosData.forEach((prod, idx) => {
-        const mainImg = prod.imagens && prod.imagens.length ? prod.imagens[0] : 'images-seminovos/iphone-14-pro-seminovo.jpg';
+        const mainImg = prod.imagens && prod.imagens.length ? prod.imagens[0] : '';
         const discount = prod.precoOriginal && prod.preco ? Math.round((1 - prod.preco / prod.precoOriginal) * 100) : 0;
         const installment = prod.preco ? (prod.preco / 18).toFixed(2).replace('.', ',') : '0,00';
         const priceFormatted = prod.preco ? prod.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '';
