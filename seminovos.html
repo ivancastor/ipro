@@ -197,13 +197,13 @@ tailwind.config = {
 
   <!-- PRODUCT DETAIL POPUP -->
   <div id="product-popup" class="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center sm:p-4 opacity-0 pointer-events-none transition-opacity duration-300" style="background:rgba(0,0,0,0.65);backdrop-filter:blur(10px);">
-    <div class="bg-white sm:rounded-3xl rounded-t-3xl shadow-2xl w-full sm:max-w-4xl flex flex-col relative transform translate-y-4 sm:translate-y-0 sm:scale-95 transition-all duration-300 opacity-0" id="product-popup-inner">
+    <div class="bg-white sm:rounded-3xl rounded-t-3xl shadow-2xl w-full sm:max-w-4xl flex flex-col relative transform translate-y-4 sm:translate-y-0 sm:scale-95 transition-all duration-300 opacity-0 max-h-[90vh]" id="product-popup-inner">
       <button onclick="closeProductPopup()" class="absolute top-4 right-4 w-10 h-10 bg-[#f5f5f7] hover:bg-[#e0e0e0] rounded-full flex items-center justify-center transition-colors z-10">
         <svg class="w-5 h-5 text-[#1a1a1a]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
       <!-- drag handle mobile -->
       <div class="flex justify-center pt-3 pb-1 sm:hidden"><div class="w-10 h-1 bg-[#ddd] rounded-full"></div></div>
-      <div class="overflow-y-auto flex-1 p-5 sm:p-8">
+     <div class="overflow-y-auto flex-1 p-6 sm:p-10">
         <!-- Title at the top, centered, full-width -->
         <h2 id="popup-title" class="text-xl sm:text-4xl font-bold text-[#1a1a1a] tracking-tight mb-3 sm:mb-4 text-center leading-tight pr-8 sm:pr-0"></h2>
         <!-- Badges -->
