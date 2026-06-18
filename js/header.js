@@ -10,6 +10,12 @@
   f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-5XGDNMPT');
 
+// Carregar eventos GTM da iPro
+const iproGtm = document.createElement('script');
+iproGtm.src = '/js/ipro-gtm.js';
+iproGtm.defer = true;
+document.head.appendChild(iproGtm);
+
 (function () {
   var placeholder = document.getElementById('site-header');
   if (!placeholder) return;
